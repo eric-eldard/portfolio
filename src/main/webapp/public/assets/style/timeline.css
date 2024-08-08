@@ -1,0 +1,44 @@
+.timeline {
+	width: 85%;
+}
+
+.timeline .timeline-events {
+    display: grid;
+    font-size: 24px;
+    justify-content: space-around;
+    padding-left: 15px;
+    position: relative;
+    white-space: nowrap;
+    z-index: 100;
+}
+
+.timeline .timeline-dates {
+    border-top: 1px solid #000;
+    color: #666;
+    display: grid;
+    font-size: 16px;
+    font-style: italic;
+    justify-content: space-around;
+    padding-top: 15px;
+    position: relative;
+    top: -13px;
+    z-index: 99;
+}
+
+.timeline .timeline-event {
+	width: 12px;
+}
+
+.timeline .timeline-event {
+    display: inline-block;
+    transition: color 0.75s, text-shadow 0.75s;
+}
+
+.timeline a:after {
+    color: #666;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+	transform: rotate(-45deg);
+	transform-origin: -14px 0px;
+}

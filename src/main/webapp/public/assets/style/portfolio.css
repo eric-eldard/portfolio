@@ -1,0 +1,247 @@
+@import url("dialog.css");
+@import url("embedded-media.css");
+@import url("tagging.css");
+@import url("third-party-logos.css");
+@import url("timeline.css");
+@import url("timeline-impl.css");
+@import url("screenshot-gridding.css");
+
+
+a {
+    color: #666;
+	text-decoration: none;
+	transition: color 0.75s;
+}
+
+a:hover {
+    color: #b00;
+}
+
+button, input[type=checkbox], label {
+    cursor: pointer;
+}
+
+body {
+	background-color: #000;
+	font-family: Helvetica, sans-serif;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.center-children > * {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.details {
+	display: inline-block;
+	opacity: 0;
+	transition: opacity 1s;
+	width: 100%;
+}
+
+.disclaimer {
+    font-size: smaller;
+}
+
+.larger-text {
+    font-size: larger;
+}
+
+.mono {
+    font-family: Consolas, monospace;
+}
+
+.sm-heading {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.title {
+	cursor: pointer;
+	display: inline-block;
+	font-weight: bold;
+}
+
+img.solo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.screenshot a {
+	position: relative;
+}
+
+.screenshot a img {
+  height: 100%;
+  width: 100%;
+}
+
+.white-border {
+    border: 1px solid white;
+}
+
+
+/* Add glare to topic divs */
+.topic:before {
+	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 27%,rgba(255,255,255,0) 100%);
+	border-radius: 15px;
+	content: "";
+	display: block;
+	height: 20px;
+	left: -10px;
+	opacity: 0.8;
+	padding-left: 20px;
+	position: relative;
+	top: -20px;
+	width: 100%;
+}
+
+/* Vertical "centering" for topic text */
+.topic > div {
+	position: relative;
+	top: -17px;
+}
+
+.intro {
+    background-color: #c8c8c8; /* fallback */
+    background: linear-gradient(to bottom, rgba(150,150,150,1) 0%, rgba(238,238,238,1) 100%);
+    border: 2px solid #000;  /* Hide reflection div artifacting in Chrome */
+    border-radius: 15px;
+    box-shadow: inset 0 0 20px #000;  /* Enhance the 3D look of .topic divs */
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    padding: 15px;
+    padding-bottom: 0px;
+    vertical-align: middle;
+    width: 95%;
+    white-space: normal;
+}
+
+/* Add glare to intro div */
+.intro:before {
+	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 27%,rgba(255,255,255,0) 100%);
+	border-radius: 15px;
+	content: "";
+	display: block;
+	height: 20px;
+	left: -10px;
+	opacity: 0.8;
+	padding-left: 20px;
+	position: relative;
+	top: -20px;
+	width: 100%;
+}
+
+.intro > div {
+	margin-bottom: 10px;
+	margin-left: 15px;
+	margin-right: 15px;
+	text-align: justify;
+}
+
+.intro-heading {
+    color: #282828;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+/* Main content, excluding #dialog/#popup */
+#main {
+	padding-bottom: 15px;
+	padding-top: 15px;
+	position: relative;
+	width: 100%;
+	z-index: 1;
+}
+
+.header {
+	color: #fff;
+	left: -16px;
+	margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 95%;
+}
+
+.header-title {
+    font-size: 64px;
+    left: -5px;
+    position: relative;
+}
+
+.header-subtitle {
+    font-size: 24px;
+    left: -1px;
+    position: relative;
+}
+
+.intro .footer {
+    color: #666;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.footer .gh:hover {
+	color: #000;
+}
+
+.footer .gh:before {
+	filter: brightness(40%);
+	transition: filter 0.75s;
+}
+
+.footer .gh:hover:before {
+	filter: brightness(0%);
+}
+
+.link-out {
+    font-weight: bold;
+    position: relative;
+    white-space: nowrap; /* absolute position on the :after becomes a problem when the text wraps to multiple lines */
+}
+
+.link-out:after {
+    content: "\027a4";
+    font-size: 16px;
+    opacity: 0;
+    position: absolute;
+    right: var(--right_displacement, -12px);
+    top: var(--top_displacement, -8px);
+    transform: rotate(-45deg);
+    transition: opacity 0.75s ease-out;
+}
+
+.link-out:hover:after {
+    opacity: 1;
+}
+
+#preload-images, #preload-docs, #loaded-docs {
+    display: none;
+}
+
+
+@media screen and (min-width: 1100px) {
+    .header, .intro {
+        width: 900px;
+    }
+
+    .intro > div {
+    	margin-left: 50px;
+    	margin-right: 50px;
+    }
+}

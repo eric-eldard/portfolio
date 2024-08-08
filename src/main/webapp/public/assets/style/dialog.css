@@ -1,0 +1,117 @@
+/* A full-page div for preventing interaction with the main page while content is being displayed in #popup */
+#dialog {
+	background: rgba(128, 128, 128, 0.5);
+	cursor: pointer;
+	display: none;
+	height: 100%;
+	left: 0;
+	overflow: auto;
+	overscroll-behavior: none;
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	z-index: 1000;
+}
+
+/* A div for displaying all pop-up content */
+#popup {
+	background-color: #000;
+	border: 3px solid #fff;
+	border-radius: 15px;
+	cursor: default;
+	color: #fff;
+	height: 88%;
+	margin: auto;
+	max-width: 1100px;
+	overscroll-behavior: contain;
+	padding-bottom: 15px;
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-top: 10px;
+	padding-bottom: 24px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: width 0.3s;
+	width: 0px;
+}
+
+#popup a {
+	color: #ddf;
+	transition: color 0.3s;
+}
+
+#popup a:hover {
+	color: #ffd;
+}
+
+#popup h1 {
+	margin-top: 0px;
+	text-align: center;
+}
+
+#popup h2 {
+	margin-top: 36px;
+}
+
+#popup hr {
+	border: 0;
+	border-top: 1px solid #fff;
+	margin-top: 36px;
+	height: 0px;
+	width: 80%;
+}
+
+#popup div.iframe {
+    border: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+#popup iframe {
+    border: 0;
+    border-radius: 10px;
+    display: block
+}
+
+#popup p {
+	margin-top: 0px;
+	text-align: justify;
+}
+
+#popup .github, #popup .github:hover {
+    color: white;
+}
+
+#popup .github img {
+    filter: invert(1);
+    height: 19px;
+    margin-left: 2px;
+}
+
+/* A table for listing project specs */
+#popup .specs {
+    font-size: 14px;
+	margin-bottom: 10px;
+}
+
+/* Replacement for colgroup */
+#popup .specs tr td:first-child {
+	font-weight: bold;
+	padding-right: 5px;
+}
+
+/* The "X" for closing #popup */
+#popup #closeX {
+    cursor: pointer;
+    font-size: 20px;
+	font-weight: bold;
+	text-align: right;
+}
+
+#popup #closeX a {
+	color: #fff;
+}

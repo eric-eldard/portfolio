@@ -1,0 +1,28 @@
+.iframe:after, .screenshot a:after {
+    background-color: #666;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    opacity: 0.8;
+    padding: 4px;
+    position: absolute;
+    right: 0px;
+    text-align: right;
+}
+
+.iframe:after {
+	bottom: 5px;
+	content: "iframe";
+
+}
+
+.screenshot a:after {
+	bottom: 3px;
+	content: "Screenshot";
+	transition: background-color 0.3s, opacity 0.3s;
+}
+
+.screenshot a:hover:after {
+    background-color: #999;
+    opacity: .9;
+}

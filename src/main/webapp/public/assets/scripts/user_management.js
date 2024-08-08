@@ -1,0 +1,91 @@
+const USER_ADMIN_PATH = "/portfolio/users";
+const MIN_PASSWORD_CHARS = 8;
+
+function postNewUser(newUser) {
+    if (!newUser.username || newUser.username.trim().length < 0) {
+        alert("Username cannot be blank")
+    }
+    else if (!newUser.password || newUser.password.trim().length < MIN_PASSWORD_CHARS) {
+        alert("User " + newUser.username + " not created\nPassword must be at least 8 characters")
+    }
+    else {
+        fetch(USER_ADMIN_PATH, makeRequestOptions("POST", newUser))
+            .then(response => handleResponse(response));
+    }
+}
+
+function deleteUser(id, username) {
+    const confirmed = confirm("Are you sure you want to delete user " + username + "?");
+    if (confirmed) {
+        fetch(USER_ADMIN_PATH + "/" + id, makeRequestOptions("DELETE"))
+            .then(response => handleResponse(response));
+    }
+    else {
+        alert("Deletion of user " + username + " canceled")
+    }
+}
+
+function unlockUser(id, username) {
+    const confirmed = confirm("Confirm unlocking account for " + username);
+    if (confirmed === true) {
+        fetch(USER_ADMIN_PATH + "/" + id + "/unlock", makeRequestOptions("PUT"))
+            .then(response => handleResponse(response));
+    }
+}
+
+function resetPword(id, username) {
+    const password = prompt("Set new password for user " + username);
+    if (!password) {
+        alert("Password change for " + username + " was canceled")
+    }
+    else if (password.trim().length < MIN_PASSWORD_CHARS) {
+        alert("Password for " + username + " was not changed\nNew password must be at least 8 characters")
+    }
+    else {
+        fetch(USER_ADMIN_PATH + "/" + id + "/password", makeRequestOptions("PUT", password))
+            .then(response => handleResponse(response));
+    }
+}
+
+function setAuthUntil(id, username, date) {
+    const confirmed = confirm("Confirm " + date + " as new authorized-until date for " + username);
+    if (confirmed === true) {
+            fetch(USER_ADMIN_PATH + "/" + id + "/authorized-until/" + date, makeRequestOptions("PUT"))
+                .then(response => handleResponse(response));
+    }
+    else {
+        alert("Authorized-until date for " + username + " not changed");
+        Window.location.reload();
+    }
+}
+
+function setInfiniteAuth(id, username) {
+    const confirmed = confirm("Confirm infinite authorization for " + username);
+    if (confirmed === true) {
+            fetch(USER_ADMIN_PATH + "/" + id + "/authorized-until/forever", makeRequestOptions("PUT"))
+                .then(response => handleResponse(response));
+    }
+    else {
+        alert("Authorized-until date for " + username + " not changed");
+        Window.location.reload();
+    }
+}
+
+function toggleUser(id) {
+    fetch(USER_ADMIN_PATH + "/" + id + "/toggle-enabled", makeRequestOptions("PUT"))
+        .then(response => handleResponse(response));
+}
+
+function toggleRole(id) {
+    fetch(USER_ADMIN_PATH + "/" + id + "/toggle-admin", makeRequestOptions("PUT"))
+        .then(response => handleResponse(response));
+}
+
+function handleResponse(response) {
+    if (response.ok) {
+        window.location.reload();
+    }
+    else {
+        alert("Response from server: " + response.status);
+    }
+}
