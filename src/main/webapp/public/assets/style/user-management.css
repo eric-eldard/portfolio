@@ -1,0 +1,181 @@
+@import url("portfolio.css");
+
+body {
+    color: white;
+    padding: 10px 25px;
+}
+
+h1, h2 {
+    font-weight: 300;
+    width: fit-content;
+}
+
+fieldset {
+    margin-bottom: 20px;
+    width: fit-content;
+}
+
+input[type="date"], input[type="text"] {
+    border: 0;
+}
+
+table {
+    background-color: white;
+    border-collapse: collapse;
+    color: black;
+    margin-bottom: 10px;
+}
+
+table button {
+    width: 75px;
+}
+
+table tr td.binary-field {
+    color: #666;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 0;
+    transition: color 0.75s;
+}
+
+table tr td.binary-field:hover {
+    color: #b00;
+}
+
+th, .vertical-table tr td:first-of-type {
+    background-color: lightgrey;
+}
+
+th, td {
+    border: 1px solid black;
+}
+
+.authorization-cell {
+    padding-right: 20px !important;
+    text-wrap: nowrap;
+    vertical-align: middle;
+}
+
+.authorization-cell input {
+    font-size: 12px;
+}
+
+.authorization-cell .infin-link {
+    font-size: 22px;
+    line-height: 12px;
+    margin-left: 3px;
+    padding-top: 2px;
+    position: absolute;
+}
+
+.bread-crumbs {
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+.bread-crumbs a {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+.bread-crumbs a:hover {
+    color: #d00;
+}
+
+.bread-crumbs a:not(:last-of-type):after {
+    color: #bbb;
+    content: "\025B6";
+    font-size: smaller;
+    margin-left: 5px;
+}
+
+.clock {
+    font-size: 21px;
+    line-height: 12px;
+    margin-left: 29px;
+    padding-top: 1px;
+    position: absolute;
+    transform: rotate(-45deg);
+}
+
+.emoji-silhouette {
+  color: transparent;
+  text-shadow: 0 0 0 #666;
+  transition: text-shadow 0.75s;
+}
+
+.emoji-silhouette:hover {
+  color: transparent;
+  text-shadow: 0 0 0 #b00;
+}
+
+.expired-account input {
+    color: #aaa;
+}
+
+.lock {
+  font-size: 14px;
+}
+
+.new-user-controls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.vertical-table tr td:first-of-type {
+    padding-right: 5px;
+    text-align: right;
+}
+
+.vertical-table tr td:not(:first-of-type) {
+    font-family: Consolas, monospace;
+    text-align: center;
+}
+
+.vertical-table tr td:last-of-type input {
+    font-family: Consolas, monospace;
+    width: 250px;
+}
+
+.horizontal-table a {
+    font-weight: bold;
+}
+
+.horizontal-table th,
+.vertical-table td:first-of-type {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 3px 10px;
+}
+
+.horizontal-table {
+    text-align: center;
+}
+
+.horizontal-table tr:hover {
+    background-color: #eee;
+}
+
+.horizontal-table tr td {
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.user-id {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.user-id a {
+    color: #b00;
+    display: inline-block;
+    font-weight: bold;
+    height: 100%;
+    line-height: 24px;
+    width: 100%;
+}

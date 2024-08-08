@@ -1,0 +1,95 @@
+.intro .timeline .timeline-events {
+    grid-template-columns: repeat(7, 1fr);
+    padding-top: 200px;
+}
+
+.intro .timeline .timeline-dates {
+    font-size: smaller;
+    grid-template-columns: repeat(7, 1fr);
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.intro .timeline {
+    margin-bottom: 24px;
+}
+
+.intro .timeline-event:hover {
+	text-shadow:  0px  2px  4px #fff,
+                  0px -2px  4px #fff,
+                  2px  0px  4px #fff,
+                 -2px  0px  4px #fff,
+	              2px  2px  4px #fff,
+	              2px -2px  4px #fff,
+	             -2px  2px  4px #fff,
+	             -2px -2px  4px #fff;
+}
+
+.intro .timeline-event:nth-of-type(1):after {
+    content: "movie theater manager";
+}
+
+.intro .timeline-event:nth-of-type(2):after {
+    content: "student";
+}
+
+.intro .timeline-event:nth-of-type(3):after {
+    content: "software engineer";
+}
+
+.intro .timeline-event:nth-of-type(4):after {
+    content: "solutions engineer";
+}
+
+.intro .timeline-event:nth-of-type(5):after {
+    content: "engineering exec";
+}
+
+.intro .timeline-event:nth-of-type(6):after {
+    content: "hobbyist";
+}
+
+.intro .timeline-event:nth-of-type(7):after {
+    content: "job seeker";
+}
+
+.intro .timeline-event:nth-of-type(1),
+.intro .timeline-event:nth-of-type(1):hover:after {
+	color: #b0b;
+}
+
+.intro .timeline-event:nth-of-type(2),
+.intro .timeline-event:nth-of-type(2):hover:after {
+	color: #00d;
+}
+
+.intro .timeline-event:nth-of-type(3),
+.intro .timeline-event:nth-of-type(3):hover:after {
+	color: #0bb;
+}
+
+.intro .timeline-event:nth-of-type(4),
+.intro .timeline-event:nth-of-type(4):hover:after {
+	color: #0b0;
+}
+
+.intro .timeline-event:nth-of-type(5),
+.intro .timeline-event:nth-of-type(5):hover:after {
+	color: #dc0;
+}
+
+.intro .timeline-event:nth-of-type(6),
+.intro .timeline-event:nth-of-type(6):hover:after {
+	color: #e80;
+}
+
+.intro .timeline-event:nth-of-type(7),
+.intro .timeline-event:nth-of-type(7):hover:after {
+	color: #d00;
+}
+
+@media screen and (min-width: 400px) {
+    .intro .timeline .timeline-dates {
+        font-size: unset;
+    }
+}

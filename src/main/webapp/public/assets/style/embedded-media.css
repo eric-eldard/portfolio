@@ -1,0 +1,53 @@
+/* Video */
+.embedded-video {
+    aspect-ratio: 16 / 9;
+    margin-left: auto;
+    margin-right: auto;
+    width: 85%;
+}
+
+/* PDF */
+.embedded-doc {
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+}
+
+.embedded-doc iframe {
+    height: 100%;
+    width: 100%;
+}
+
+/* Multi-PDF viewer */
+.multi-doc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+}
+
+.multi-doc .menu {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.multi-doc .menu ul {
+    left: -16px;
+    position: relative;
+}
+
+.multi-doc .menu li {
+    margin-bottom: 12px;
+}
+
+.multi-doc .document {
+    aspect-ratio: 16 / 10;
+    flex-grow: 1;
+}
+
+.multi-doc .document iframe {
+    height: 100%;
+    width: 100%;
+}
