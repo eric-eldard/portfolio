@@ -51,20 +51,32 @@ th, td {
     border: 1px solid black;
 }
 
-.authorization-cell {
+.authorization-container {
     padding-right: 20px !important;
     text-wrap: nowrap;
     vertical-align: middle;
 }
 
-.authorization-cell input {
+.authorization-container input {
     font-size: 12px;
+    width: 95px;
 }
 
-.authorization-cell .infin-link {
-    font-size: 22px;
+.authorization-container .clock {
+    font-size: 21px;
+    font-weight: bold;
     line-height: 12px;
-    margin-left: 3px;
+    margin-left: 29px;
+    padding-top: 1px;
+    position: absolute;
+    transform: rotate(-45deg);
+}
+
+.authorization-container .infinity {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 12px;
+    margin-left: 8px;
     padding-top: 2px;
     position: absolute;
 }
@@ -93,15 +105,6 @@ th, td {
     margin-left: 5px;
 }
 
-.clock {
-    font-size: 21px;
-    line-height: 12px;
-    margin-left: 29px;
-    padding-top: 1px;
-    position: absolute;
-    transform: rotate(-45deg);
-}
-
 .emoji-silhouette {
   color: transparent;
   text-shadow: 0 0 0 #666;
@@ -113,7 +116,7 @@ th, td {
   text-shadow: 0 0 0 #b00;
 }
 
-.expired-account input {
+.expired-account {
     color: #aaa;
 }
 
@@ -138,7 +141,6 @@ th, td {
 
 .vertical-table tr td:last-of-type input {
     font-family: Consolas, monospace;
-    width: 250px;
 }
 
 .horizontal-table a {

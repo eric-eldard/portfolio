@@ -121,6 +121,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
                 new IllegalArgumentException("Cannot set password for user with id [" + id + "]; user not found"));
 
         user.setPassword(passwordEncoder.encode(password.trim()));
+        user.setFailedPasswordAttempts(0);
         portfolioUserRepo.save(user);
     }
 

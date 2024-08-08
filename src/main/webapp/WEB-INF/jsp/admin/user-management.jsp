@@ -27,6 +27,10 @@
                 margin: 3px;
             }
 
+            .vertical-table tr td input {
+                width: 250px;
+            }
+
             @media screen and (min-width: 1000px) {
                 .horizontal-table tr td:last-of-type {
                     display: table-cell;
@@ -34,7 +38,7 @@
             }
         </style>
 
-        <script src="/public/assets/scripts/user_management.js"></script>
+        <script src="/public/assets/scripts/user-management.js"></script>
 
         <script>
             function createUser() {
@@ -100,34 +104,12 @@
                 <th>Actions</th>
             </tr>
             <c:forEach items="${userList}" var="user">
+            <c:set var="user" value="${user}" scope="request"/>
             <tr>
                 <td class="user-id"><a href="/portfolio/users/${user.id}" title="View user">${user.id}</a></td>
                 <td>${user.username}</td>
-                <td class="authorization-cell ${user.isAccountNonExpired() ? '' : 'expired-account'}">
-                    <div id="forever-auth-${user.id}"
-                         ${user.authorizedUntil == null ? "" : "style='display: none'"}>
-                        <i>forever</i>
-                        <a href="javascript: void(0)"
-                           onclick="javascript:
-                                    document.getElementById('forever-auth-${user.id}').style.display='none';
-                                    document.getElementById('exp-date-${user.id}').style.display='inline-block'"
-                           class="emoji-silhouette clock"
-                           title="Set authorization end date"
-                        >
-                            &#9202;
-                        </a>
-                    </div>
-                    <div id="exp-date-${user.id}"
-                         ${user.authorizedUntil == null ? "style='display: none'" : ""}
-                    >
-                        <fmt:formatDate pattern="yyyy-MM-dd" value="${user.authorizedUntil}" var="authorizedUntilFormatted"/>
-                        <input
-                                type="date"
-                                onchange="setAuthUntil(${user.id}, '${user.username}', this.value)"
-                                ${user.authorizedUntil == null ? "" : "value='".concat(authorizedUntilFormatted).concat("'")}
-                        />
-                        <a href="javascript: setInfiniteAuth(${user.id}, '${user.username}')" class="infin-link" title="Authorize forever">&infin;</a>
-                    </div>
+                <td>
+                    <c:import url="../widgets/authorized-until-input.jsp"/>
                 </td>
                 <td>${user.getLastSuccessfulLoginTimestamp() == null ? "<i>never</i>" : user.getLastSuccessfulLoginTimestamp()}</td>
                 <td>${user.failedPasswordAttempts}</td>
