@@ -20,8 +20,8 @@
 <h2>Management Training Center <span class="sm-heading">(iframes, CSS, JavaScript)</span></h2>
 <p>
     I was running a movie theater in 2011 when my company dissolved its management training program with no replacement.
-    Coding was well beyond the scope of my responsibilities when I managed theaters, but I created this training portal
-    for my team. I continued to roll out new modules until I left the company.
+    Coding was well beyond the scope of my responsibilities, but I created this training portal for my team. I continued
+    to roll out new modules until I left the company.
 </p>
 <p class="disclaimer">
     [One module with no proprietary info is shown below]
@@ -43,7 +43,7 @@
     technology has always been one of my strengths.
 </p>
 <jsp:include page="../widgets/solo-screenshot.jsp">
-    <jsp:param name="path" value="/portfolio/assets/images/screenshots/Budget_Buddy.png"/>
+    <jsp:param name="path" value="/portfolio/assets/images/screenshots/Budget-Buddy.png"/>
     <jsp:param name="altText" value="Budget Buddy (Excel w/ VBA) screenshot"/>
 </jsp:include>
 
@@ -66,6 +66,6 @@
     showtime schedule to write itself.
 </p>
 <jsp:include page="../widgets/solo-screenshot.jsp" >
-    <jsp:param name="path" value="/portfolio/assets/images/screenshots/Usher_Schedule.png"/>
+    <jsp:param name="path" value="/portfolio/assets/images/screenshots/usher-schedule.png"/>
     <jsp:param name="altText" value="Usher Schedules (Excel w/ VBA) screenshot"/>
 </jsp:include>

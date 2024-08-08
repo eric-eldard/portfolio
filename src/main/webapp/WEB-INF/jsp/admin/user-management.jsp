@@ -126,7 +126,7 @@
                                 onchange="setAuthUntil(${user.id}, '${user.username}', this.value)"
                                 ${user.authorizedUntil == null ? "" : "value='".concat(authorizedUntilFormatted).concat("'")}
                         />
-                        <a href="javascript: setInfiniteAuth(${user.id}, '${user.username}')" class="infin-link" title="Set forever">&infin;</a>
+                        <a href="javascript: setInfiniteAuth(${user.id}, '${user.username}')" class="infin-link" title="Authorize forever">&infin;</a>
                     </div>
                 </td>
                 <td>${user.getLastSuccessfulLoginTimestamp() == null ? "<i>never</i>" : user.getLastSuccessfulLoginTimestamp()}</td>

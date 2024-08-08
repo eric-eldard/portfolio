@@ -1,7 +1,11 @@
 <style>
-    #flow-doc {
+    #flowchart-doc {
         aspect-ratio: 128 / 69;
         width: 95%;
+    }
+
+    #dfd-doc {
+        height: 575px;
     }
 
     #partner-doc {
@@ -56,11 +60,24 @@
 
 <hr>
 
+<h2>Brazen Data Flows</h2>
+<p>
+    When Brazen joined the Radancy family, I put this data flow diagram together to help our new teammates understand
+    what kind of data we worked with and how it was enriched as it moved through our system&mdash;and ultimately which
+    points in the Brazen candidate journey would provide the highest value for integration. I produced both this YC
+    version and a multi-level GC version, which can be easier to digest for folks unfamiliar with your system.
+</p>
+<div id="dfd-doc" class="embedded-doc">
+    <iframe src="/portfolio/assets/documents/Candidate-and-Job-Data-Flows.pdf#navpanes=0&view=FitH" allowfullscreen></iframe>
+</div>
+
+<hr>
+
 <h2>Brazen Event Capacity Flow</h2>
 <p>
     I put this flowchart together for a customer who was looking to better understand the interplay of several advanced
     features of our event sign-up flow. The use of screenshots here helps tie abstract concepts to our more familiar ui.
 </p>
-<div id="flow-doc" class="embedded-doc">
+<div id="flowchart-doc" class="embedded-doc">
     <iframe src="/portfolio/assets/documents/Event-Capacity-Flow.pdf#navpanes=0&view=FitH" allowfullscreen></iframe>
 </div>

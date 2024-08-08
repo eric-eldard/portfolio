@@ -35,7 +35,7 @@ function unlockUser(id, username) {
 
 function resetPword(id, username) {
     const password = prompt("Set new password for user " + username);
-    if (!password) {
+    if (typeof password === "undefined" || password === null) {
         alert("Password change for " + username + " was canceled")
     }
     else if (password.trim().length < MIN_PASSWORD_CHARS) {

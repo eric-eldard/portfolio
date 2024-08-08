@@ -6,7 +6,8 @@
     incredibly fortunate to be picked up by the small startup Brazen. Over the first year, we built and launched
     Brazen's best-in-class virtual event platform. Then we spent the next 9 years building up and out, adding orders of
     magnitude more capacity, a customer-facing API, video chat, an embeddable chat plugin, multiple language support,
-    advanced web accessibility, in-person event support, and literally hundreds more features.
+    advanced web accessibility, in-person event support, and literally hundreds more features. The Brazen software would
+    host millions of users across tens-of-thousands of events.
 </p>
 <p>
     I started out in a junior Java developer role with Brazen, became lead for our solo Scrum team, and by the time
