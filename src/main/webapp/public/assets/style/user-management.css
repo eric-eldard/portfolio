@@ -39,6 +39,7 @@ table tr td.binary-field {
 }
 
 table tr td.binary-field:hover {
+    background-color: #fdd;
     color: #b00;
 }
 
@@ -178,4 +179,8 @@ th, td {
     height: 100%;
     line-height: 24px;
     width: 100%;
+}
+
+.user-id:hover {
+    background-color: #fdd;
 }

@@ -23,8 +23,8 @@
     <div class="menu">
         <ul>
             <li><a href="/portfolio/assets/documents/Modularity.pdf#navpanes=0" target="brown-bag-viewer">Modularity</a></li>
-            <li><a href="/portfolio/assets/documents/EffectiveCodeReviews.pdf#navpanes=0" target="brown-bag-viewer">Effective&nbsp;Code&nbsp;Reviews</a></li>
-            <li><a href="/portfolio/assets/documents/ShiftLeft.pdf#navpanes=0" target="brown-bag-viewer">Shift&nbsp;Left</a></li>
+            <li><a href="/portfolio/assets/documents/Effective-Code-Reviews.pdf#navpanes=0" target="brown-bag-viewer">Effective&nbsp;Code&nbsp;Reviews</a></li>
+            <li><a href="/portfolio/assets/documents/Shift-Left.pdf#navpanes=0" target="brown-bag-viewer">Shift&nbsp;Left</a></li>
         </ul>
     </div>
     <div class="document">
@@ -42,7 +42,7 @@
     dashboards on top of that data, allowing them to begin their standups with a health check of their products.
 </p>
 <div id="osc-doc" class="embedded-doc">
-    <iframe src="/portfolio/assets/documents/OperationalSuccessFlow.pdf#navpanes=0&view=Fit" allowfullscreen></iframe>
+    <iframe src="/portfolio/assets/documents/Operational-Success-Flow.pdf#navpanes=0&view=Fit" allowfullscreen></iframe>
 </div>
 
 <hr>

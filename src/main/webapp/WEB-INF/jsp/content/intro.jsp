@@ -3,7 +3,7 @@
         I've been building stuff for as long as I can remember. As a kid, it was Legos; since a programmable graphing
         calculator was put in my middle-school hands, it's been software. Even before I was writing code professionally,
         I was a software engineer&mdash;as a hobbyist and as a movie theater general manager&mdash;using those skills to
-        maximize the time and effectiveness of myself and my people. Also, building stuff is just really fun! I believe
+        maximize the time and effectiveness of myself and my team. Also, building stuff is just really fun! I believe
         in automating the mundane, delivering high value quickly, and building things that are extensible and easily
         maintained. And I enjoy refactors&mdash;making existing software faster, cheaper, and more elegant.
     </p>
