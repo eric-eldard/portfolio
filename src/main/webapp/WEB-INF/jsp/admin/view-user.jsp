@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<c:set var="user" value="${user}" scope="request"/>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,17 +12,30 @@
         <link rel="stylesheet" type="text/css" href="/public/assets/style/user-management.css">
 
         <style>
+            .button-cell {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                justify-content: space-around;
+                justify-items: center;
+                width: 100%;
+            }
+
+            .button-cell button {
+                width: 100px;
+            }
+
             .vertical-table tr td {
                 font-size: 12px;
+                height: 22px;
                 padding: 5px;
             }
 
-            .vertical-table tr td:not(first-of-type) {
-                min-width: 75px;
+            .vertical-table tr td:last-of-type {
+                width: 120px;
             }
         </style>
 
-        <script src="/public/assets/scripts/user_management.js"></script>
+        <script src="/public/assets/scripts/user-management.js"></script>
     </head>
     <body class="center-children">
         <h1>View User: <b>${user.username}</b></h1>
@@ -34,14 +49,8 @@
             <tr>
                 <td>Authorized Until</td>
                 <td>
-                    <c:choose>
-                        <c:when test="${user.authorizedUntil == null}">
-                            <i>forever</i>
-                        </c:when>
-                        <c:otherwise>
-                            <fmt:formatDate pattern="yyyy-MM-dd" value="${user.authorizedUntil}"/>
-                        </c:otherwise>
-                    </c:choose>
+                    <c:import url="../widgets/authorized-until-input.jsp"/>
+                </td>
             </tr>
             <tr>
                 <td>Failed Password Attempts</td>
@@ -55,11 +64,23 @@
             </c:if>
             <tr>
                 <td>Disabled</td>
-                <td class="binary-field">${!user.enabled ? "&cross;" : ""}</td>
+                <td class="binary-field" onclick="toggleUser(${user.id})" title="${user.enabled ? 'Disable' : 'Enable'}">
+                    ${!user.enabled ? "&cross;" : ""}
+                </td>
             </tr>
             <tr>
                 <td>Is Admin</td>
-                <td class="binary-field">${user.admin ? "&check;" : ""}</td>
+                <td class="binary-field" onclick="toggleRole(${user.id})" title="${user.admin ? 'Demote' : 'Promote'}">
+                    ${user.admin ? "&check;" : ""}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="button-cell">
+                        <button onclick="resetPword(${user.id}, '${user.username}')">Set Password</button>
+                        <button onclick="deleteUser(${user.id}, '${user.username}', (response => window.location = '/portfolio/users'));">Delete</button>
+                    </div>
+                </td>
             </tr>
         </table>
 

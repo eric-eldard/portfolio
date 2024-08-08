@@ -14,11 +14,11 @@ function postNewUser(newUser) {
     }
 }
 
-function deleteUser(id, username) {
+function deleteUser(id, username, successCallback = (response => window.location.reload())) {
     const confirmed = confirm("Are you sure you want to delete user " + username + "?");
     if (confirmed) {
         fetch(USER_ADMIN_PATH + "/" + id, makeRequestOptions("DELETE"))
-            .then(response => handleResponse(response));
+            .then(response => handleResponse(response, successCallback));
     }
     else {
         alert("Deletion of user " + username + " canceled")
@@ -36,14 +36,14 @@ function unlockUser(id, username) {
 function resetPword(id, username) {
     const password = prompt("Set new password for user " + username);
     if (typeof password === "undefined" || password === null) {
-        alert("Password change for " + username + " was canceled")
+        alert("Password change for user " + username + " was canceled")
     }
     else if (password.trim().length < MIN_PASSWORD_CHARS) {
-        alert("Password for " + username + " was not changed\nNew password must be at least 8 characters")
+        alert("Password for user " + username + " was not changed\nNew password must be at least 8 characters")
     }
     else {
         fetch(USER_ADMIN_PATH + "/" + id + "/password", makeRequestOptions("PUT", password))
-            .then(response => handleResponse(response));
+            .then(response => handleResponse(response, (response => alert("Password updated for user " + username))));
     }
 }
 
@@ -54,7 +54,7 @@ function setAuthUntil(id, username, date) {
                 .then(response => handleResponse(response));
     }
     else {
-        alert("Authorized-until date for " + username + " not changed");
+        alert("Authorized-until date for user " + username + " not changed");
         Window.location.reload();
     }
 }
@@ -66,7 +66,7 @@ function setInfiniteAuth(id, username) {
                 .then(response => handleResponse(response));
     }
     else {
-        alert("Authorized-until date for " + username + " not changed");
+        alert("Authorized-until date for user " + username + " not changed");
         Window.location.reload();
     }
 }
@@ -81,9 +81,12 @@ function toggleRole(id) {
         .then(response => handleResponse(response));
 }
 
-function handleResponse(response) {
+/**
+ * @param {successCallback} optional action to run on success; omit for default behavior (reload page)
+ */
+function handleResponse(response, successCallback = (response => window.location.reload())) {
     if (response.ok) {
-        window.location.reload();
+        successCallback(response);
     }
     else {
         alert("Response from server: " + response.status);
