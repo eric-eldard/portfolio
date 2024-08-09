@@ -14,7 +14,7 @@ function postNewUser(newUser) {
     }
 }
 
-function deleteUser(id, username, successCallback = (response => window.location.reload())) {
+function deleteUser(id, username, successCallback = undefined) {
     const confirmed = confirm("Are you sure you want to delete user " + username + "?");
     if (confirmed) {
         fetch(USER_ADMIN_PATH + "/" + id, makeRequestOptions("DELETE"))

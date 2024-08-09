@@ -11,10 +11,10 @@
     </appender>
 
     <logger name="com.eric_eldard" level="INFO" additivity="false">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE"/>
     </logger>
 
     <root level="INFO">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="FILE"/>
     </root>
 </configuration>

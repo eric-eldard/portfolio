@@ -1,6 +1,7 @@
 package com.eric_eldard.portfolio;
 
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
+import com.eric_eldard.portfolio.security.filter.MapCsrfCookieToHeaderFilter;
 import com.eric_eldard.portfolio.service.user.SecurityContextService;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import com.eric_eldard.portfolio.service.user.PortfolioUserServiceImpl;
@@ -18,6 +19,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.SecurityContextHolderFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.header.writers.CrossOriginResourcePolicyHeaderWriter;
 
 import javax.inject.Inject;
 import javax.servlet.FilterChain;
@@ -31,6 +35,10 @@ import java.io.IOException;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class GlobalConfig
 {
+    private static final String XSRF_COOKIE_NAME = "XSRF-TOKEN";
+
+    private static final String XSRF_HEADER_NAME = "X-XSRF-TOKEN";
+
     private final PasswordEncoder passwordEncoder;
 
     private final PortfolioUserServiceImpl portfolioUserDetailsService;
@@ -85,9 +93,16 @@ public class GlobalConfig
             )
             .httpBasic()
                 .and()
+            .csrf()
+                .csrfTokenRepository(makeCookieCsrfTokenRepository())
+                .and()
+            .addFilterBefore(new MapCsrfCookieToHeaderFilter(XSRF_COOKIE_NAME, XSRF_HEADER_NAME), CsrfFilter.class)
             .headers()
                 .frameOptions()
-                .sameOrigin()
+                    .sameOrigin()
+                .crossOriginResourcePolicy()
+                    .policy(CrossOriginResourcePolicyHeaderWriter.CrossOriginResourcePolicy.SAME_SITE)
+                    .and()
                 .and()
             .securityContext((securityContext) -> securityContext.requireExplicitSave(true))
             .addFilterAfter(this::addUserToMdc, SecurityContextHolderFilter.class);
@@ -100,6 +115,14 @@ public class GlobalConfig
         AuthenticationManagerBuilder builder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
         builder.userDetailsService(portfolioUserDetailsService).passwordEncoder(passwordEncoder);
         return builder.build();
+    }
+
+    private CookieCsrfTokenRepository makeCookieCsrfTokenRepository()
+    {
+        CookieCsrfTokenRepository tokenRepo = new CookieCsrfTokenRepository();
+        tokenRepo.setCookieName(XSRF_COOKIE_NAME);
+        tokenRepo.setHeaderName(XSRF_HEADER_NAME);
+        return tokenRepo;
     }
 
     private void addUserToMdc(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)

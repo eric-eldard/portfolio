@@ -77,8 +77,7 @@ function makeRequestOptions(method, body) {
     return {
         method: method,
         headers: {
-            ...(hasBody ? {"Content-Type": "application/json"} : {}),
-            "X-CSRF-TOKEN": getMetaValue("_csrf")
+            ...(hasBody ? {"Content-Type": "application/json"} : {})
         },
         ...(hasBody ? {body: JSON.stringify(body)} : {})
     };
