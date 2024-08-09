@@ -7,6 +7,7 @@
 <html lang="en">
     <head>
         <jsp:include page="../widgets/headers.jsp"/>
+        <jsp:include page="../widgets/csrf-token.jsp"/>
 
         <link rel="stylesheet" type="text/css" href="/public/assets/style/user-management.css">
 
