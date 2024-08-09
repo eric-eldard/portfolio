@@ -74,9 +74,15 @@
             <version>1</version>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -127,7 +133,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/resources</directory>
@@ -147,25 +153,25 @@
                 <version>1.5.3</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>replace</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <basedir>${project.build.directory}/${project.build.finalName}</basedir>
+                    <basedir>${project.build.directory}</basedir>
                     <includes>
                         <include>run.sh</include>
-                        <include>WEB-INF/jsp/widgets/headers.jsp</include>
+                        <include>classes/application.properties</include>
                     </includes>
                     <replacements>
                         <replacement>
-                            <token>%project.artifactId%</token>
+                            <token>\$\{ARTIFACT_ID\}</token>
                             <value>${project.artifactId}</value>
                         </replacement>
                         <replacement>
-                            <token>%project.version%</token>
+                            <token>\$\{ARTIFACT_VERSION\}</token>
                             <value>${project.version}</value>
                         </replacement>
                     </replacements>

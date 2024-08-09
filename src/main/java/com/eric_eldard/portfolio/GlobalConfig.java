@@ -61,7 +61,7 @@ public class GlobalConfig
     }
 
     @Bean
-    public PasswordEncoder getPasswordEncoder()
+    public PasswordEncoder passwordEncoder()
     {
         return passwordEncoder;
     }

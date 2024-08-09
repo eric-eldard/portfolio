@@ -1,8 +1,10 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<spring:eval expression="@environment.getProperty('portfolio.app.version')" var="version"/>
 <meta charset="UTF-8">
         <meta name="author" content="Eric Eldard">
         <meta name="description" content="Eric Eldard's Digital Portfolio">
         <meta name="keywords" content="Eric Eldard, portfolio, engineer, web designer, programmer, developer">
-        <meta name="version" content="%project.version%"/>
+        <meta name="version" content="${version}"/>
 
         <link rel="apple-touch-icon" sizes="180x180" href="/public/assets/images/icons/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/public/assets/images/icons/favicon/favicon-32x32.png">
