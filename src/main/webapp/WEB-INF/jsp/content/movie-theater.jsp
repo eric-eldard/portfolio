@@ -6,7 +6,7 @@
     }
 
     #mtc .iframe {
-        height: 785px;
+        height: 769px;
         width: 1045px;
     }
 
@@ -24,7 +24,7 @@
     to roll out new modules until I left the company.
 </p>
 <p class="disclaimer">
-    [One module with no proprietary info is shown below]
+    [Modules with proprietary info have been removed]
 </p>
 <div id="mtc">
     <div class="iframe">
@@ -36,11 +36,11 @@
 
 <h2>Budget Buddy <span class="sm-heading">(Excel w/ VBA)</span></h2>
 <p>
-    Tracking an 8-figure movie theater budget with expenditures ranging from thousands of dollars down to a couple bucks
-    is quite an undertaking, especially with no access to financial apps or even database software. Excel with VBA to
-    the rescue! Using spreadsheet tables like database tables, I was able to create an application that tracked hundreds
-    of expenditures, generated previously-handwritten reports, and helped make projections. Leveraging available
-    technology has always been one of my strengths.
+    Tracking an 8-figure movie theater budget, with expenditures ranging from thousands of dollars down to a couple
+    bucks, is quite an undertaking&mdash;especially with no access to financial apps or even database software. Excel
+    with VBA to the rescue! Using spreadsheet tables like database tables, I was able to create a Visual Basic
+    application to track hundreds of expenditures, generate previously-handwritten reports, and help make
+    financial projections. Leveraging available technology has always been one of my strengths.
 </p>
 <jsp:include page="../widgets/solo-screenshot.jsp">
     <jsp:param name="path" value="/portfolio/assets/images/screenshots/Budget-Buddy.png"/>
@@ -52,18 +52,18 @@
 <h2>Scheduling Software <span class="sm-heading">(Excel w/ VBA & XML)</span></h2>
 <p>
     I was able to save dozens of person-hours each week by automating Excel paperwork with Visual Basic for
-    Applications. Here's an example in which I found out our box office software was publishing our showtimes in XML to
-    potentially be used by electronic signage software. I was able to consume this and create all kinds of schedule
-    variants (movie start schedules for projectionists, cleaning schedules for ushers, etc.) which previously had to be
-    created by hand. Usage spread to other theaters in our chain, who could all use it too since they all ran the same
-    box office software.
+    Applications. This got my management team out of the office and onto the floor, helping customers and training
+    staff. Here's an example in which I found out our box office software was publishing our showtimes in an XML feed
+    to a hidden folder on each of our back office computers, just in case one of them happened to be running electronic
+    signage software. I was able to consume this feed and create all kinds of schedule variants (movie-start schedules
+    for projectionists, cleaning schedules for ushers, etc.) which previously had to be created by hand. Usage spread
+    to other theaters in our chain, who could all use it too since they all ran the same box office software.
 </p>
 <p>
     Beyond consuming showtimes, I was also working on creating weekly show schedules. Normally done by hand, these have
-    to follow a lot of rules for when movies can play, including film ratings, target audiences, number of copies you
-    have, weeks each movie has been out, each building's operating hours, and much more. With all of these dimensions,
-    I was in the midst of studying chess AI when I left the theater business, in hopes to one day get our weekly
-    showtime schedule to write itself.
+    to follow a lot of criteria for when movies can play, including film ratings, target audiences, number of copies you
+    have, your operating hours, and much more. With all of these dimensions, I was in the midst of studying chess AI
+    when I left the theater business, in hopes to one day get our weekly showtime schedule to write itself.
 </p>
 <jsp:include page="../widgets/solo-screenshot.jsp" >
     <jsp:param name="path" value="/portfolio/assets/images/screenshots/usher-schedule.png"/>

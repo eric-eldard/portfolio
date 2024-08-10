@@ -4,8 +4,8 @@
     }
 
     #cycling-font-colors .iframe {
-        height: 210px;
-        width: 660px !important;
+        height: 188px;
+        width: 590px !important;
     }
 
     #cycling-font-colors .iframe iframe {
