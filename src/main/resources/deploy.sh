@@ -29,4 +29,4 @@ sudo chown -R $USER $ROOT
 
 echo "Portfolio app successfully deployed."
 echo
-echo "Kill existing process, then run run.sh from ${ROOT} as user ${USER}"
+echo "To run, execute run.sh from ${ROOT} as user ${USER}"
