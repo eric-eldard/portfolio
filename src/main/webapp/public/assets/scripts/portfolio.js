@@ -28,6 +28,7 @@ function showPopup(content) {
 }
 
 function closePopup() {
+    video.destroyAllPlayers();
     popup.style.width = "0px";
     setTimeout(function() {
         dialog.style.display = "none";
@@ -58,10 +59,6 @@ function setInnerHTML(container, html) {
 
         oldScriptElem.parentNode.replaceChild(newScriptElem, oldScriptElem);
     });
-}
-
-function getVideoPlayers() {
-    return document.getElementsByClassName("embedded-video");
 }
 
 function getMetaValue(name) {

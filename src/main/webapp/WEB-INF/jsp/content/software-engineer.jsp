@@ -38,9 +38,11 @@
     <jsp:param name="build" value="Maven on Jenkins"/>
     <jsp:param name="env" value="Tomcat and Jetty on Amazon EC2"/>
 </jsp:include>
-<div class="embedded-video">
-    ${brazeniteGpt}
-</div>
+
+<jsp:include page="../widgets/video-player.jsp">
+    <jsp:param name="id" value="brazenite-gpt-video"/>
+    <jsp:param name="iframe" value="${brazeniteGpt}"/>
+</jsp:include>
 
 <hr>
 
@@ -65,9 +67,11 @@
     <jsp:param name="build" value="Gradle"/>
     <jsp:param name="env" value="IntelliJ"/>
 </jsp:include>
-<div class="embedded-video">
-    ${treeOfUsages}
-</div>
+
+<jsp:include page="../widgets/video-player.jsp">
+    <jsp:param name="id" value="tree-of-usages-video"/>
+    <jsp:param name="iframe" value="${treeOfUsages}"/>
+</jsp:include>
 
 <hr>
 
