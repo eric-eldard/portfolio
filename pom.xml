@@ -138,6 +138,7 @@
                                 <resource>
                                     <directory>src/main/resources</directory>
                                     <includes>
+                                        <include>deploy.sh</include>
                                         <include>run.sh</include>
                                     </includes>
                                 </resource>
@@ -162,6 +163,7 @@
                 <configuration>
                     <basedir>${project.build.directory}</basedir>
                     <includes>
+                        <include>deploy.sh</include>
                         <include>run.sh</include>
                         <include>classes/application.properties</include>
                     </includes>
