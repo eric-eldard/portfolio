@@ -1,3 +1,5 @@
+fuser -k 8080/tcp
+
 json=`aws secretsmanager get-secret-value --secret-id apiVideo --query SecretString --output text`
 export API_VIDEO_KEY=`echo $json | jq -r ".apiKey"`
 
