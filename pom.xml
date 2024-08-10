@@ -167,8 +167,8 @@
                     </includes>
                     <replacements>
                         <replacement>
-                            <token>\$\{ARTIFACT_ID\}</token>
-                            <value>${project.artifactId}</value>
+                            <token>\$\{ARTIFACT_FINAL_NAME\}</token>
+                            <value>${project.build.finalName}</value>
                         </replacement>
                         <replacement>
                             <token>\$\{ARTIFACT_VERSION\}</token>

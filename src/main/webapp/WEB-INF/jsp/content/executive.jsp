@@ -59,9 +59,10 @@
 <p>
     Here's an example from a 6-video series I did on being an IntelliJ power user.
 </p>
-<div class="embedded-video">
-    ${intellijPostfix}
-</div>
+<jsp:include page="../widgets/video-player.jsp">
+    <jsp:param name="id" value="intellij-postfix-video"/>
+    <jsp:param name="iframe" value="${intellijPostfix}"/>
+</jsp:include>
 
 <hr>
 
@@ -79,6 +80,7 @@
     I cut this video of the presentations, along with some B-roll, to share our
     engineers' hard work and enthusiasm with the whole company.
 </p>
-<div class="embedded-video">
-    ${hackathon}
-</div>
+<jsp:include page="../widgets/video-player.jsp">
+    <jsp:param name="id" value="hackathon-video"/>
+    <jsp:param name="iframe" value="${hackathon}"/>
+</jsp:include>
