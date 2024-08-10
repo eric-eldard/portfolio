@@ -120,10 +120,6 @@ th, td {
     color: #aaa;
 }
 
-.lock {
-  font-size: 14px;
-}
-
 .new-user-controls {
     display: flex;
     justify-content: space-between;

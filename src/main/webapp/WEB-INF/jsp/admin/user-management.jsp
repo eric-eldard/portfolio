@@ -116,7 +116,7 @@
                 <td>
                     ${user.lockedOn}
                     <c:if test="${user.lockedOn != null}">
-                        <a href="javascript: unlockUser(${user.id}, '${user.username}');" class="emoji-silhouette lock" title="Unlock">&#128275;</a>
+                        <a href="javascript: unlockUser(${user.id}, '${user.username}');" class="emoji-silhouette" title="Unlock">&#128275;</a>
                     </c:if>
                 </td>
                 <td class="binary-field" onclick="toggleUser(${user.id})" title="${user.enabled ? 'Disable' : 'Enable'}">
