@@ -41,9 +41,11 @@
     instrumenting their most critical endpoints and pushing metrics into Google BigQuery. The teams then built Sigma
     dashboards on top of that data, allowing them to begin their standups with a health check of their products.
 </p>
-<div id="osc-doc" class="embedded-doc">
-    <iframe src="/portfolio/assets/documents/Operational-Success-Flow.pdf#navpanes=0&view=Fit" allowfullscreen></iframe>
-</div>
+<jsp:include page="../widgets/embedded-doc.jsp">
+    <jsp:param name="id" value="osc-doc"/>
+    <jsp:param name="file" value="Operational-Success-Flow.pdf"/>
+    <jsp:param name="fitOverride" value="Fit"/>
+</jsp:include>
 
 <hr>
 
