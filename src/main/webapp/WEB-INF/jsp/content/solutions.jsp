@@ -35,9 +35,10 @@
 <p class="disclaimer">
     [Partner information anonymized]
 </p>
-<div id="partner-doc" class="embedded-doc">
-    <iframe src="/portfolio/assets/documents/Partner-Integration.pdf#navpanes=0&view=FitH" allowfullscreen></iframe>
-</div>
+<jsp:include page="../widgets/embedded-doc.jsp">
+    <jsp:param name="id" value="partner-doc"/>
+    <jsp:param name="file" value="Partner-Integration.pdf"/>
+</jsp:include>
 
 <hr>
 
@@ -67,9 +68,10 @@
     points in the Brazen candidate journey would provide the highest value for integration. I produced both this YC
     version and a multi-level GC version, which can be easier to digest for folks unfamiliar with your system.
 </p>
-<div id="dfd-doc" class="embedded-doc">
-    <iframe src="/portfolio/assets/documents/Candidate-and-Job-Data-Flows.pdf#navpanes=0&view=FitH" allowfullscreen></iframe>
-</div>
+<jsp:include page="../widgets/embedded-doc.jsp">
+    <jsp:param name="id" value="dfd-doc"/>
+    <jsp:param name="file" value="Candidate-and-Job-Data-Flows.pdf"/>
+</jsp:include>
 
 <hr>
 
@@ -78,6 +80,7 @@
     I put this flowchart together for a customer who was looking to better understand the interplay of several advanced
     features of our event sign-up flow. The use of screenshots here helps tie abstract concepts to our more familiar ui.
 </p>
-<div id="flowchart-doc" class="embedded-doc">
-    <iframe src="/portfolio/assets/documents/Event-Capacity-Flow.pdf#navpanes=0&view=FitH" allowfullscreen></iframe>
-</div>
+<jsp:include page="../widgets/embedded-doc.jsp">
+    <jsp:param name="id" value="flowchart-doc"/>
+    <jsp:param name="file" value="Event-Capacity-Flow.pdf"/>
+</jsp:include>
