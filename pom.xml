@@ -133,10 +133,10 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <outputDirectory>${project.build.directory}/scripts</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/main/resources</directory>
+                                    <directory>scripts</directory>
                                     <includes>
                                         <include>deploy.sh</include>
                                         <include>run.sh</include>
@@ -163,8 +163,8 @@
                 <configuration>
                     <basedir>${project.build.directory}</basedir>
                     <includes>
-                        <include>deploy.sh</include>
-                        <include>run.sh</include>
+                        <include>scripts/deploy.sh</include>
+                        <include>scripts/run.sh</include>
                         <include>classes/application.properties</include>
                     </includes>
                     <replacements>
