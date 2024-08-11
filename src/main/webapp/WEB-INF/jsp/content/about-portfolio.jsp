@@ -17,13 +17,13 @@
     <jsp:param name="env" value="Amazon EC2, Amazon Secrets Manager"/>
 </jsp:include>
 
-<jsp:include page="../widgets/solo-screenshot.jsp" >
+<jsp:include page="../widgets/screenshot-solo.jsp" >
     <jsp:param name="path" value="/portfolio/assets/images/screenshots/portfolio-hosting-infra.png"/>
     <jsp:param name="altText" value="Portfolio Hosting Infrastructure diagram"/>
 </jsp:include>
 
 <h3>Admin-only user management</h3>
-<jsp:include page="../widgets/solo-screenshot.jsp" >
+<jsp:include page="../widgets/screenshot-solo.jsp" >
     <jsp:param name="path" value="/portfolio/assets/images/screenshots/portfolio-user-management.png"/>
     <jsp:param name="altText" value="Admin-only user management features screenshot"/>
     <jsp:param name="classes" value="white-border"/>

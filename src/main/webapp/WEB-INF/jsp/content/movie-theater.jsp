@@ -42,7 +42,7 @@
     application to track hundreds of expenditures, generate previously-handwritten reports, and help make
     financial projections. Leveraging available technology has always been one of my strengths.
 </p>
-<jsp:include page="../widgets/solo-screenshot.jsp">
+<jsp:include page="../widgets/screenshot-solo.jsp">
     <jsp:param name="path" value="/portfolio/assets/images/screenshots/Budget-Buddy.png"/>
     <jsp:param name="altText" value="Budget Buddy (Excel w/ VBA) screenshot"/>
 </jsp:include>
@@ -65,7 +65,7 @@
     have, your operating hours, and much more. With all of these dimensions, I was in the midst of studying chess AI
     when I left the theater business, in hopes to one day get our weekly showtime schedule to write itself.
 </p>
-<jsp:include page="../widgets/solo-screenshot.jsp" >
+<jsp:include page="../widgets/screenshot-solo.jsp" >
     <jsp:param name="path" value="/portfolio/assets/images/screenshots/usher-schedule.png"/>
     <jsp:param name="altText" value="Usher Schedules (Excel w/ VBA) screenshot"/>
 </jsp:include>

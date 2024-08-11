@@ -8,7 +8,7 @@
 
     <body>
         <div id="main">
-            <jsp:include page="widgets/title-subtitle.jsp"/>
+            <jsp:include page="content/title-subtitle.jsp"/>
 
             <div class="content">
                 <div class="intro-heading">Get to know me as a...</div>

@@ -10,7 +10,7 @@
     </head>
     <body>
         <div id="main">
-            <jsp:include page="widgets/title-subtitle.jsp"/>
+            <jsp:include page="content/title-subtitle.jsp"/>
 
             <div class="content">
                 <div class="intro-heading">What can we build together?</div>
