@@ -86,7 +86,7 @@
     exactly when my changes were released to production.
 </p>
 
-<jsp:include page="../widgets/solo-screenshot.jsp" >
+<jsp:include page="../widgets/screenshot-solo.jsp" >
     <jsp:param name="path" value="/portfolio/assets/images/screenshots/plugin-db-improvements.png"/>
     <jsp:param name="altText" value="Plugin performance improvement graphs"/>
 </jsp:include>

@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<%-- An input field for PortfolioUser#authorizedUntil which allows for both date and infinite-time selections. --%>
+
 <div class="authorization-container">
     <div id="forever-auth-${user.id}" ${user.authorizedUntil == null ? "" : "style='display: none'"}>
         <i>forever</i>

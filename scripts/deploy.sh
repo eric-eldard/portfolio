@@ -1,14 +1,16 @@
-ROOT=/opt/portfolio
-USER=portfolio-app
+ROOT="/opt/portfolio"
+USER="portfolio-app"
+ARTIFACT="${ARTIFACT_FINAL_NAME}.war" # This can be set by maven during a build or provided as an env prop
 
-GREEN="\e[1;92m"
-YELLOW="\e[33m"
-MAGENTA="\e[35m"
-CYAN="\e[36m"
-WHITE="\e[1;97m"
+YELLOW="\e[0;93m"
+MAGENTA="\e[0;95m"
+CYAN="\e[0;96m"
+WHITE="\e[0;97m"
+BOLD_GREEN="\e[1;92m"
+BOLD_WHITE="\e[1;97m"
 RESET="\e[0m"
 
-printf "\n${WHITE}Deploying Portfolio App${RESET}\n\n"
+printf "\n${BOLD_WHITE}Deploying Portfolio App${RESET}\n\n"
 
 if [[ ! -d $ROOT ]]
 then
@@ -16,8 +18,8 @@ then
   sudo mkdir $ROOT
 fi
 
-printf "Moving ${YELLOW}${ARTIFACT_FINAL_NAME}.war${RESET} to ${CYAN}${ROOT}/${RESET}...\n"
-sudo mv ~/${ARTIFACT_FINAL_NAME}.war $ROOT
+printf "Moving ${YELLOW}${ARTIFACT}${RESET} to ${CYAN}${ROOT}/${RESET}...\n"
+sudo mv ~/${ARTIFACT} $ROOT
 
 printf "Moving ${YELLOW}run.sh${RESET} to ${CYAN}${ROOT}/${RESET}...\n"
 sudo mv ~/run.sh $ROOT
@@ -41,5 +43,5 @@ fi
 printf "Changing ownership of ${CYAN}${ROOT}${RESET} to user ${MAGENTA}${USER}${RESET}...\n"
 sudo chown -R $USER $ROOT
 
-printf "\n${GREEN}Portfolio app successfully deployed.${RESET}\n\n"
+printf "\n${BOLD_GREEN}Portfolio app successfully deployed.${RESET}\n\n"
 printf "To run, execute ${YELLOW}run.sh${RESET} from ${CYAN}${ROOT}${RESET} as user ${MAGENTA}${USER}${RESET}\n\n"

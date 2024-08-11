@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%-- A widget for displaying various project specs. All inputs are optional and hidden when not provided. --%>
+
 <table class="specs">
     <c:if test="${param.frontend ne null}">
     <tr>

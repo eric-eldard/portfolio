@@ -216,12 +216,20 @@ img.solo {
 
 
 @media screen and (min-width: 1100px) {
-    .header, .content {
+    .content, .header {
         width: 900px;
     }
 
     .content > div {
     	margin-left: 50px;
     	margin-right: 50px;
+    }
+
+    #popup .screenshot.solo {
+        width: 70%;
+    }
+
+    #popup .screenshot.grid1and3 {
+        width: 85%;
     }
 }

@@ -12,12 +12,15 @@
     <jsp:param name="database" value="Oracle Database 10g XE"/>
     <jsp:param name="env" value="Oracle WebLogic 11g"/>
 </jsp:include>
-<div class="screenshot grid1and3">
-    <a href="/portfolio/assets/images/screenshots/nile2.png" target="_blank"><img src="/portfolio/assets/images/screenshots/nile2.png" alt="Nile Shopping App screenshot"></a>
-    <a href="/portfolio/assets/images/screenshots/nile0.png" target="_blank"><img src="/portfolio/assets/images/screenshots/nile0.png" alt="Nile Shopping App screenshot"></a>
-    <a href="/portfolio/assets/images/screenshots/nile3.png" target="_blank"><img src="/portfolio/assets/images/screenshots/nile3.png" alt="Nile Shopping App screenshot"></a>
-    <a href="/portfolio/assets/images/screenshots/nile4.png" target="_blank"><img src="/portfolio/assets/images/screenshots/nile4.png" alt="Nile Shopping App screenshot"></a>
-</div>
+
+<jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
+    <jsp:param name="id" value="nile-shopping-screenshots"/>
+    <jsp:param name="centerImage" value="/portfolio/assets/images/screenshots/nile2.png"/>
+    <jsp:param name="galleryImg1" value="/portfolio/assets/images/screenshots/nile0.png"/>
+    <jsp:param name="galleryImg2" value="/portfolio/assets/images/screenshots/nile3.png"/>
+    <jsp:param name="galleryImg3" value="/portfolio/assets/images/screenshots/nile4.png"/>
+    <jsp:param name="altText" value="Nile Shopping App screenshot"/>
+</jsp:include>
 
 <hr>
 
@@ -36,12 +39,15 @@
     <jsp:param name="build" value="Ant"/>
     <jsp:param name="env" value="Oracle WebLogic 11g"/>
 </jsp:include>
-<div class="screenshot grid1and3 columns70_30">
-    <a href="/portfolio/assets/images/screenshots/oat1.png" target="_blank"><img src="/portfolio/assets/images/screenshots/oat1.png" alt="Online Assessment Tool screenshot"></a>
-    <a href="/portfolio/assets/images/screenshots/oat0.png" target="_blank"><img src="/portfolio/assets/images/screenshots/oat0.png" alt="Online Assessment Tool screenshot"></a>
-    <a href="/portfolio/assets/images/screenshots/oat6.png" target="_blank"><img src="/portfolio/assets/images/screenshots/oat6.png" alt="Online Assessment Tool screenshot"></a>
-    <a href="/portfolio/assets/images/screenshots/oat4.png" target="_blank"><img src="/portfolio/assets/images/screenshots/oat4.png" alt="Online Assessment Tool screenshot"></a>
-</div>
+
+<jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
+    <jsp:param name="id" value="oat-screenshots"/>
+    <jsp:param name="centerImage" value="/portfolio/assets/images/screenshots/oat1.png"/>
+    <jsp:param name="galleryImg1" value="/portfolio/assets/images/screenshots/oat0.png"/>
+    <jsp:param name="galleryImg2" value="/portfolio/assets/images/screenshots/oat6.png"/>
+    <jsp:param name="galleryImg3" value="/portfolio/assets/images/screenshots/oat4.png"/>
+    <jsp:param name="altText" value="Online Assessment Tool screenshot"/>
+</jsp:include>
 
 <hr>
 
@@ -50,11 +56,11 @@
     During my training, I created a flashcard application serving JSPs out of a simple servlet, which I maintained for
     myself and my classmates until the conclusion of the program.
 </p>
-<div>
-    <div class="screenshot grid1and3">
-        <a href="/portfolio/assets/images/screenshots/flashcard0.png" target="_blank"><img src="/portfolio/assets/images/screenshots/flashcard0.png" alt="Flashcard App screenshot"></a>
-        <a href="/portfolio/assets/images/screenshots/flashcard2.png" target="_blank"><img src="/portfolio/assets/images/screenshots/flashcard2.png" alt="Flashcard App screenshot"></a>
-        <a href="/portfolio/assets/images/screenshots/flashcard3.png" target="_blank"><img src="/portfolio/assets/images/screenshots/flashcard3.png" alt="Flashcard App screenshot"></a>
-        <a href="/portfolio/assets/images/screenshots/flashcard4.png" target="_blank"><img src="/portfolio/assets/images/screenshots/flashcard4.png" alt="Flashcard App screenshot"></a>
-    </div>
-</div>
+<jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
+    <jsp:param name="id" value="flashcard-screenshots"/>
+    <jsp:param name="centerImage" value="/portfolio/assets/images/screenshots/flashcard0.png"/>
+    <jsp:param name="galleryImg1" value="/portfolio/assets/images/screenshots/flashcard2.png"/>
+    <jsp:param name="galleryImg2" value="/portfolio/assets/images/screenshots/flashcard3.png"/>
+    <jsp:param name="galleryImg3" value="/portfolio/assets/images/screenshots/flashcard4.png"/>
+    <jsp:param name="altText" value="Flashcard App screenshot"/>
+</jsp:include>

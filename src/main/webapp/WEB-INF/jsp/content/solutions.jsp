@@ -54,7 +54,7 @@
     developers@brazen.com, assisting our customers' tech folks as they built their integrations. I love building tools
     for other devs to build cool stuff!
 </p>
-<jsp:include page="../widgets/solo-screenshot.jsp" >
+<jsp:include page="../widgets/screenshot-solo.jsp" >
     <jsp:param name="path" value="/portfolio/assets/images/screenshots/brazen-dev-resources.png"/>
     <jsp:param name="altText" value="Brazen Developer Resources screenshot"/>
 </jsp:include>
