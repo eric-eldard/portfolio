@@ -114,3 +114,19 @@ function ensureNotPopupState() {
         history.pushState("", "", window.location.pathname + window.location.search);
     }
 }
+
+function cycleFontColors(containerId, rBegin, gBegin, bBegin, rEnd, gEnd, bEnd) {
+    const container = document.getElementById(containerId);
+    const text = container.innerText;
+    const rIncrement = (rEnd - rBegin) / (text.length - 1);
+    const gIncrement = (gEnd - gBegin) / (text.length - 1);
+    const bIncrement = (bEnd - bBegin) / (text.length - 1);
+    let outputHTML = "";
+    for (let i = 0; i < text.length; i++) {
+        const red   = rBegin + Math.round(rIncrement * i);
+        const green = gBegin + Math.round(gIncrement * i);
+        const blue  = bBegin + Math.round(bIncrement * i);
+        outputHTML += `<span style="color: rgb(${red}, ${green}, ${blue})">${text.charAt(i)}</span>`;
+    }
+    container.innerHTML = outputHTML;
+}
