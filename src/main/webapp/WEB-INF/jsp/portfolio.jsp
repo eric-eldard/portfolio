@@ -10,7 +10,7 @@
         <div id="main">
             <jsp:include page="widgets/title-subtitle.jsp"/>
 
-            <div class="intro">
+            <div class="content">
                 <div class="intro-heading">Get to know me as a...</div>
                 <jsp:include page="content/timeline.jsp"/>
                 <jsp:include page="content/footer.jsp"/>
@@ -18,7 +18,7 @@
 
         </div>
 
-        <div id="dialog" onclick="closePopup()">
+        <div id="popup-background" onclick="closePopup()">
             <div id="popup" onclick="event.stopPropagation()"></div>
         </div>
 

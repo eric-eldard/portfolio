@@ -4,7 +4,8 @@
         <meta name="author" content="Eric Eldard">
         <meta name="description" content="Eric Eldard's Digital Portfolio">
         <meta name="keywords" content="Eric Eldard, portfolio, engineer, web designer, programmer, developer">
-        <meta name="version" content="${version}"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="version" content="${version}">
 
         <link rel="apple-touch-icon" sizes="180x180" href="/public/assets/images/icons/favicon/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/public/assets/images/icons/favicon/favicon-32x32.png">

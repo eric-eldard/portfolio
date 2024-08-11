@@ -1,3 +1,7 @@
+a {
+    color: #555;
+}
+
 .connect-li:hover {
     color: #0A66C2;
 }
@@ -6,26 +10,17 @@
     filter: saturate(1);
 }
 
-.have-password:hover {
-    color: #b00;
-}
-
-.intro {
+.content {
     padding-bottom: 20px;
 }
 
-a {
-    color: #555;
-    font-weight: bold;
-}
-
-a:hover {
-    color: #b00;
-}
-
-.intro a.link-card {
+.content a.link-card {
     font-weight: 300;
     line-height: 125%;
+}
+
+.have-password:hover {
+    color: #b00;
 }
 
 .intro-text p {
@@ -58,6 +53,7 @@ a:hover {
 .link-container {
     display: flex;
     flex-wrap: wrap;
+    gap: 10px;
     justify-content: space-around;
 }
 

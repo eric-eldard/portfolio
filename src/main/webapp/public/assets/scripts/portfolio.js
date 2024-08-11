@@ -7,9 +7,9 @@ function retrieveAndShowContent(path) {
 
 //Show the content pop-up and populate w/ content
 function showPopup(content) {
-    const main   = document.getElementById("main");
-    const dialog = document.getElementById("dialog");
-    const popup  = document.getElementById("popup");
+    const main       = document.getElementById("main");
+    const background = document.getElementById("popup-background");
+    const popup      = document.getElementById("popup");
 
     const innerHTML = `
         <div id="closeX">
@@ -20,7 +20,10 @@ function showPopup(content) {
 
     setInnerHTML(popup, innerHTML);
 
-    dialog.style.display = "block";
+    main.style.overflow = "hidden";
+    main.style.position = "fixed";
+    background.style.display = "block";
+
     setTimeout(function() {
         popup.style.width = "80%";
         popup.scrollTop = 0;
@@ -28,10 +31,18 @@ function showPopup(content) {
 }
 
 function closePopup() {
-    video.destroyAllPlayers();
+    const main       = document.getElementById("main");
+    const background = document.getElementById("popup-background");
+    const popup      = document.getElementById("popup");
+
     popup.style.width = "0px";
+    main.style.overflow = "unset";
+    main.style.position = "unset";
+
+    video.destroyAllPlayers();
+
     setTimeout(function() {
-        dialog.style.display = "none";
+        background.style.display = "none";
         popup.innerHTML = "";
     }, 300);
 }
