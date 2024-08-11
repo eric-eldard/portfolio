@@ -12,7 +12,7 @@
         <div id="main">
             <jsp:include page="widgets/title-subtitle.jsp"/>
 
-            <div class="intro">
+            <div class="content">
                 <div class="intro-heading">What can we build together?</div>
                 <jsp:include page="content/intro.jsp"/>
 
