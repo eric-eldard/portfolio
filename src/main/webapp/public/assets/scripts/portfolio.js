@@ -1,3 +1,6 @@
+const popupOpenParam = "#popup";
+const popstateListener = (event) => closePopup();
+
 // Retrieve content and display it in the popup
 function retrieveAndShowContent(path) {
     fetch("content/" + path)
@@ -27,6 +30,11 @@ function showPopup(content) {
     setTimeout(function() {
         popup.style.width = "80%";
         popup.scrollTop = 0;
+
+        // Add listener for (mobile) back button, and push an extra frame onto history, so the
+        // back button can be used to close the popup without navigating away from the page
+        history.pushState({ popupStatus : "open"}, "", popupOpenParam);
+        window.addEventListener("popstate", popstateListener);
     }, 100);
 }
 
@@ -34,6 +42,11 @@ function closePopup() {
     const main       = document.getElementById("main");
     const background = document.getElementById("popup-background");
     const popup      = document.getElementById("popup");
+
+    window.removeEventListener("popstate", popstateListener);
+    if (isPopupState()) {
+        history.back();
+    }
 
     popup.style.width = "0px";
     main.style.overflow = "unset";
@@ -90,4 +103,14 @@ function makeRequestOptions(method, body) {
         },
         ...(hasBody ? {body: JSON.stringify(body)} : {})
     };
+}
+
+function isPopupState() {
+    return window.location.hash === popupOpenParam;
+}
+
+function ensureNotPopupState() {
+    if (isPopupState()) {
+        history.pushState("", "", window.location.pathname + window.location.search);
+    }
 }
