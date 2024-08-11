@@ -30,4 +30,4 @@ export SPRING_DATASOURCE_PASSWORD=`echo $json | jq -r ".password"`
 printf "Starting ${YELLOW}${ARTIFACT}${RESET}...\n"
 nohup java -jar ${ARTIFACT} > logs/output.log 2>&1 &
 
-printf "\n${BOLD_GREEN}Portfolio app has started.${RESET} It may take up to 30 seconds for ${WHITE}Spring${RESET} to serve requests.\n\n"
+printf "\n${BOLD_GREEN}Portfolio app has started.${RESET} It may take up to ${WHITE}30 seconds for Spring${RESET} to serve requests.\n\n"

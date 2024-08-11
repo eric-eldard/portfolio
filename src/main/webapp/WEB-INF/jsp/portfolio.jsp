@@ -6,7 +6,7 @@
         <jsp:include page="widgets/headers.jsp"/>
     </head>
 
-    <body>
+    <body onload="ensureNotPopupState()">
         <div id="main">
             <jsp:include page="content/title-subtitle.jsp"/>
 
