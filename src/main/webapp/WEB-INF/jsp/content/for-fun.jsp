@@ -4,8 +4,8 @@
     }
 
     #cycling-font-colors .iframe {
-        height: 188px;
-        width: 590px !important;
+        height: 200px;
+        width: 600px !important;
     }
 
     #cycling-font-colors .iframe iframe {
@@ -68,7 +68,8 @@
 
 <h2><span id="fontColorsTitle">Cycling Font Colors</span></h2>
 <p>
-    I saw this effect on another website and thought it would be a fun thing to build a tool for.<br><span id="back2back1">To get the colors </span><span id="back2back2">to truly cycle, </span><span id="back2back3">put opposite stri</span><span id="back2back4">ngs back-to-back.</span>
+    I saw this effect on another website and thought it would be a fun thing to build a tool for.<br>
+    <span id="back2back1">To get the colors to </span><span id="back2back2">fully cycle back and </span><span id="back2back3">forth, put opposite </span><span id="back2back4">strings back-to-back.</span>
 </p>
 <div id="cycling-font-colors">
     <div class="iframe">
@@ -76,33 +77,14 @@
     </div>
 </div>
 
+<c:set var="red" value="${red}"/>
+<c:set var="green" value="${green}"/>
+<c:set var="blue" value="${blue}"/>
+
 <script>
-    var cyclingFontColors = (function () {
-        return {
-            cycle: function (insertElement, rBegin, rEnd, gBegin, gEnd, bBegin, bEnd) {
-                var text = insertElement.innerHTML;
-                var rIncrement = (rEnd - rBegin) / (text.length - 1);
-                var gIncrement = (gEnd - gBegin) / (text.length - 1);
-                var bIncrement = (bEnd - bBegin) / (text.length - 1);
-                var outputHTML = "";
-                for(i = 0; i < text.length; i++) {
-                    red = rBegin + Math.round(rIncrement * i);
-                    green = gBegin + Math.round(gIncrement * i);
-                    blue = bBegin + Math.round(bIncrement * i);
-                    outputHTML += "<span style='color: rgb(" + red + "," + green + "," + blue + ");'>" + text.charAt(i) + "</span>";
-                }
-                insertElement.innerHTML = outputHTML;
-            },
-
-            cyclePageContent: function() {
-                this.cycle(fontColorsTitle, 255, 0, 0, 0, 0, 255);
-                this.cycle(back2back1, 0, 0, 0, 128, 255, 0);
-                this.cycle(back2back2, 0, 0, 128, 0, 0, 255);
-                this.cycle(back2back3, 0, 0, 0, 128, 255, 0);
-                this.cycle(back2back4, 0, 0, 128, 0, 0, 255);
-            }
-        }
-    })();
-
-    cyclingFontColors.cyclePageContent();
+    cycleFontColors("fontColorsTitle", 255, 0, 0, 0, 0, 255);
+    cycleFontColors("back2back1", 0, 128, 255, 0, 192, 0);
+    cycleFontColors("back2back2", 0, 192, 0, 0, 128, 255);
+    cycleFontColors("back2back3", 0, 128, 255, 0, 192, 0);
+    cycleFontColors("back2back4", 0, 192, 0, 0, 128, 255);
 </script>
