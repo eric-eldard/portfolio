@@ -119,6 +119,10 @@ function ensureNotPopupState() {
     }
 }
 
+function setFrameSrc(frameElemId, src) {
+    document.getElementById(frameElemId).contentWindow.location.replace(src);
+}
+
 function cycleFontColors(containerId, rBegin, gBegin, bBegin, rEnd, gEnd, bEnd) {
     const container = document.getElementById(containerId);
     const text = container.innerText;
