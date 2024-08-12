@@ -6,5 +6,5 @@
     <a href="https://www.linkedin.com/in/ericeldard/" target="_blank" class="linkedin">
         <img src="/public/assets/images/third-party/linkedin.png" alt="LinkedIn">
     </a>
-    <a href="/">Home</a>
+    <a href="/" id="footer-home-link">Home</a>
 </div>
