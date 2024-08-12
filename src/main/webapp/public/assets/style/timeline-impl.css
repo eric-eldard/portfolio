@@ -1,5 +1,4 @@
 .content .timeline {
-    margin-bottom: 24px;
     margin-left: unset;
     margin-right: unset;
 }
@@ -92,6 +91,7 @@
 
 @media screen and (min-width: 475px) {
     .content .timeline {
+        margin-bottom: 24px;
         margin-left: auto;
         margin-right: auto;
     }
