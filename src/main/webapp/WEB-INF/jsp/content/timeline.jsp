@@ -1,5 +1,5 @@
 <div>
-    <div class="timeline center">
+    <div class="timeline">
         <div class="timeline-events">
             <a href="javascript: retrieveAndShowContent('movie-theater')" class="timeline-event">&#x25cf;</a>
             <a href="javascript: retrieveAndShowContent('training-projects')" class="timeline-event">&#x25cf;</a>

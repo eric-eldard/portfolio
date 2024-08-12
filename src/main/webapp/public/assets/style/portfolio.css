@@ -113,6 +113,10 @@ button, input[type=checkbox], label {
 	filter: brightness(0%);
 }
 
+.content .footer #footer-home-link {
+    display: none;
+}
+
 .details {
 	display: inline-block;
 	opacity: 0;
@@ -238,5 +242,11 @@ img.solo {
 
     #popup .screenshot.grid1and3 {
         width: 85%;
+    }
+}
+
+@media screen and (min-width: 475px) {
+    .content .footer #footer-home-link {
+        display: unset;
     }
 }
