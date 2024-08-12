@@ -3,7 +3,14 @@
         overflow-x: scroll;
     }
 
+    #cycling-font-colors a {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     #cycling-font-colors .iframe {
+        display: none;
         height: 200px;
         width: 600px !important;
     }
@@ -43,6 +50,16 @@
         height: 183px;
         object-fit: cover;
         object-position: 0 1%;
+    }
+
+    @media screen and (min-width: 750px) {
+        #cycling-font-colors a {
+            display: none;
+        }
+
+        #cycling-font-colors .iframe {
+            display: block;
+        }
     }
 
     @media screen and (min-width: 1100px) {
@@ -109,14 +126,13 @@
     <span id="back2back1">To get the colors to </span><span id="back2back2">fully cycle back and </span><span id="back2back3">forth, put opposite </span><span id="back2back4">strings back-to-back.</span>
 </p>
 <div id="cycling-font-colors">
+    <jsp:include page="../widgets/open-in-new-tab.jsp">
+        <jsp:param name="href" value="/portfolio/assets/projects/Cycling_Font_Colors/index.html"/>
+    </jsp:include>
     <div class="iframe">
         <iframe src="/portfolio/assets/projects/Cycling_Font_Colors/index.html"></iframe>
     </div>
 </div>
-
-<c:set var="red" value="${red}"/>
-<c:set var="green" value="${green}"/>
-<c:set var="blue" value="${blue}"/>
 
 <script>
     cycleFontColors("fontColorsTitle", 255, 0, 0, 0, 0, 255);
