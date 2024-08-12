@@ -23,8 +23,10 @@ function showPopup(content) {
 
     setInnerHTML(popup, innerHTML);
 
-    main.style.overflow = "hidden";
-    main.style.position = "fixed";
+    // TODO ERIC position=fixed causing resizing of main content when popup open
+    // main.style.overflow = "hidden";
+    // main.style.position = "fixed";
+
     background.style.display = "block";
 
     setTimeout(function() {
@@ -49,8 +51,10 @@ function closePopup() {
     }
 
     popup.style.width = "0px";
-    main.style.overflow = "unset";
-    main.style.position = "unset";
+
+    // TODO ERIC position=fixed causing resizing of main content when popup open
+    // main.style.overflow = "unset";
+    // main.style.position = "unset";
 
     video.destroyAllPlayers();
 

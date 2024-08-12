@@ -55,7 +55,7 @@
 </p>
 <p>
     <a href="https://www.eric-eldard.com/mtg/docs/mtg.js.html" target="_blank" class="link-out">
-        Check out the source
+        Check out the JSDoc
     </a>
 </p>
 <div id="mtg">
