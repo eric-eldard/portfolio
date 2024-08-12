@@ -13,12 +13,13 @@
 .iframe:after {
 	bottom: 5px;
 	content: "iframe";
-
+    font-weight: normal;
 }
 
 .screenshot a:after {
 	bottom: 3px;
 	content: "Screenshot";
+	font-weight: normal;
 	transition: background-color 0.3s, opacity 0.3s;
 }
 

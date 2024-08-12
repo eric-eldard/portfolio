@@ -6,7 +6,7 @@
             <a href="javascript: retrieveAndShowContent('software-engineer')" class="timeline-event">&#x25cf;</a>
             <a href="javascript: retrieveAndShowContent('solutions')" class="timeline-event">&#x25cf;</a>
             <a href="javascript: retrieveAndShowContent('executive')" class="timeline-event">&#x25cf;</a>
-            <a href="javascript: retrieveAndShowContent('for-fun')" class="timeline-event">&#x25cf;</a>
+            <a href="javascript: retrieveAndShowContent('hobby')" class="timeline-event">&#x25cf;</a>
             <a href="javascript: retrieveAndShowContent('about-portfolio')" class="timeline-event">&#x25cf;</a>
         </div>
         <div class="timeline-dates">

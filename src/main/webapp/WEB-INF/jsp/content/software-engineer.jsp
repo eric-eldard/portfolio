@@ -22,6 +22,9 @@
     was worth a year-and-a-half to two anywhere else.
 </p>
 <p>
+    As a dev, I believe in writing code that is secure, readable, extensible, and efficient&mdash;in that order.
+</p>
+<p>
     Below is a little example of some of my Brazen work. In 2023, I was attached to a small tiger team, along with our
     VP of Marketing and our Data Engineering Manager, to experiment with both how we could include generative AI into
     our platform and how we could get AI tools into the hands of our team members. In a week, I put together a sample

@@ -78,7 +78,13 @@
 
 <h2>Steganography</h2>
 <p>
-    My Java utility <b>steganos</b> provides tools for simple text-in-image steganography by subtly encoding the bits of a message into the color channels of an image. This is useful for watermarking or passing messages in plain sight.
+    My Java utility <b>steganos</b> provides tools for simple text-in-image
+    <jsp:include page="../widgets/link-out.jsp">
+        <jsp:param name="text" value="steganography"/>
+        <jsp:param name="url" value="https://en.wikipedia.org/wiki/Steganography"/>
+    </jsp:include>
+    by subtly encoding the bits of a message into the color channels of an image. This is useful for watermarking or
+    passing messages in plain sight.
 </p>
 
 <jsp:include page="../widgets/see-it-on-gh.jsp">
@@ -93,7 +99,11 @@
 </jsp:include>
 <div>
     <a href="https://github.com/eric-eldard/steganos?tab=readme-ov-file#examples" target="_blank">
-        <img id="steganos-example" class="solo" src="https://github.com/eric-eldard/steganos/raw/master/examples.png?raw=true">
+        <img id="steganos-example"
+             class="solo"
+             src="https://github.com/eric-eldard/steganos/raw/master/examples.png?raw=true"
+             alt="Link out to example output of steganos"
+        >
     </a>
 </div>
 
