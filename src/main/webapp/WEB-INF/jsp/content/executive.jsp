@@ -19,18 +19,15 @@
     I tracked the DORA metrics for Brazen Engineering, and here are some big initiatives I kicked off in order to
     improve specific deliverability and uptime stats.
 </p>
-<div class="multi-doc">
-    <div class="menu">
-        <ul>
-            <li><a href="/portfolio/assets/documents/Modularity.pdf#navpanes=0" target="brown-bag-viewer">Modularity</a></li>
-            <li><a href="/portfolio/assets/documents/Effective-Code-Reviews.pdf#navpanes=0" target="brown-bag-viewer">Effective&nbsp;Code&nbsp;Reviews</a></li>
-            <li><a href="/portfolio/assets/documents/Shift-Left.pdf#navpanes=0" target="brown-bag-viewer">Shift&nbsp;Left</a></li>
-        </ul>
-    </div>
-    <div class="document">
-        <iframe name="brown-bag-viewer" src="/portfolio/assets/documents/Modularity.pdf#navpanes=0" allowfullscreen></iframe>
-    </div>
-</div>
+<jsp:include page="../widgets/three-doc-viewer.jsp">
+    <jsp:param name="doc1Name" value="Modularity"/>
+    <jsp:param name="doc1Path" value="/portfolio/assets/documents/Modularity.pdf"/>
+    <jsp:param name="doc2Name" value="Effective&nbsp;Code&nbsp;Reviews"/>
+    <jsp:param name="doc2Path" value="/portfolio/assets/documents/Effective-Code-Reviews.pdf"/>
+    <jsp:param name="doc3Name" value="Shift&nbsp;Left"/>
+    <jsp:param name="doc3Path" value="/portfolio/assets/documents/Shift-Left.pdf"/>
+</jsp:include>
+
 <h3>Operational Success Criteria</h3>
 <p>
     Brazen Engineering always had good alarms for things that absolutely couldn't fail&mdash;like a server going down.
