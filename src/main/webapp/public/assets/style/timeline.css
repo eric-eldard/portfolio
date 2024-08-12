@@ -1,4 +1,8 @@
 .timeline {
+    margin-bottom: 50px;
+    margin-top: 50px;
+    transform: rotate(90deg);
+    transition: transform 0.75s;
 	width: 85%;
 }
 
@@ -25,6 +29,11 @@
     z-index: 99;
 }
 
+.timeline .timeline-dates span {
+    transform: rotate(-90deg);
+    transition: transform 0.75s;
+}
+
 .timeline .timeline-event {
 	width: 12px;
 }
@@ -39,6 +48,24 @@
     display: inline-block;
     font-size: 20px;
     font-weight: bold;
-	transform: rotate(-45deg);
-	transform-origin: -14px 0px;
+	transform: rotate(-90deg);
+	transform-origin: -15px 5px;
+	transition: transform 0.75s;
+}
+
+@media screen and (min-width: 475px) {
+    .timeline {
+        margin-bottom: unset;
+        margin-top: unset;
+        transform: rotate(0deg);
+    }
+
+    .timeline .timeline-dates span {
+        transform: rotate(0deg);
+    }
+
+    .timeline .timeline-events a:after {
+        transform: rotate(-45deg);
+        transform-origin: -14px 0px;
+    }
 }
