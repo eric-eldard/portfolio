@@ -1,4 +1,5 @@
 .timeline {
+    padding-right: 30px;
 	width: 85%;
 }
 
@@ -41,4 +42,10 @@
     font-weight: bold;
 	transform: rotate(-45deg);
 	transform-origin: -14px 0px;
+}
+
+@media screen and (min-width: 475px) {
+    .timeline {
+        padding-right: 0;
+    }
 }
