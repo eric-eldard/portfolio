@@ -12,7 +12,7 @@
     <name>Eric Eldard Portfolio</name>
     <groupId>com.eric_eldard</groupId>
     <artifactId>portfolio</artifactId>
-    <version>0.5.3-beta</version>
+    <version>0.5.5-prerelease</version>
     <packaging>war</packaging>
 
     <properties>

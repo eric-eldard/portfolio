@@ -5,6 +5,9 @@ import org.springframework.core.io.Resource;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Utilities for working with classpath resources
+ */
 public interface ClasspathService
 {
     /**

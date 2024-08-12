@@ -123,6 +123,7 @@ public class PortfolioUser implements UserDetails
     /**
      * @return {@link #loginAttempts} sorted in descending {@link LoginAttempt#timestamp} order
      */
+    @Transient
     public List<LoginAttempt> getLoginAttemptsSorted()
     {
         return loginAttempts.stream()

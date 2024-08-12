@@ -1,5 +1,11 @@
 package com.eric_eldard.portfolio.service.video;
 
+import lombok.Getter;
+
+/**
+ * IDs of embeddable videos hosted by the video vendor
+ */
+@Getter
 public enum EmbeddableVideo
 {
     BRAZENITE_GPT("vi5Y7abhpi19t5srd5e1dQmF"),
@@ -12,10 +18,5 @@ public enum EmbeddableVideo
     EmbeddableVideo(String id)
     {
         this.id = id;
-    }
-
-    public String getId()
-    {
-        return id;
     }
 }

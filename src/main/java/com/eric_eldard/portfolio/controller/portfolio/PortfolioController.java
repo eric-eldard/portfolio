@@ -43,12 +43,12 @@ public class PortfolioController implements WebMvcConfigurer
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry)
     {
-        // Expose protected assets
+        // Exposes protected assets to any authenticated user
         registry.addResourceHandler("/portfolio/assets/**")
             .addResourceLocations("classpath:" + ASSETS_PATH)
             .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
 
-        // Public assets already exposed; add caching of images
+        // Public assets already exposed; this adds cache control to public images
         registry.addResourceHandler("/public/assets/images/**")
             .addResourceLocations("/public/assets/images/")
             .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
@@ -68,6 +68,9 @@ public class PortfolioController implements WebMvcConfigurer
         return "portfolio";
     }
 
+    /**
+     * Generic endpoint for serving any JSP that has no dynamic content
+     */
     @GetMapping("/content/{content}")
     public String getStaticPortfolioContent(@PathVariable String content)
     {
@@ -102,6 +105,9 @@ public class PortfolioController implements WebMvcConfigurer
         return "content/software-engineer";
     }
 
+    /**
+     * Get a pre-baked iframe for the given video from the video vendor
+     */
     private String retrieveVideoIframe(EmbeddableVideo embeddableVideo)
     {
         String iframe;
@@ -112,7 +118,7 @@ public class PortfolioController implements WebMvcConfigurer
         catch (ApiException ex)
         {
             LOGGER.error(
-                "Unable to retrieve video {} for reason {}",
+                "Unable to retrieve video [{}] for reason [{}]",
                 embeddableVideo, ex.getMessage()
             );
             iframe = """
@@ -122,6 +128,9 @@ public class PortfolioController implements WebMvcConfigurer
         return iframe;
     }
 
+    /**
+     * Adds paths to the model for all the resources of the given type; supports preloading assets on the browser side
+     */
     private void addClasspathResources(Model model, ResourceType type)
     {
         try

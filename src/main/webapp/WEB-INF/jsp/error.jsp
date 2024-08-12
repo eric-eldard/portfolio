@@ -20,19 +20,30 @@
                 background-color: #000;
                 color: #fff;
                 font-family: Helvetica, sans-serif;
-                font-size: 18pt;
+                font-size: 20px;
             }
 
             #main {
                 margin-left: auto;
                 margin-right: auto;
                 padding: 15px;
-                width: 600px;
             }
 
             .heading {
-                font-size: 61pt;
-                margin: -7px;
+                font-size: 60px;
+                margin-bottom: 25px;
+                margin-left: -4px;
+            }
+
+            @media screen and (min-width: 600px) {
+                #main {
+                    /* creates a meaty area mid-screen for the messages, but not on mobile where the text needs to wrap */
+                    width: 600px;
+                }
+
+                .heading {
+                    font-size: 120px;
+                }
             }
         </style>
     </head>

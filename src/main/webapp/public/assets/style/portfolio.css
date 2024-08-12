@@ -32,8 +32,8 @@ button, input[type=checkbox], label {
 #main {
 	padding-top: 15px;
 	position: relative;
-	width: 100%;
 	transition: padding 1s;
+	width: 100%;
 	z-index: 1;
 }
 
@@ -216,10 +216,6 @@ img.solo {
 
 
 @media screen and (min-width: 600px) {
-    #main {
-        padding-top: 50px;
-    }
-
     .content .footer #footer-fs-resume {
         display: unset;
     }
@@ -257,6 +253,11 @@ img.solo {
 }
 
 @media screen and (min-width: 1100px) {
+    #main {
+        /* centers main content a bit more on desktop, but not in landscape mobile where it would add to scrolling */
+        padding-top: 75px;
+    }
+
     .content, .header {
         width: 900px;
     }
