@@ -10,8 +10,8 @@
 	max-width: 1100px;
 	overscroll-behavior: contain;
 	padding-bottom: 15px;
-	padding-left: 25px;
-	padding-right: 25px;
+	padding-left: 15px;
+	padding-right: 15px;
 	padding-top: 10px;
 	padding-bottom: 24px;
 	overflow-x: hidden;
@@ -19,7 +19,7 @@
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
-	transition: width 0.3s;
+	transition: padding 1s, width 0.3s;
 	width: 0px;
 }
 
@@ -86,6 +86,10 @@
 	margin-bottom: 10px;
 }
 
+#popup .specs td {
+    vertical-align: top;
+}
+
 /* Replacement for colgroup */
 #popup .specs tr td:first-child {
 	font-weight: bold;
@@ -119,6 +123,13 @@
 	z-index: 1000;
 }
 
+
+@media screen and (min-width: 600px) {
+    #popup {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+}
 
 @media screen and (min-width: 1100px) {
     #popup .screenshot.solo {

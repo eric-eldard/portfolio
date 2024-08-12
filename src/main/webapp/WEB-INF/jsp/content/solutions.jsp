@@ -23,7 +23,11 @@
 </p>
 <p>
     This is a role I would play a good deal as Brazen became part of the Radancy product suite, and we designed how we
-    would integrate into the rest of the stack over the 2 years.
+    would integrate into the rest of the stack over the first 2 years.
+</p>
+<p>
+    As a provider of solutions, I believe in clean, attractive visuals. Putting in time upfront to ensure quality
+    alleviates confusion and saves time for your audience when they're trying to absorb a new concept.
 </p>
 
 <h2>Brazen Partner Integration</h2>
@@ -31,7 +35,7 @@
     In 2022, Brazen worked with a major job board to use Brazen Virtual Events as the interview component of their
     hiring funnel. After consulting with their product and tech folks on the need, I put together this interactive
     sequence diagram, illustrating the fastest path to achieving this integration. This really helped to advance our
-    conversation. I know reading someone else's plan daunting, which is why I believe in clean, attractive visuals.
+    conversation.
 </p>
 <p class="disclaimer">
     [Partner information anonymized]
@@ -46,14 +50,14 @@
 <h2>developers.brazen.com</h2>
 <p>
     <jsp:include page="../widgets/link-out.jsp">
-        <jsp:param name="url" value="https://developers.brazen.com/"/>
         <jsp:param name="text" value="Brazen Developer Resources"/>
+        <jsp:param name="url" value="https://developers.brazen.com/"/>
     </jsp:include>
     advertises all the ways our customers and partners could integrate with us. This portal was created and maintained
     by me and one of my long-time Brazen collaborators. It showcases some solutions I helped build from the ground-up,
     like our customer-facing RESTful API, our XML job feeds, and our embeddable chat plugin. I also staffed
     developers@brazen.com, assisting our customers' tech folks as they built their integrations. I love building tools
-    for other devs to build cool stuff!
+    that facilitate other devs building cool stuff!
 </p>
 <jsp:include page="../widgets/screenshot-solo.jsp" >
     <jsp:param name="path" value="/portfolio/assets/images/screenshots/brazen-dev-resources.png"/>
