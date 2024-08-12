@@ -4,6 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
+/**
+ * Application entry point
+ */
 @SpringBootApplication(
     scanBasePackages = "com.eric_eldard.portfolio",
     exclude = SecurityAutoConfiguration.class

@@ -1,10 +1,10 @@
 package com.eric_eldard.portfolio;
 
+import com.eric_eldard.portfolio.logging.AddUserToMdcFilter;
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import com.eric_eldard.portfolio.service.user.PortfolioUserServiceImpl;
 import com.eric_eldard.portfolio.service.user.SecurityContextService;
-import org.slf4j.MDC;
 import org.springframework.boot.web.servlet.server.CookieSameSiteSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,12 +21,10 @@ import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.header.writers.CrossOriginResourcePolicyHeaderWriter;
 
 import javax.inject.Inject;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import java.io.IOException;
 
+/**
+ * Master context config for security, logging, and beans for which creation order prevents a circular dependency.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -43,6 +41,9 @@ public class GlobalConfig
     {
         this.securityContextService = securityContextService;
         passwordEncoder = new BCryptPasswordEncoder();
+
+        // Creating this bean here, instead of annotating its class for component scan, avoids a circular dependency
+        // with GlobalConfig and PasswordEncoder,
         portfolioUserDetailsService =
             new PortfolioUserServiceImpl(passwordEncoder, portfolioUserRepo, securityContextService);
     }
@@ -94,7 +95,7 @@ public class GlobalConfig
                     .and()
                 .and()
             .securityContext((securityContext) -> securityContext.requireExplicitSave(true))
-            .addFilterAfter(this::addUserToMdc, SecurityContextHolderFilter.class);
+            .addFilterAfter(new AddUserToMdcFilter(securityContextService), SecurityContextHolderFilter.class);
 
         return httpSecurity.build();
     }
@@ -104,23 +105,5 @@ public class GlobalConfig
         AuthenticationManagerBuilder builder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
         builder.userDetailsService(portfolioUserDetailsService).passwordEncoder(passwordEncoder);
         return builder.build();
-    }
-
-    private void addUserToMdc(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-        throws IOException, ServletException
-    {
-        try
-        {
-            String username = securityContextService.getCurrentUsersNameNullable();
-            if (username != null)
-            {
-                MDC.put("username", username);
-            }
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
-        finally
-        {
-            MDC.remove("username");
-        }
     }
 }

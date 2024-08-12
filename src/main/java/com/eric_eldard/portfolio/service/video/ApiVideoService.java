@@ -10,6 +10,9 @@ import video.api.client.api.models.Video;
 
 import javax.inject.Inject;
 
+/**
+ * An {@link EmbeddableVideo} implementation for working with <a href="https://api.video/">api.video</a>
+ */
 @Service
 public class ApiVideoService implements EmbeddableVideoService
 {
