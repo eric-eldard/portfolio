@@ -59,7 +59,6 @@
 #popup iframe {
     border: 0;
     border-radius: 10px;
-    display: block
 }
 
 #popup p {
@@ -75,6 +74,10 @@
     filter: invert(1);
     height: 19px;
     margin-left: 2px;
+}
+
+#popup .screenshot.grid1and3 {
+    width: 99%;
 }
 
 /* A table for listing project specs */
@@ -114,4 +117,15 @@
 	top: 0px;
 	width: 100%;
 	z-index: 1000;
+}
+
+
+@media screen and (min-width: 1100px) {
+    #popup .screenshot.solo {
+        width: 90%;
+    }
+
+    #popup .screenshot.grid1and3 {
+        width: 90%;
+    }
 }

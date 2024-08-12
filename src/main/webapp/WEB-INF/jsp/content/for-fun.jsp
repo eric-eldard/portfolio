@@ -13,6 +13,10 @@
         width: 100%;
     }
 
+    #mtg {
+        display: none;
+    }
+
     #mtg .iframe {
         height: 550px;
         width: 90% !important;
@@ -21,6 +25,35 @@
     #mtg .iframe iframe {
         height: 100%;
         width: 100%;
+    }
+
+    #mtg-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        height: 50px;
+        justify-content: space-around;
+    }
+
+    #mtg-links * {
+      align-self: center;
+    }
+
+    #steganos-example {
+        height: 183px;
+        object-fit: cover;
+        object-position: 0 1%;
+    }
+
+    @media screen and (min-width: 1100px) {
+        #mtg {
+            display: block;
+        }
+
+        #mtg-links {
+            height: 60px;
+            margin-top: -10px;
+        }
     }
 </style>
 
@@ -43,7 +76,7 @@
 </jsp:include>
 <div>
     <a href="https://github.com/eric-eldard/steganos?tab=readme-ov-file#examples" target="_blank">
-        <img class="solo" style="height: 200px; object-fit: cover; object-position: 0 1%;" src="https://github.com/eric-eldard/steganos/raw/master/examples.png?raw=true">
+        <img id="steganos-example" class="solo" src="https://github.com/eric-eldard/steganos/raw/master/examples.png?raw=true">
     </a>
 </div>
 
@@ -53,11 +86,15 @@
 <p>
     I was hoping to get my fianc&eacute;e to try out the trading card game Magic: The Gathering, so I put this player aid together for her. It's just a simple html page. But as I wrote it, I got tired of constantly creating anchor tags to reference back to other parts of the aid. I ended up writing myself a little wiki-style linking library, allowing me to auto-link from tags like <span class="mono">[creature]</span> and <span class="mono">[Untap|tapping]</span>.
 </p>
-<p>
-    <a href="https://www.eric-eldard.com/mtg/docs/mtg.js.html" target="_blank" class="link-out">
-        Check out the JSDoc
-    </a>
-</p>
+<div id="mtg-links">
+    <jsp:include page="../widgets/open-in-new-tab.jsp">
+        <jsp:param name="href" value="https://www.eric-eldard.com/mtg/"/>
+    </jsp:include>
+    <jsp:include page="../widgets/open-in-new-tab.jsp">
+        <jsp:param name="text" value="Check out the JSDoc"/>
+        <jsp:param name="href" value="https://www.eric-eldard.com/mtg/docs/mtg.js.html"/>
+    </jsp:include>
+</div>
 <div id="mtg">
     <div class="iframe">
         <iframe src="https://www.eric-eldard.com/mtg/"></iframe>

@@ -14,7 +14,7 @@
     <jsp:param name="database" value="MySQL in Amazon RDS"/>
     <jsp:param name="versioning" value="GitHub"/>
     <jsp:param name="build" value="Maven"/>
-    <jsp:param name="env" value="Amazon EC2, Amazon Secrets Manager"/>
+    <jsp:param name="env" value="Amazon EC2"/>
 </jsp:include>
 
 <jsp:include page="../widgets/screenshot-solo.jsp" >

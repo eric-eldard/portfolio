@@ -92,6 +92,11 @@
 @media screen and (min-width: 475px) {
     .content .timeline {
         margin-bottom: 24px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .content .timeline {
         margin-left: auto;
         margin-right: auto;
     }

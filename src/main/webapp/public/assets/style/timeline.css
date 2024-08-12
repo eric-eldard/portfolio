@@ -1,6 +1,6 @@
 .timeline {
-    margin-bottom: 50px;
-    margin-top: 50px;
+    margin-bottom: 40px;
+    margin-top: 40px;
     transform: rotate(90deg);
     transition: transform 0.75s;
 	width: 85%;

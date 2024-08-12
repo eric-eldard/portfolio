@@ -6,13 +6,31 @@
     }
 
     #mtc .iframe {
+        display: none;
         height: 765px;
-        width: 1045px;
+        width: 1040px;
+    }
+
+    #mtc a {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
     }
 
     #mtc .iframe iframe {
         height: 100%;
         width: 100%;
+    }
+
+    @media screen and (min-width: 1300px) {
+        #mtc .iframe {
+            display: block;
+        }
+
+        #mtc a {
+            display: none;
+        }
     }
 </style>
 
@@ -27,6 +45,9 @@
     [Modules with proprietary info have been removed]
 </p>
 <div id="mtc">
+    <jsp:include page="../widgets/open-in-new-tab.jsp">
+        <jsp:param name="href" value="/portfolio/assets/projects/MTC/ManagementTrainingCenter.html"/>
+    </jsp:include>
     <div class="iframe">
         <iframe src="/portfolio/assets/projects/MTC/ManagementTrainingCenter.html"></iframe>
     </div>

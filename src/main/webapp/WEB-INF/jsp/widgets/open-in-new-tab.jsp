@@ -1,0 +1,1 @@
+<a href="${param.href}" target="_blank" class="link-out new-tab">${param.text eq null ? "Open in new tab" : param.text}</a>

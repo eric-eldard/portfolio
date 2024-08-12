@@ -17,7 +17,6 @@
 .screenshot.grid1and3 {
     grid-template-columns: 75% 25%;
     grid-template-rows: repeat(3, 1fr);
-    width: 100%;
 }
 
 .screenshot.grid1and3 :nth-child(1) {

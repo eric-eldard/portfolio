@@ -1,15 +1,16 @@
 <style>
     #flowchart-doc {
         aspect-ratio: 128 / 69;
-        width: 95%;
     }
 
-    #dfd-doc {
-        height: 575px;
-    }
+    @media screen and (min-width: 600px) {
+        #dfd-doc, #partner-doc {
+            height: 575px;
+        }
 
-    #partner-doc {
-        height: 575px;
+        #flowchart-doc {
+            height: 550px;
+        }
     }
 </style>
 
@@ -35,7 +36,7 @@
 <p class="disclaimer">
     [Partner information anonymized]
 </p>
-<jsp:include page="../widgets/embedded-doc.jsp">
+<jsp:include page="../widgets/embedded-doc-solo.jsp">
     <jsp:param name="id" value="partner-doc"/>
     <jsp:param name="file" value="Partner-Integration.pdf"/>
 </jsp:include>
@@ -68,7 +69,7 @@
     points in the Brazen candidate journey would provide the highest value for integration. I produced both this YC
     version and a multi-level GC version, which can be easier to digest for folks unfamiliar with your system.
 </p>
-<jsp:include page="../widgets/embedded-doc.jsp">
+<jsp:include page="../widgets/embedded-doc-solo.jsp">
     <jsp:param name="id" value="dfd-doc"/>
     <jsp:param name="file" value="Candidate-and-Job-Data-Flows.pdf"/>
 </jsp:include>
@@ -80,7 +81,7 @@
     I put this flowchart together for a customer who was looking to better understand the interplay of several advanced
     features of our event sign-up flow. The use of screenshots here helps tie abstract concepts to our more familiar ui.
 </p>
-<jsp:include page="../widgets/embedded-doc.jsp">
+<jsp:include page="../widgets/embedded-doc-solo.jsp">
     <jsp:param name="id" value="flowchart-doc"/>
     <jsp:param name="file" value="Event-Capacity-Flow.pdf"/>
 </jsp:include>
