@@ -33,21 +33,21 @@ a {
     border-radius: 10px;
     display: block;
     font-size: 18px;
-    margin: 15px 0;
     padding: 15px 0;
     text-align: center;
     transition:
         box-shadow 0.25s,
         color 0.25s,
-        margin-left 0.25s,
-        margin-top 0.25s;
+        margin 0.25s;
     width: 325px;
 }
 
 .link-card:hover {
     box-shadow: 2px 2px 4px #444;
+    margin-bottom: 1px;
     margin-left: -1px;
-    margin-top: 14px;
+    margin-right: 1px;
+    margin-top: -1px;
 }
 
 .link-container {
@@ -59,4 +59,16 @@ a {
 
 .linkedin img {
     transition: filter 0.25s;
+}
+
+@media screen and (min-width: 745px) {
+    .link-card {
+        margin-bottom: 15px;
+        margin-top: 15px;
+    }
+
+    .link-card:hover {
+        margin-bottom: 16px;
+        margin-top: 14px;
+    }
 }

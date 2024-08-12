@@ -65,7 +65,6 @@ button, input[type=checkbox], label {
     padding: 15px;
     padding-bottom: 0px;
     vertical-align: middle;
-    width: 95%;
     white-space: normal;
 }
 
@@ -132,18 +131,17 @@ button, input[type=checkbox], label {
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    width: 95%;
 }
 
 .header-title {
     font-size: 64px;
-    left: -5px;
+    left: 17px;
     position: relative;
 }
 
 .header-subtitle {
     font-size: 24px;
-    left: -1px;
+    left: 21px;
     position: relative;
 }
 
@@ -224,6 +222,14 @@ img.solo {
     .content > div {
     	margin-left: 50px;
     	margin-right: 50px;
+    }
+
+    .header-title {
+        left: -5px;
+    }
+
+    .header-subtitle {
+        left: -1px;
     }
 
     #popup .screenshot.solo {
