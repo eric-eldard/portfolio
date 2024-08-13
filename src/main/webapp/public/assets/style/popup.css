@@ -20,7 +20,11 @@
 	top: 50%;
 	transform: translateY(-50%);
 	transition: padding 1s, width 0.3s;
-	width: 0px;
+	width: 0;
+}
+
+#popup.open {
+    width: 85%;
 }
 
 #popup a {
@@ -47,18 +51,6 @@
 	margin-top: 36px;
 	height: 0px;
 	width: 80%;
-}
-
-#popup div.iframe {
-    border: 0;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-}
-
-#popup iframe {
-    border: 0;
-    border-radius: 10px;
 }
 
 #popup p {
@@ -123,11 +115,19 @@
 	z-index: 1000;
 }
 
+#popup-background.open {
+    display: block;
+}
+
 
 @media screen and (min-width: 600px) {
     #popup {
         padding-left: 25px;
         padding-right: 25px;
+    }
+
+    #popup.open {
+        width: 80%;
     }
 }
 

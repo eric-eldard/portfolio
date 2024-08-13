@@ -18,13 +18,13 @@
 </jsp:include>
 
 <jsp:include page="../widgets/screenshot-solo.jsp" >
-    <jsp:param name="path" value="/portfolio/assets/images/screenshots/portfolio-hosting-infra.png"/>
-    <jsp:param name="altText" value="Portfolio Hosting Infrastructure diagram"/>
+    <jsp:param name="path" value="portfolio-hosting-infra.png"/>
+    <jsp:param name="description" value="Portfolio Hosting Infrastructure diagram"/>
 </jsp:include>
 
 <h3>Admin-only user management</h3>
 <jsp:include page="../widgets/screenshot-solo.jsp" >
-    <jsp:param name="path" value="/portfolio/assets/images/screenshots/portfolio-user-management.png"/>
-    <jsp:param name="altText" value="Admin-only user management features screenshot"/>
+    <jsp:param name="path" value="portfolio-user-management.png"/>
+    <jsp:param name="description" value="Admin-only user management features"/>
     <jsp:param name="classes" value="white-border"/>
 </jsp:include>

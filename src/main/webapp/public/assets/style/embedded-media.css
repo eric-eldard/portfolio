@@ -1,29 +1,56 @@
-/* Video */
+/* Iframe, PDF, Video */
+.embedded-doc,
+.embedded-iframe,
 .embedded-video {
-    aspect-ratio: 16 / 9;
     margin-left: auto;
     margin-right: auto;
+    overflow: hidden;
+    position: relative;
+    transition: border-radius 1.5s;
+}
+
+.embedded-doc {
     width: 100%;
 }
 
-/* PDF */
-.embedded-doc {
-    height: 20px; /* Default height for "Open in new tab" link; set explicit screen-width>600px height per doc */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.embedded-doc a {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-}
-
-.embedded-doc iframe {
+.embedded-doc .iframe {
     display: none;
+    width: 100%;
+}
+
+.embedded-doc .iframe:after {
+    display: none; /* don't show "iframe" label over pdf doc viewer */
+}
+
+.embedded-doc .iframe div,
+.embedded-doc .iframe div iframe,
+.embedded-iframe .iframe div,
+.embedded-iframe .iframe div iframe {
+    border: 0;
     height: 100%;
     width: 100%;
+}
+
+.embedded-doc .screenshot a:after {
+    content: "Open PDF";
+}
+
+.embedded-iframe {
+    width: fit-content;
+}
+
+.embedded-iframe .iframe {
+    display: none;
+    width: fit-content;
+}
+
+.embedded-iframe .screenshot a:after {
+    content: "Open in new tab";
+}
+
+.embedded-video {
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
 }
 
 /* Multi-PDF viewer */
@@ -55,36 +82,40 @@
 }
 
 .multi-doc .document {
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 64 / 41;
     display: none;
     flex-grow: 1;
 }
 
 .multi-doc .document iframe {
+    border: 0;
+    border-radius: 10px;
     height: 100%;
     width: 100%;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 800px) {
     .embedded-doc {
-        width: 100%;
+        border-radius: 10px;
     }
 
-    .embedded-doc a {
-        display: none;
-    }
-
-    .embedded-doc iframe {
+    .embedded-doc .iframe {
         display: block;
+    }
+
+    .embedded-doc .screenshot {
+        display: none;
     }
 }
 
 @media screen and (min-width: 1100px) {
-    .embedded-doc, .embedded-video {
+    .embedded-doc,
+    .embedded-video {
         width: 90%;
     }
 
-    .multi-doc .menu, .multi-doc .document {
+    .multi-doc .menu,
+    .multi-doc .document {
         display: block;
     }
 

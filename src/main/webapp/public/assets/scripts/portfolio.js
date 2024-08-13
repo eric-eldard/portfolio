@@ -27,10 +27,10 @@ function showPopup(content) {
     // main.style.overflow = "hidden";
     // main.style.position = "fixed";
 
-    background.style.display = "block";
+    background.classList.add("open");
 
     setTimeout(function() {
-        popup.style.width = "80%";
+        popup.classList.add("open");
         popup.scrollTop = 0;
 
         // Add listener for (mobile) back button, and push an extra frame onto history, so the
@@ -50,7 +50,7 @@ function closePopup() {
         history.back();
     }
 
-    popup.style.width = "0px";
+    popup.classList.remove("open");
 
     // TODO ERIC position=fixed causing resizing of main content when popup open
     // main.style.overflow = "unset";
@@ -59,7 +59,7 @@ function closePopup() {
     video.destroyAllPlayers();
 
     setTimeout(function() {
-        background.style.display = "none";
+        background.classList.remove("open");
         popup.innerHTML = "";
     }, 300);
 }

@@ -1,34 +1,19 @@
 <style>
-    #mtc {
-        margin-left: auto;
-        margin-right: auto;
-        overflow-x: scroll;
-    }
-
     #mtc .iframe {
-        display: none;
         height: 765px;
         width: 1040px;
     }
 
-    #mtc a {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 20px;
-    }
-
-    #mtc .iframe iframe {
-        height: 100%;
-        width: 100%;
-    }
-
     @media screen and (min-width: 1300px) {
+        #mtc {
+            border-radius: 10px;
+        }
+
         #mtc .iframe {
             display: block;
         }
 
-        #mtc a {
+        #mtc .screenshot {
             display: none;
         }
     }
@@ -44,14 +29,12 @@
 <p class="disclaimer">
     [Modules with proprietary info have been removed]
 </p>
-<div id="mtc">
-    <jsp:include page="../widgets/open-in-new-tab.jsp">
-        <jsp:param name="href" value="/portfolio/assets/projects/MTC/ManagementTrainingCenter.html"/>
-    </jsp:include>
-    <div class="iframe">
-        <iframe src="/portfolio/assets/projects/MTC/ManagementTrainingCenter.html"></iframe>
-    </div>
-</div>
+<jsp:include page="../widgets/embedded-iframe.jsp">
+    <jsp:param name="id" value="mtc"/>
+    <jsp:param name="description" value="Management Training Center"/>
+    <jsp:param name="path" value="MTC/ManagementTrainingCenter.html"/>
+    <jsp:param name="backupImg" value="MTC.png"/>
+</jsp:include>
 
 <hr>
 
@@ -64,8 +47,8 @@
     financial projections. Leveraging available technology has always been one of my strengths.
 </p>
 <jsp:include page="../widgets/screenshot-solo.jsp">
-    <jsp:param name="path" value="/portfolio/assets/images/screenshots/Budget-Buddy.png"/>
-    <jsp:param name="altText" value="Budget Buddy (Excel w/ VBA) screenshot"/>
+    <jsp:param name="path" value="Budget-Buddy.png"/>
+    <jsp:param name="description" value="Budget Buddy (Excel w/ VBA)"/>
 </jsp:include>
 
 <hr>
@@ -87,6 +70,6 @@
     when I left the theater business, in hopes to one day get our weekly showtime schedule to write itself.
 </p>
 <jsp:include page="../widgets/screenshot-solo.jsp" >
-    <jsp:param name="path" value="/portfolio/assets/images/screenshots/usher-schedule.png"/>
-    <jsp:param name="altText" value="Usher Schedules (Excel w/ VBA) screenshot"/>
+    <jsp:param name="path" value="usher-schedule.png"/>
+    <jsp:param name="description" value="Usher Schedules (Excel w/ VBA)"/>
 </jsp:include>

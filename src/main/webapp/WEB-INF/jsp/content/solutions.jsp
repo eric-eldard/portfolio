@@ -1,14 +1,14 @@
 <style>
-    #flowchart-doc {
+    #flowchart-doc .iframe {
         aspect-ratio: 128 / 69;
     }
 
     @media screen and (min-width: 600px) {
-        #dfd-doc, #partner-doc {
+        #dfd-doc .iframe, #partner-doc .iframe {
             height: 575px;
         }
 
-        #flowchart-doc {
+        #flowchart-doc .iframe {
             height: 550px;
         }
     }
@@ -42,7 +42,9 @@
 </p>
 <jsp:include page="../widgets/embedded-doc-solo.jsp">
     <jsp:param name="id" value="partner-doc"/>
-    <jsp:param name="file" value="Partner-Integration.pdf"/>
+    <jsp:param name="path" value="Partner-Integration.pdf"/>
+    <jsp:param name="backupImg" value="Partner-Integration.png"/>
+    <jsp:param name="description" value="Partner Integration Sequence Diagram"/>
 </jsp:include>
 
 <hr>
@@ -51,7 +53,7 @@
 <p>
     <jsp:include page="../widgets/link-out.jsp">
         <jsp:param name="text" value="Brazen Developer Resources"/>
-        <jsp:param name="url" value="https://developers.brazen.com/"/>
+        <jsp:param name="href" value="https://developers.brazen.com/"/>
     </jsp:include>
     advertises all the ways our customers and partners could integrate with us. This portal was created and maintained
     by me and one of my long-time Brazen collaborators. It showcases some solutions I helped build from the ground-up,
@@ -60,8 +62,8 @@
     that facilitate other devs building cool stuff!
 </p>
 <jsp:include page="../widgets/screenshot-solo.jsp" >
-    <jsp:param name="path" value="/portfolio/assets/images/screenshots/brazen-dev-resources.png"/>
-    <jsp:param name="altText" value="Brazen Developer Resources screenshot"/>
+    <jsp:param name="path" value="brazen-dev-resources.png"/>
+    <jsp:param name="description" value="Brazen Developer Resources"/>
 </jsp:include>
 
 <hr>
@@ -75,7 +77,9 @@
 </p>
 <jsp:include page="../widgets/embedded-doc-solo.jsp">
     <jsp:param name="id" value="dfd-doc"/>
-    <jsp:param name="file" value="Candidate-and-Job-Data-Flows.pdf"/>
+    <jsp:param name="path" value="Candidate-and-Job-Data-Flows.pdf"/>
+    <jsp:param name="backupImg" value="Candidate-and-Job-Data-Flows.png"/>
+    <jsp:param name="description" value="Candidate and Job Data Flow Diagram"/>
 </jsp:include>
 
 <hr>
@@ -87,5 +91,7 @@
 </p>
 <jsp:include page="../widgets/embedded-doc-solo.jsp">
     <jsp:param name="id" value="flowchart-doc"/>
-    <jsp:param name="file" value="Event-Capacity-Flow.pdf"/>
+    <jsp:param name="path" value="Event-Capacity-Flow.pdf"/>
+    <jsp:param name="backupImg" value="Event-Capacity-Flow.png"/>
+    <jsp:param name="description" value="Event Capacity Flowchart"/>
 </jsp:include>

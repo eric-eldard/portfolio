@@ -50,7 +50,7 @@
     font-weight: bold;
 	transform: rotate(-90deg);
 	transform-origin: -15px 5px;
-	transition: transform 0.75s;
+	transition: transform 0.75s, color 0.25s;
 }
 
 
@@ -81,6 +81,6 @@
 
     .timeline .timeline-events a:after {
         transform: rotate(-45deg);
-        transform-origin: -14px 0px;
+        transform-origin: -14px 0;
     }
 }

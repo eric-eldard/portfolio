@@ -176,12 +176,6 @@ button, input[type=checkbox], label {
     font-family: Consolas, monospace;
 }
 
-.new-tab {
-    font-size: 18px;
-    text-wrap: nowrap;
-    width: fit-content;
-}
-
 .screenshot a {
 	position: relative;
 }

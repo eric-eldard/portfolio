@@ -11,13 +11,13 @@
         I joined the startup
         <jsp:include page="../widgets/link-out.jsp">
             <jsp:param name="text" value="Brazen Technologies"/>
-            <jsp:param name="url" value="https://resources.brazen.com/get-brazen"/>
+            <jsp:param name="href" value="https://resources.brazen.com/get-brazen"/>
         </jsp:include>
         in 2013 as a junior engineer and helped build our best-in-class virtual event and hiring SaaS platform from
         scratch. By the time of our 2023 sale into the
         <jsp:include page="../widgets/link-out.jsp">
             <jsp:param name="text" value="Radancy Talent Cloud"/>
-            <jsp:param name="url" value="https://www.radancy.com/en/radancy-acquires-brazen-adding-award-winning-hiring-event-capabilities-to-the-end-to-end-radancy-talent-acquisition-cloud/"/>
+            <jsp:param name="href" value="https://www.radancy.com/en/radancy-acquires-brazen-adding-award-winning-hiring-event-capabilities-to-the-end-to-end-radancy-talent-acquisition-cloud/"/>
         </jsp:include>, I'd been Brazen's Vice President of Engineering for 2 years. The outcome of multiple rounds of
         technical diligence, completed by Brazen's Chief Technology Officer and myself, was cited as a key factor in our
         acquisition. I stayed on into mid-2024 to help ensure a successful transition into our new parent company,

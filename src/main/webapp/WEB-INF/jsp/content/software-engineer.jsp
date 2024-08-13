@@ -91,6 +91,6 @@
 </p>
 
 <jsp:include page="../widgets/screenshot-solo.jsp" >
-    <jsp:param name="path" value="/portfolio/assets/images/screenshots/plugin-db-improvements.png"/>
-    <jsp:param name="altText" value="Plugin performance improvement graphs"/>
+    <jsp:param name="path" value="plugin-db-improvements.png"/>
+    <jsp:param name="description" value="Plugin performance improvement graphs"/>
 </jsp:include>

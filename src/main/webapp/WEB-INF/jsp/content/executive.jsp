@@ -1,35 +1,3 @@
-<style>
-    #osc-doc {
-        aspect-ratio: 128 / 81;
-        height: 20px;
-    }
-
-    /* Override embedded-doc settings so osc-doc disappears at the same width as the multi-doc viewer */
-    @media screen and (min-width: 600px) {
-        #osc-doc a {
-            display: block;
-        }
-
-        #osc-doc iframe {
-            display: none;
-        }
-    }
-
-    @media screen and (min-width: 1100px) {
-         #osc-doc {
-            height: 625px;
-        }
-
-        #osc-doc a {
-            display: none;
-        }
-
-        #osc-doc iframe {
-            display: block;
-        }
-    }
-</style>
-
 <h1>Executive Work</h1>
 <p>
     As Brazen's Vice President of Engineering, I was responsible for the quality of the product which engineers turned
@@ -68,10 +36,9 @@
     their most critical endpoints and pushing metrics into Google BigQuery. The teams then built Sigma dashboards on top
     of that data, allowing them to begin their standups with a health check of their products.
 </p>
-<jsp:include page="../widgets/embedded-doc-solo.jsp">
-    <jsp:param name="id" value="osc-doc"/>
-    <jsp:param name="file" value="Operational-Success-Flow.pdf"/>
-    <jsp:param name="fitOverride" value="Fit"/>
+<jsp:include page="../widgets/screenshot-solo.jsp" >
+    <jsp:param name="path" value="Operational-Success-Flow.png"/>
+    <jsp:param name="description" value="Flowchart for Operational Success Criteria initiative"/>
 </jsp:include>
 
 <hr>

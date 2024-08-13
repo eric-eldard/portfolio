@@ -2,12 +2,19 @@
     A 4 screenshot gallery with 1 central image and 3 in the right gutter.
     Hovering on the gutter images causes them to be shown in the central slot.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="basedir" value="${param.basedir eq null ? '/portfolio/assets/images/screenshots' : param.basedir}"/>
+<c:set var="centerImg" value="${basedir}/${param.centerImage}"/>
+<c:set var="img1" value="${basedir}/${param.galleryImg1}"/>
+<c:set var="img2" value="${basedir}/${param.galleryImg2}"/>
+<c:set var="img3" value="${basedir}/${param.galleryImg3}"/>
+<c:set var="altText" value="${param.description} screenshot (click to open)"/>
 
 <div class="screenshot grid1and3" id="${param.id}">
-    <a href="${param.centerImage}" target="_blank"><img src="${param.centerImage}" alt="${param.altText}"></a>
-    <a href="${param.galleryImg1}" target="_blank"><img src="${param.galleryImg1}" alt="${param.altText}"></a>
-    <a href="${param.galleryImg2}" target="_blank"><img src="${param.galleryImg2}" alt="${param.altText}"></a>
-    <a href="${param.galleryImg3}" target="_blank"><img src="${param.galleryImg3}" alt="${param.altText}"></a>
+    <a href="${centerImg}" target="_blank"><img src="${centerImg}" alt="${altText}"></a>
+    <a href="${img1}" target="_blank"><img src="${img1}" alt="${altText}"></a>
+    <a href="${img2}" target="_blank"><img src="${img2}" alt="${altText}"></a>
+    <a href="${img3}" target="_blank"><img src="${img3}" alt="${altText}"></a>
 </div>
 
 <script>
@@ -24,7 +31,7 @@
     <%-- When center image is moused-over, return to original --%>
     document.getElementById("${param.id}").children[0].addEventListener("mouseover", (event) => {
         const centerImage = document.getElementById("${param.id}").children[0].children[0];
-        centerImage.src = "${param.centerImage}";
+        centerImage.src = "${centerImg}";
      });
 
     <%--
@@ -33,6 +40,6 @@
     --%>
     document.getElementById("${param.id}").addEventListener("mouseleave", (event) => {
         const centerImage = document.getElementById("${param.id}").children[0].children[0];
-        centerImage.src = "${param.centerImage}";
+        centerImage.src = "${centerImg}";
      });
 </script>
