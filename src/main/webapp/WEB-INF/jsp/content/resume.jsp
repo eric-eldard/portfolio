@@ -4,5 +4,5 @@
 
 <jsp:include page="../widgets/embedded-doc-solo.jsp">
     <jsp:param name="id" value="resume-doc"/>
-    <jsp:param name="file" value=""/>
+    <jsp:param name="path" value=""/>
 </jsp:include>

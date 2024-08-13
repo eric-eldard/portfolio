@@ -15,11 +15,11 @@
 
 <jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
     <jsp:param name="id" value="nile-shopping-screenshots"/>
-    <jsp:param name="centerImage" value="/portfolio/assets/images/screenshots/nile2.png"/>
-    <jsp:param name="galleryImg1" value="/portfolio/assets/images/screenshots/nile0.png"/>
-    <jsp:param name="galleryImg2" value="/portfolio/assets/images/screenshots/nile3.png"/>
-    <jsp:param name="galleryImg3" value="/portfolio/assets/images/screenshots/nile4.png"/>
-    <jsp:param name="altText" value="Nile Shopping App screenshot"/>
+    <jsp:param name="centerImage" value="nile2.png"/>
+    <jsp:param name="galleryImg1" value="nile0.png"/>
+    <jsp:param name="galleryImg2" value="nile3.png"/>
+    <jsp:param name="galleryImg3" value="nile4.png"/>
+    <jsp:param name="description" value="Nile Shopping App"/>
 </jsp:include>
 
 <hr>
@@ -42,11 +42,11 @@
 
 <jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
     <jsp:param name="id" value="oat-screenshots"/>
-    <jsp:param name="centerImage" value="/portfolio/assets/images/screenshots/oat1.png"/>
-    <jsp:param name="galleryImg1" value="/portfolio/assets/images/screenshots/oat0.png"/>
-    <jsp:param name="galleryImg2" value="/portfolio/assets/images/screenshots/oat6.png"/>
-    <jsp:param name="galleryImg3" value="/portfolio/assets/images/screenshots/oat4.png"/>
-    <jsp:param name="altText" value="Online Assessment Tool screenshot"/>
+    <jsp:param name="centerImage" value="oat1.png"/>
+    <jsp:param name="galleryImg1" value="oat0.png"/>
+    <jsp:param name="galleryImg2" value="oat6.png"/>
+    <jsp:param name="galleryImg3" value="oat4.png"/>
+    <jsp:param name="description" value="Online Assessment Tool"/>
 </jsp:include>
 
 <hr>
@@ -58,9 +58,9 @@
 </p>
 <jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
     <jsp:param name="id" value="flashcard-screenshots"/>
-    <jsp:param name="centerImage" value="/portfolio/assets/images/screenshots/flashcard0.png"/>
-    <jsp:param name="galleryImg1" value="/portfolio/assets/images/screenshots/flashcard2.png"/>
-    <jsp:param name="galleryImg2" value="/portfolio/assets/images/screenshots/flashcard3.png"/>
-    <jsp:param name="galleryImg3" value="/portfolio/assets/images/screenshots/flashcard4.png"/>
-    <jsp:param name="altText" value="Flashcard App screenshot"/>
+    <jsp:param name="centerImage" value="flashcard0.png"/>
+    <jsp:param name="galleryImg1" value="flashcard2.png"/>
+    <jsp:param name="galleryImg2" value="flashcard3.png"/>
+    <jsp:param name="galleryImg3" value="flashcard4.png"/>
+    <jsp:param name="description" value="Flashcard App"/>
 </jsp:include>

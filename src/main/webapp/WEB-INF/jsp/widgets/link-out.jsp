@@ -1,4 +1,4 @@
-<a href="${param.url}"
+<a href="${param.href}"
    target="_blank"
    class="link-out"
 <%-- displacement math not rendering correctly in Firefox, so this has been temporarily commented out
