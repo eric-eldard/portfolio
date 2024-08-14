@@ -1,57 +1,36 @@
 package com.eric_eldard.portfolio.controller.portfolio;
 
+import com.eric_eldard.portfolio.util.Constants;
 import com.eric_eldard.portfolio.service.classpath.ClasspathService;
+import com.eric_eldard.portfolio.service.video.EmbeddableVideo;
+import com.eric_eldard.portfolio.service.video.EmbeddableVideoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
-import org.springframework.http.CacheControl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import com.eric_eldard.portfolio.service.video.EmbeddableVideo;
-import com.eric_eldard.portfolio.service.video.EmbeddableVideoService;
 import video.api.client.api.ApiException;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("/portfolio")
-public class PortfolioController implements WebMvcConfigurer
+public class PortfolioController
 {
-    private static final String ASSETS_PATH = "/portfolio/assets/";
-
     private static final Logger LOGGER = LoggerFactory.getLogger(PortfolioController.class);
 
     private final ClasspathService classpathService;
 
     private final EmbeddableVideoService videoService;
 
-    @Inject
     public PortfolioController(ClasspathService classpathService, EmbeddableVideoService videoService)
     {
         this.classpathService = classpathService;
         this.videoService = videoService;
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry)
-    {
-        // Exposes protected assets to any authenticated user
-        registry.addResourceHandler("/portfolio/assets/**")
-            .addResourceLocations("classpath:" + ASSETS_PATH)
-            .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
-
-        // Public assets already exposed; this adds cache control to public images
-        registry.addResourceHandler("/public/assets/images/**")
-            .addResourceLocations("/public/assets/images/")
-            .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
     }
 
     @GetMapping("")
@@ -135,7 +114,7 @@ public class PortfolioController implements WebMvcConfigurer
     {
         try
         {
-            String folder = ASSETS_PATH + type.location();
+            String folder = Constants.ASSETS_PATH + type.location();
 
             List<Resource> resources =
                 classpathService.getClasspathResources("classpath:" + folder + "/*");

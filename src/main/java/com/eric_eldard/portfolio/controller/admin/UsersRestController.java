@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +22,6 @@ public class UsersRestController
 {
     private final PortfolioUserService userService;
 
-    @Inject
     public UsersRestController(PortfolioUserService userService)
     {
         this.userService = userService;

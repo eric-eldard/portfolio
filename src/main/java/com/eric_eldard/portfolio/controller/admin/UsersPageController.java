@@ -10,7 +10,6 @@ import com.eric_eldard.portfolio.model.user.PortfolioUser;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.inject.Inject;
 import java.util.List;
 
 @Controller
@@ -19,7 +18,6 @@ public class UsersPageController
 {
     private final PortfolioUserService userService;
 
-    @Inject
     public UsersPageController(PortfolioUserService userService)
     {
         this.userService = userService;

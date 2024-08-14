@@ -6,14 +6,11 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationFailureDisabledEvent;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-
 @Component
 public class AccountDisabledListener implements ApplicationListener<AuthenticationFailureDisabledEvent>
 {
     private final PortfolioUserService portfolioUserService;
 
-    @Inject
     public AccountDisabledListener(PortfolioUserService portfolioUserService)
     {
         this.portfolioUserService = portfolioUserService;

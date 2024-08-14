@@ -5,9 +5,11 @@
 
 <div id="${param.id}" class="embedded-iframe">
     <div class="screenshot">
+        <c:if test="${param.backupImg ne null}">
         <a href="${frameUrl}" target="_blank">
             <img src="${baseImgDir}/${param.backupImg}" alt="${param.description} screenshot (click to open)">
         </a>
+        </c:if>
     </div>
 
     <div class="iframe">
