@@ -12,7 +12,7 @@
     <name>Eric Eldard Portfolio</name>
     <groupId>com.eric_eldard</groupId>
     <artifactId>portfolio</artifactId>
-    <version>0.7-prerelease</version>
+    <version>0.7.1-prerelease</version>
     <packaging>war</packaging>
 
     <properties>
@@ -123,10 +123,11 @@
             </plugin>
 
             <!-- Precompile JSPs (they'll be output to WEB-INF/classes/org/apache/jsp) -->
+            <!-- https://jetty.org/docs/jetty/12/programming-guide/maven-jetty/jetty-jspc-maven-plugin.html -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-jspc-maven-plugin</artifactId>
-                <version>11.0.22</version>
+                <version>10.0.22</version>
                 <executions>
                     <execution>
                         <id>jspc</id>
