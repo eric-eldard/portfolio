@@ -4,14 +4,14 @@
 // @author       EE
 // @version      1.0
 // @description  Stop spending 10 minutes trying to figure out why your changes aren't showing up...
-// @include      /^(http:\/\/localhost:8080|https:\/\/eric-eldard.com)((?!assets).)*$/
+// @include      /^https:\/\/(local\.)?eric-eldard.com((?!assets).)*$/
 // ==/UserScript==
 
 (function() {
     'use strict';
 
     function isLocalHost() {
-        return window.location.toString().includes("localhost");
+        return window.location.toString().startsWith("https://local.");
     }
 
     let label;

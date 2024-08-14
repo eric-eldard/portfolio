@@ -70,6 +70,7 @@
 #popup .github img {
     filter: invert(1);
     height: 19px;
+    margin-bottom: -4px;
     margin-left: 2px;
 }
 

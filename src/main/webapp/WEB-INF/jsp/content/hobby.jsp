@@ -116,7 +116,7 @@
 <jsp:include page="../widgets/embedded-iframe.jsp">
     <jsp:param name="id" value="mtg"/>
     <jsp:param name="description" value="MTG Player Aid"/>
-    <jsp:param name="path" value="https://www.eric-eldard.com/mtg/index.html"/>
+    <jsp:param name="path" value="https://www.eric-eldard.com/mtg"/>
 </jsp:include>
 
 <hr>
