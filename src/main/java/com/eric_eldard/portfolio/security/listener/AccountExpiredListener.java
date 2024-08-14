@@ -6,14 +6,11 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationFailureExpiredEvent;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-
 @Component
 public class AccountExpiredListener implements ApplicationListener<AuthenticationFailureExpiredEvent>
 {
     private final PortfolioUserService portfolioUserService;
 
-    @Inject
     public AccountExpiredListener(PortfolioUserService portfolioUserService)
     {
         this.portfolioUserService = portfolioUserService;

@@ -8,8 +8,6 @@ import video.api.client.api.ApiException;
 import video.api.client.api.models.Environment;
 import video.api.client.api.models.Video;
 
-import javax.inject.Inject;
-
 /**
  * An {@link EmbeddableVideo} implementation for working with <a href="https://api.video/">api.video</a>
  */
@@ -18,7 +16,6 @@ public class ApiVideoService implements EmbeddableVideoService
 {
     private final ApiVideoClient apiVideoClient;
 
-    @Inject
     public ApiVideoService(
         @Value("${apiVideo.key}") String apiVideoKey,
         @Value("${apiVideo.env:PRODUCTION}") Environment apiVideoEnv

@@ -12,7 +12,7 @@
     <name>Eric Eldard Portfolio</name>
     <groupId>com.eric_eldard</groupId>
     <artifactId>portfolio</artifactId>
-    <version>0.6-prerelease</version>
+    <version>0.7-prerelease</version>
     <packaging>war</packaging>
 
     <properties>
@@ -119,6 +119,35 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
+                </configuration>
+            </plugin>
+
+            <!-- Precompile JSPs (they'll be output to WEB-INF/classes/org/apache/jsp) -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-jspc-maven-plugin</artifactId>
+                <version>11.0.22</version>
+                <executions>
+                    <execution>
+                        <id>jspc</id>
+                        <goals>
+                            <goal>jspc</goal>
+                        </goals>
+                        <configuration>
+                            <mergeFragment>true</mergeFragment>
+                            <sourceVersion>17</sourceVersion>
+                            <targetVersion>17</targetVersion>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Specify where the web.xml, with servlet definitions for precompiled JSPs, will be -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>${project.basedir}/target/web.xml</webXml>
                 </configuration>
             </plugin>
 

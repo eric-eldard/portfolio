@@ -1,12 +1,12 @@
 package com.eric_eldard.portfolio.service.user;
 
-import com.eric_eldard.portfolio.model.Constants;
 import com.eric_eldard.portfolio.model.user.LoginAttempt;
 import com.eric_eldard.portfolio.model.user.LoginFailureReason;
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
-import com.eric_eldard.portfolio.GlobalConfig;
+import com.eric_eldard.portfolio.config.GlobalConfig;
+import com.eric_eldard.portfolio.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

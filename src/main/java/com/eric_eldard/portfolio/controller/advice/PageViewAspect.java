@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-
 @Aspect
 @Component
 public class PageViewAspect
@@ -17,7 +15,6 @@ public class PageViewAspect
 
     private final SecurityContextService securityContextService;
 
-    @Inject
     public PageViewAspect(SecurityContextService securityContextService)
     {
         this.securityContextService = securityContextService;

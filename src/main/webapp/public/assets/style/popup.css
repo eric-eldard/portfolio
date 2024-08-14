@@ -43,6 +43,11 @@
 
 #popup h2 {
 	margin-top: 36px;
+	text-align: center;
+}
+
+#popup h3 {
+    text-align: center;
 }
 
 #popup hr {
@@ -128,6 +133,10 @@
 
     #popup.open {
         width: 80%;
+    }
+
+    #popup h2, #popup h3 {
+        text-align: left;
     }
 }
 

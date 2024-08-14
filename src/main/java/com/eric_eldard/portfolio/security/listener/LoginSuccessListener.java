@@ -5,14 +5,11 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.stereotype.Component;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 
-import javax.inject.Inject;
-
 @Component
 public class LoginSuccessListener implements ApplicationListener<AuthenticationSuccessEvent>
 {
     private final PortfolioUserService portfolioUserService;
 
-    @Inject
     public LoginSuccessListener(PortfolioUserService portfolioUserService)
     {
         this.portfolioUserService = portfolioUserService;

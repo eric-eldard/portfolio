@@ -6,14 +6,11 @@ import org.springframework.security.authentication.event.AuthenticationFailureBa
 import org.springframework.stereotype.Component;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 
-import javax.inject.Inject;
-
 @Component
 public class BadCredentialsListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent>
 {
     private final PortfolioUserService portfolioUserService;
 
-    @Inject
     public BadCredentialsListener(PortfolioUserService portfolioUserService)
     {
         this.portfolioUserService = portfolioUserService;

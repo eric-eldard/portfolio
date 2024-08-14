@@ -1,4 +1,4 @@
-package com.eric_eldard.portfolio;
+package com.eric_eldard.portfolio.config;
 
 import com.eric_eldard.portfolio.logging.AddUserToMdcFilter;
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
@@ -20,10 +20,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.header.writers.CrossOriginResourcePolicyHeaderWriter;
 
-import javax.inject.Inject;
-
 /**
- * Master context config for security, logging, and beans for which creation order prevents a circular dependency.
+ * Master config for security, logging, and beans for which creation order prevents a circular dependency.
  */
 @Configuration
 @EnableWebSecurity
@@ -36,7 +34,6 @@ public class GlobalConfig
 
     private final SecurityContextService securityContextService;
 
-    @Inject
     public GlobalConfig(SecurityContextService securityContextService, PortfolioUserRepository portfolioUserRepo)
     {
         this.securityContextService = securityContextService;

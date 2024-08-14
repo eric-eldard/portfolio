@@ -1,6 +1,6 @@
 package com.eric_eldard.portfolio.model.user;
 
-import com.eric_eldard.portfolio.model.Constants;
+import com.eric_eldard.portfolio.util.Constants;
 import lombok.Getter;
 import lombok.Setter;
 
