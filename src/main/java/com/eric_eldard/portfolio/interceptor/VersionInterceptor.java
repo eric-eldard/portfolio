@@ -27,7 +27,7 @@ public class VersionInterceptor implements HandlerInterceptor
     {
         if (modelAndView != null)
         {
-            modelAndView.getModelMap().addAttribute("version", version);
+            modelAndView.getModelMap().addAttribute("portfolio_app_version", version);
         }
     }
 }
