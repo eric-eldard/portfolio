@@ -1,6 +1,7 @@
 <h1>Portfolio App</h1>
 <p>
-    This portfolio is a Spring Boot app I wrote myself. It was a blast to put together!
+    This portfolio is a Spring Boot app I wrote myself. The frontend is a custom UI built from scratch&mdash;no
+    toolkits used. It was a blast to put together!
 </p>
 
 <jsp:include page="../widgets/see-it-on-gh.jsp">
@@ -8,7 +9,7 @@
 </jsp:include>
 
 <jsp:include page="../widgets/project-specs.jsp">
-    <jsp:param name="frontend" value="JSP, CSS3, JavaScript (custom UI from scratch; no toolkits)"/>
+    <jsp:param name="frontend" value="JSP, CSS3, JavaScript"/>
     <jsp:param name="backend" value="Java 17, Spring Boot 2.7, Spring Security"/>
     <jsp:param name="persistence" value="Spring Data JPA"/>
     <jsp:param name="database" value="MySQL in Amazon RDS"/>

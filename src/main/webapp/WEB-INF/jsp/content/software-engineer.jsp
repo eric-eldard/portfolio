@@ -10,7 +10,7 @@
     host millions of users across tens-of-thousands of events.
 </p>
 <p>
-    I started out in a junior Java developer role with Brazen, became lead for our solo Scrum team, and by the time
+    I started out in a junior Java developer role with Brazen, became lead for our lone Scrum team, and by the time
     Brazen was at its largest, I was Vice President of Engineering over three agile teams. In 2023, all of our hard work
     paid off when Brazen was acquired into the Radancy Talent Cloud. In 2024, I took over all of Brazen Engineering,
     adding QA, DevOps, and InfoSec to my teams.
@@ -18,19 +18,20 @@
 <p>
     Building Brazen was an absolute pleasure, every day. I worked with such smart, talented, motivated, friendly people,
     and I made some connections that will last a lifetime. Brazen Engineering was a place to learn and try new things,
-    and engineers grew very quickly there. I often estimated that a year in that fast-paced, people-focused environment
-    was worth a year-and-a-half to two anywhere else.
+    and engineers grew very quickly there. I often estimated that a year in Brazen's fast-paced, people-focused
+    environment was worth a year-and-a-half or more anywhere else.
 </p>
 <p>
-    As a dev, I believe in writing code that is secure, testable, readable, extensible, and efficient&mdash;in that
-    order.
+    Though I'd been a hobby programmer for as long as I could remember, Brazen is where I became the software engineer
+    I am today. As an engineer, I believe in writing code that is secure, testable, readable, extensible, and
+    efficient&mdash;in that order.
 </p>
 <p>
     Below is a little example of some of my Brazen work. In 2023, I was attached to a small tiger team, along with our
     VP of Marketing and our Data Engineering Manager, to experiment with both how we could include generative AI into
-    our platform and how we could get AI tools into the hands of our team members. In a week, I put together a sample
-    ChatGPT integration which would generate virtual event content for our customers, and also provide an open
-    pass-through to ChatGPT for day-to-day usage by our staff.
+    our platform and how we could get AI tools into the hands of our team members. In a week (a day of coding and
+    nearly 4 of prompt engineering), I put together a sample ChatGPT integration which would generate virtual event
+    content for our customers, and also provide an open pass-through to ChatGPT for day-to-day use by our staff.
 </p>
 <jsp:include page="../widgets/project-specs.jsp">
     <jsp:param name="frontend" value="Freemarker, Google Web Toolkit, Google Material Design, jQuery"/>

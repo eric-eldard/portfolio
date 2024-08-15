@@ -20,7 +20,7 @@
 </style>
 
 <h1>Coding at the Movies</h1>
-<h2>Management Training Center <span class="sm-heading">(iframes, CSS, JavaScript)</span></h2>
+<h2>Management Training&nbsp;Center <span class="sm-heading">(iframes, CSS, JavaScript)</span></h2>
 <p>
     I was running a movie theater in 2011 when my company dissolved its management training program with no replacement.
     Coding was well beyond the scope of my responsibilities, but I created this training portal for my team. I continued

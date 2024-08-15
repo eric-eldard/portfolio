@@ -55,9 +55,9 @@
         <jsp:param name="text" value="Brazen Developer Resources"/>
         <jsp:param name="href" value="https://developers.brazen.com/"/>
     </jsp:include>
-    advertises all the ways our customers and partners could integrate with us. This portal was created and maintained
-    by me and one of my long-time Brazen collaborators. It showcases some solutions I helped build from the ground-up,
-    like our customer-facing RESTful API, our XML job feeds, and our embeddable chat plugin. I also staffed
+    advertises all the ways customers and partners can integrate with Brazen. This portal was created and maintained by
+    me and one of my long-time Brazen collaborators. It showcases some solutions I helped design and build from the
+    ground-up, like our customer-facing RESTful API, our XML job feeds, and our embeddable chat plugin. I also staffed
     developers@brazen.com, assisting our customers' tech folks as they built their integrations. I love building tools
     that facilitate other devs building cool stuff!
 </p>
