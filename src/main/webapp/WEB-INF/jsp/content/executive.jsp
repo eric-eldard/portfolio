@@ -2,9 +2,10 @@
 <p>
     As Brazen's Vice President of Engineering, I was responsible for the quality of the product which engineers turned
     over to testers&mdash;and ultimately, to our customers. I consulted on major designs, took frequent code reviews,
-    and encouraged best-practices. With a team of engineers ranging from Year-One juniors to Principals, I took on a lot
-    of different training and quality assurance initiatives. Guiding engineers to write code in extensible, maintainable
-    ways has taught me more about software engineering than I ever learned from just writing the code myself.
+    and encouraged best-practices. With a diverse team of engineers ranging from Principals to Year-One juniors, I took
+    on a lot of different training and quality assurance initiatives. Guiding engineers to write code in secure,
+    extensible, and maintainable ways has taught me more about software engineering than I ever learned from just
+    writing code myself. And while I wrote a lot less code as an exec, it was also the time I wrote my best stuff.
 </p>
 <p>
     As an executive, I believe in processes that work with little-to-no thought and have built-in redundancies. A
@@ -66,11 +67,13 @@
 <p>
     Brazen expanded rapidly in 2020 & 2021&mdash;suddenly our team was spread out across two continents. In 2022, we
     brought the whole engineering department together for a hackathon. Engineers worked in groups of their choice and
-    selected their own projects. It was a great bonding activity and a lot of fun was had. My primary role was to
-    consult on all projects and ensure engineers would have something to show after 48 hours. In the end, our hackathon
-    was seen as a huge success! Heads from all departments participated in project judging, and we were all extremely
-    impressed by the quality and creativity delivered by our engineers. Within 6 months, 6 of 14 hackathon projects had
-    gone into production.
+    selected their own projects. It was a great bonding activity and a lot of fun was had. My role was to consult on all
+    projects, helping devs generate their ideas and scope them down to something achievable in 48 hours, then stay
+    abreast of each team's progress, ensuring they would have something in a presentable state by the end. Heads from
+    all Brazen departments participated in project judging, and we were all extremely impressed by the quality and
+    creativity delivered by our engineers. In the end, our hackathon was seen by all as a huge success, both culturally
+    and for the work it produced. Though we had tempered expectations that the goal wasn't new feature development,
+    within six months 6 of 14 hackathon projects had gone into production.
 </p>
 <p>
     I cut this video of the presentations, along with some B-roll, to share our
