@@ -4,6 +4,7 @@ import com.eric_eldard.portfolio.util.Constants;
 import com.eric_eldard.portfolio.service.classpath.ClasspathService;
 import com.eric_eldard.portfolio.service.video.EmbeddableVideo;
 import com.eric_eldard.portfolio.service.video.EmbeddableVideoService;
+import com.eric_eldard.portfolio.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import video.api.client.api.ApiException;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/portfolio")
@@ -43,7 +46,7 @@ public class PortfolioController
     public String getPortfolio(Model model)
     {
         addClasspathResources(model, ResourceType.DOCUMENTS);
-        addClasspathResources(model, ResourceType.SCREENSHOTS);
+        addClasspathResources(model, ResourceType.IMAGES);
         return "portfolio";
     }
 
@@ -112,40 +115,37 @@ public class PortfolioController
      */
     private void addClasspathResources(Model model, ResourceType type)
     {
+        List<Resource> resources;
         try
         {
-            String folder = Constants.ASSETS_PATH + type.location();
-
-            List<Resource> resources =
-                classpathService.getClasspathResources("classpath:" + folder + "/*");
-
-            List<String> filePaths = resources.stream()
-                .map(resource -> folder + '/' + resource.getFilename())
-                .toList();
-
-            model.addAttribute(type.name(), filePaths);
+            resources = classpathService.getClasspathResources("classpath:" + type.path);
         }
         catch (IOException ex)
         {
-            LOGGER.warn("Unable to load {} resources from the classpath for reason: {}", type, ex.getMessage());
+            LOGGER.error("Unable to load {} resources from the classpath for reason: {}", type, ex.getMessage());
+            return;
         }
+
+        List<String> filePaths = resources.stream()
+            .map(classpathService::getUriOfResource)
+            .filter(Objects::nonNull)
+            .map(URI::toString)
+            .map(filePath -> StringUtils.substringAt(filePath, Constants.ASSETS_PATH))
+            .toList();
+
+        model.addAttribute(type.name(), filePaths);
     }
 
     private enum ResourceType
     {
-        DOCUMENTS("documents"),
-        SCREENSHOTS("images/screenshots");
+        DOCUMENTS(Constants.ASSETS_PATH + "**/*.pdf"),
+        IMAGES(Constants.ASSETS_PATH + "**/*.png");
 
-        private final String location;
+        private final String path;
 
-        ResourceType(String location)
+        ResourceType(String path)
         {
-            this.location = location;
-        }
-
-        public String location()
-        {
-            return location;
+            this.path = path;
         }
     }
 }
