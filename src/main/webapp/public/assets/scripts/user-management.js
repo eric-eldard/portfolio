@@ -6,7 +6,7 @@ function postNewUser(newUser) {
         alert("Username cannot be blank")
     }
     else if (!newUser.password || newUser.password.trim().length < MIN_PASSWORD_CHARS) {
-        alert("User " + newUser.username + " not created\nPassword must be at least 8 characters")
+        alert(`User ${newUser.username} not created\nPassword must be at least ${MIN_PASSWORD_CHARS} characters`)
     }
     else {
         fetch(USER_ADMIN_PATH, makeRequestOptions("POST", newUser))
@@ -15,20 +15,20 @@ function postNewUser(newUser) {
 }
 
 function deleteUser(id, username, successCallback = undefined) {
-    const confirmed = confirm("Are you sure you want to delete user " + username + "?");
+    const confirmed = confirm(`Are you sure you want to delete user ${username}?`);
     if (confirmed) {
         fetch(USER_ADMIN_PATH + "/" + id, makeRequestOptions("DELETE"))
             .then(response => handleResponse(response, successCallback));
     }
     else {
-        alert("Deletion of user " + username + " canceled")
+        alert(`Deletion of user ${username} canceled`);
     }
 }
 
 function unlockUser(id, username) {
     const confirmed = confirm("Confirm unlocking account for " + username);
     if (confirmed === true) {
-        fetch(USER_ADMIN_PATH + "/" + id + "/unlock", makeRequestOptions("PUT"))
+        fetch(`${USER_ADMIN_PATH}/${id}/unlock`, makeRequestOptions("PUT"))
             .then(response => handleResponse(response));
     }
 }
@@ -36,25 +36,25 @@ function unlockUser(id, username) {
 function resetPword(id, username) {
     const password = prompt("Set new password for user " + username);
     if (typeof password === "undefined" || password === null) {
-        alert("Password change for user " + username + " was canceled")
+        alert(`Password change for user ${username} was canceled`);
     }
     else if (password.trim().length < MIN_PASSWORD_CHARS) {
-        alert("Password for user " + username + " was not changed\nNew password must be at least 8 characters")
+        alert(`Password for user ${username} was not changed\nNew password must be at least ${MIN_PASSWORD_CHARS} characters`);
     }
     else {
-        fetch(USER_ADMIN_PATH + "/" + id + "/password", makeRequestOptions("PUT", password))
+        fetch(`${USER_ADMIN_PATH}/${id}/password`, makeRequestOptions("PUT", password))
             .then(response => handleResponse(response, (response => alert("Password updated for user " + username))));
     }
 }
 
 function setAuthUntil(id, username, date) {
-    const confirmed = confirm("Confirm " + date + " as new authorized-until date for " + username);
+    const confirmed = confirm(`Confirm ${date} as new authorized-until date for ${username}`);
     if (confirmed === true) {
-            fetch(USER_ADMIN_PATH + "/" + id + "/authorized-until/" + date, makeRequestOptions("PUT"))
+            fetch(`${USER_ADMIN_PATH}/${id}/authorized-until/${date}`, makeRequestOptions("PUT"))
                 .then(response => handleResponse(response));
     }
     else {
-        alert("Authorized-until date for user " + username + " not changed");
+        alert(`Authorized-until date for user ${username} not changed`);
         Window.location.reload();
     }
 }
@@ -62,22 +62,22 @@ function setAuthUntil(id, username, date) {
 function setInfiniteAuth(id, username) {
     const confirmed = confirm("Confirm infinite authorization for " + username);
     if (confirmed === true) {
-            fetch(USER_ADMIN_PATH + "/" + id + "/authorized-until/forever", makeRequestOptions("PUT"))
+            fetch(`${USER_ADMIN_PATH}/${id}/authorized-until/forever`, makeRequestOptions("PUT"))
                 .then(response => handleResponse(response));
     }
     else {
-        alert("Authorized-until date for user " + username + " not changed");
+        alert(`Authorized-until date for user ${username} not changed`);
         Window.location.reload();
     }
 }
 
 function toggleUser(id) {
-    fetch(USER_ADMIN_PATH + "/" + id + "/toggle-enabled", makeRequestOptions("PUT"))
+    fetch(`${USER_ADMIN_PATH}/${id}/toggle-enabled`, makeRequestOptions("PUT"))
         .then(response => handleResponse(response));
 }
 
 function toggleRole(id) {
-    fetch(USER_ADMIN_PATH + "/" + id + "/toggle-admin", makeRequestOptions("PUT"))
+    fetch(`${USER_ADMIN_PATH}/${id}/toggle-admin`, makeRequestOptions("PUT"))
         .then(response => handleResponse(response));
 }
 

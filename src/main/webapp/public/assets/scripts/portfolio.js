@@ -16,7 +16,7 @@ function showPopup(content) {
 
     const innerHTML = `
         <div id="closeX">
-            <a href="javascript: closePopup(&#39;&#39;);" title="Close">&#x2715;</a>
+            <a href="javascript: closePopup('');" title="Close">&#x2715;</a>
         </div>
         ${content}
     `;
@@ -90,7 +90,7 @@ function setInnerHTML(container, html) {
 }
 
 function getMetaValue(name) {
-    return document.querySelector("meta[name='" + name + "']").getAttribute('content');
+    return document.querySelector(`meta[name="${name}"`).getAttribute('content');
 }
 
 function makeRequestOptions(method) {

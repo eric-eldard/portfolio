@@ -24,35 +24,37 @@
         </div>
 
         <div id="preload-images">
-            <c:forEach items="${SCREENSHOTS}" var="image"><input type="hidden" value="${image}"/>
-            </c:forEach>
+            <c:forEach items="${IMAGES}" var="image"><input type="hidden" value="${image}"/>
+            </c:forEach> <%-- new line for end tag ensures each input gets a separate line in final html doc --%>
         </div>
 
         <div id="preload-docs">
             <c:forEach items="${DOCUMENTS}" var="doc"><input type="hidden" value="${doc}"/>
-            </c:forEach>
+            </c:forEach> <%-- new line for end tag ensures each input gets a separate line in final html doc --%>
         </div>
 
         <div id="loaded-docs"></div>
 
         <script async defer>
             // Pre-load images
-            let imagePaths = document.getElementById("preload-images").getElementsByTagName('input');
+            const imagePaths = document.getElementById("preload-images").getElementsByTagName('input');
             for (let path of imagePaths) {
                 fetch(path.value);
             }
+            console.log(imagePaths.length + " images preloaded");
             document.getElementById("preload-images").remove();
 
             // Pre-load PDFs; AJAX-fetched PDFs do not count as cached for when the doc is used as a top-level source,
             // so we'll fetch each doc in an iframe now (the same way they'll be retrieved when they're actually shown)
             let loadedDocs = document.getElementById("loaded-docs");
-            let docPaths = document.getElementById("preload-docs").getElementsByTagName('input');
+            const docPaths = document.getElementById("preload-docs").getElementsByTagName('input');
             for (let path of docPaths) {
                 let frame = document.createElement("iframe");
 	            frame.src = path.value;
 	            frame.style.display = "none";
 	            loadedDocs.appendChild(frame);
             }
+            console.log(docPaths.length + " documents preloaded");
             document.getElementById("preload-docs").remove();
         </script>
     </body>
