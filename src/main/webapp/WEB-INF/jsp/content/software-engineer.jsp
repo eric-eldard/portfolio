@@ -4,10 +4,10 @@
 <p>
     In 2013, I made a career jump from running movie theaters to trying my hand at software engineering. I was
     incredibly fortunate to be picked up by the small startup Brazen. Over the first year, we built and launched
-    Brazen's best-in-class virtual event platform. Then we spent the next 9 years building up and out, adding orders of
-    magnitude more capacity, a customer-facing API, video chat, an embeddable chat plugin, multiple language support,
-    advanced web accessibility, in-person event support, and literally hundreds more features. The Brazen software would
-    host millions of users across tens-of-thousands of events.
+    Brazen's best-in-class virtual event and recruitment chat platform. Then we spent the next 9 years building up and
+    out, adding orders of magnitude more capacity, a customer-facing API, video chat, an embeddable chat plugin,
+    multiple language support, advanced web accessibility, in-person event support, and literally hundreds more
+    features. The Brazen software would host millions of users across tens-of-thousands of events.
 </p>
 <p>
     I started out in a junior Java developer role with Brazen, became lead for our lone Scrum team, and by the time
@@ -38,7 +38,7 @@
     <jsp:param name="backend" value="Java 17, Spring 5, Spring MVC, Spring Security, Akka, Jersey"/>
     <jsp:param name="persistence" value="Spring Data JPA"/>
     <jsp:param name="caching" value="Hazelcast"/>
-    <jsp:param name="database" value="MySQL in Amazon RDS"/>
+    <jsp:param name="database" value="MySQL 8 in Amazon RDS"/>
     <jsp:param name="versioning" value="Git via Bitbucket"/>
     <jsp:param name="build" value="Maven on Jenkins"/>
     <jsp:param name="env" value="Tomcat and Jetty on Amazon EC2"/>

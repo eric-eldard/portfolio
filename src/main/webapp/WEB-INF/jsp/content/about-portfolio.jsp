@@ -9,10 +9,10 @@
 </jsp:include>
 
 <jsp:include page="../widgets/project-specs.jsp">
-    <jsp:param name="frontend" value="JSP, CSS3, JavaScript"/>
+    <jsp:param name="frontend" value="JSP w/ JSTL, CSS3, JavaScript"/>
     <jsp:param name="backend" value="Java 17, Spring Boot 2.7, Spring Security"/>
     <jsp:param name="persistence" value="Spring Data JPA"/>
-    <jsp:param name="database" value="MySQL in Amazon RDS"/>
+    <jsp:param name="database" value="MySQL 8 in Amazon RDS"/>
     <jsp:param name="versioning" value="GitHub"/>
     <jsp:param name="build" value="Maven"/>
     <jsp:param name="env" value="Amazon EC2"/>

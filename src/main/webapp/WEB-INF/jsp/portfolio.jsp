@@ -41,7 +41,7 @@
             for (let path of imagePaths) {
                 fetch(path.value);
             }
-            console.log(imagePaths.length + " images preloaded");
+            console.log(imagePaths.length + " portfolio images preloaded");
             document.getElementById("preload-images").remove();
 
             // Pre-load PDFs; AJAX-fetched PDFs do not count as cached for when the doc is used as a top-level source,
@@ -54,7 +54,7 @@
 	            frame.style.display = "none";
 	            loadedDocs.appendChild(frame);
             }
-            console.log(docPaths.length + " documents preloaded");
+            console.log(docPaths.length + " portfolio documents preloaded");
             document.getElementById("preload-docs").remove();
         </script>
     </body>
