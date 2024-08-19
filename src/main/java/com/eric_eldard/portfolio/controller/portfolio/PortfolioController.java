@@ -36,13 +36,7 @@ public class PortfolioController
         this.videoService = videoService;
     }
 
-    @GetMapping("")
-    public String forwardNoSlash()
-    {
-        return "redirect:portfolio/";
-    }
-
-    @GetMapping("/")
+    @GetMapping
     public String getPortfolio(Model model)
     {
         addClasspathResources(model, ResourceType.DOCUMENTS);

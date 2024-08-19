@@ -5,27 +5,31 @@ import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import com.eric_eldard.portfolio.service.user.PortfolioUserServiceImpl;
 import com.eric_eldard.portfolio.service.user.SecurityContextService;
+import jakarta.servlet.DispatcherType;
 import org.springframework.boot.web.servlet.server.CookieSameSiteSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.context.SecurityContextHolderFilter;
-import org.springframework.security.web.header.writers.CrossOriginResourcePolicyHeaderWriter;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
+
+import static org.springframework.security.web.header.writers.CrossOriginResourcePolicyHeaderWriter.CrossOriginResourcePolicy.SAME_SITE;
 
 /**
  * Master config for security, logging, and beans for which creation order prevents a circular dependency.
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class GlobalConfig
 {
     private final PasswordEncoder passwordEncoder;
@@ -74,25 +78,33 @@ public class GlobalConfig
     public SecurityFilterChain portfolioFilterChain(HttpSecurity httpSecurity) throws Exception
     {
         httpSecurity
-            .authorizeHttpRequests((config) -> config
-                .antMatchers("/").permitAll()
-                .antMatchers("/portfolio/**").authenticated()
-                .antMatchers("/portfolio/users/**").hasRole("ADMIN")
+            .authorizeHttpRequests(requests -> requests
+                .dispatcherTypeMatchers(
+                    DispatcherType.ERROR,
+                    DispatcherType.FORWARD,
+                    DispatcherType.INCLUDE
+                ).permitAll()
+                // WARNING: order matters, since these paths are hierarchical; putting "/" 1st gives admin access to all
+                .requestMatchers("/portfolio/users/**").hasRole("ADMIN")
+                .requestMatchers("/portfolio/**").authenticated()
+                .requestMatchers("/", "/public/assets/**").permitAll()
             )
             .authenticationManager(
                 makeAuthenticationManager(httpSecurity)
             )
-            .httpBasic()
-                .and()
-            .headers()
-                .frameOptions()
-                    .sameOrigin()
-                .crossOriginResourcePolicy()
-                    .policy(CrossOriginResourcePolicyHeaderWriter.CrossOriginResourcePolicy.SAME_SITE)
-                    .and()
-                .and()
-            .securityContext((securityContext) -> securityContext.requireExplicitSave(true))
-            .addFilterAfter(new AddUserToMdcFilter(securityContextService), SecurityContextHolderFilter.class);
+            .httpBasic(
+                Customizer.withDefaults()
+            )
+            .securityContext(security -> security
+                .requireExplicitSave(false) // makes sec context available for logging, even on unauthenticated pages
+            )
+            .headers(headers -> headers
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+                .crossOriginResourcePolicy(crossOrigin -> crossOrigin.policy(SAME_SITE))
+            )
+            .addFilterAfter(
+                new AddUserToMdcFilter(securityContextService), SecurityContextHolderAwareRequestFilter.class
+            );
 
         return httpSecurity.build();
     }

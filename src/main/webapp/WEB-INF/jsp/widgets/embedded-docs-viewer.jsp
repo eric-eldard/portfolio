@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <c:set var="basedir" value="/portfolio/assets/documents"/>
 <c:set var="viewerParams" value="navpanes=0&view=Fit"/>
 

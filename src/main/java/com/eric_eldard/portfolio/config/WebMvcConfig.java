@@ -5,6 +5,7 @@ import com.eric_eldard.portfolio.util.Constants;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,6 +19,12 @@ public class WebMvcConfig implements WebMvcConfigurer
     public WebMvcConfig(VersionInterceptor versionInterceptor)
     {
         this.versionInterceptor = versionInterceptor;
+    }
+
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer)
+    {
+        configurer.setUseTrailingSlashMatch(true);
     }
 
     @Override

@@ -1,14 +1,14 @@
 package com.eric_eldard.portfolio.logging;
 
 import com.eric_eldard.portfolio.service.user.SecurityContextService;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.GenericFilter;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import org.slf4j.MDC;
 import org.springframework.security.web.context.SecurityContextHolderFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.GenericFilter;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import java.io.IOException;
 
 /**

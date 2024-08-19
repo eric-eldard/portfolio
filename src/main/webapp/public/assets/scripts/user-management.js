@@ -9,7 +9,7 @@ function postNewUser(newUser) {
         alert(`User ${newUser.username} not created\nPassword must be at least ${MIN_PASSWORD_CHARS} characters`)
     }
     else {
-        fetch(USER_ADMIN_PATH, makeRequestOptions("POST", newUser))
+        fetch(USER_ADMIN_PATH, makeRequestOptions("POST", newUser, "application/json"))
             .then(response => handleResponse(response));
     }
 }
@@ -42,7 +42,7 @@ function resetPword(id, username) {
         alert(`Password for user ${username} was not changed\nNew password must be at least ${MIN_PASSWORD_CHARS} characters`);
     }
     else {
-        fetch(`${USER_ADMIN_PATH}/${id}/password`, makeRequestOptions("PUT", password))
+        fetch(`${USER_ADMIN_PATH}/${id}/password`, makeRequestOptions("PUT", password, "text/plain"))
             .then(response => handleResponse(response, (response => alert("Password updated for user " + username))));
     }
 }

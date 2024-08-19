@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <c:set var="basedir" value="${param.basedir eq null ? '/portfolio/assets/images/screenshots' : param.basedir}"/>
 <div class="screenshot solo ${param.classes eq null ? '' : param.classes}">
     <a href="${basedir}/${param.path}" target="_blank">

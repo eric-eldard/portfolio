@@ -2,7 +2,9 @@ package com.eric_eldard.portfolio.controller.admin;
 
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -46,7 +47,7 @@ public class UsersRestController
         userService.unlock(id);
     }
 
-    @PutMapping("/{id}/password")
+    @PutMapping(value = "/{id}/password", consumes = MediaType.TEXT_PLAIN_VALUE)
     public void setPassword(@PathVariable long id, @RequestBody String password)
     {
         userService.setPassword(id, password);

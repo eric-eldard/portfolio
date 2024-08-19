@@ -94,18 +94,19 @@ function getMetaValue(name) {
 }
 
 function makeRequestOptions(method) {
-    return makeRequestOptions(method, null);
+    return makeRequestOptions(method, null, null);
 }
 
-function makeRequestOptions(method, body) {
+function makeRequestOptions(method, body, contentType) {
     const hasBody = typeof body !== 'undefined';
+    const isJson = contentType === "application/json";
     return {
         method: method,
         headers: {
-            ...(hasBody ? {"Content-Type": "application/json"} : {}),
+            ...(hasBody ? {"Content-Type": contentType} : {}),
             "X-CSRF-TOKEN": getMetaValue("_csrf")
         },
-        ...(hasBody ? {body: JSON.stringify(body)} : {})
+        ...(hasBody ? (isJson ? {body: JSON.stringify(body)} : {body: body}) : {})
     };
 }
 
