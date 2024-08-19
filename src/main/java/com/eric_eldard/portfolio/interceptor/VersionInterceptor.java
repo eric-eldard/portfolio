@@ -1,5 +1,6 @@
 package com.eric_eldard.portfolio.interceptor;
 
+import com.eric_eldard.portfolio.util.Constants;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
@@ -24,9 +25,14 @@ public class VersionInterceptor implements HandlerInterceptor
                            @NotNull Object handler,
                            ModelAndView modelAndView)
     {
-        if (modelAndView != null)
+        if (!oldPortfolioRequest(request) && modelAndView != null)
         {
             modelAndView.getModelMap().addAttribute("portfolio_app_version", version);
         }
+    }
+
+    private boolean oldPortfolioRequest(HttpServletRequest request)
+    {
+        return request.getRequestURI().startsWith(Constants.OLD_PORTFOLIO_PATH);
     }
 }

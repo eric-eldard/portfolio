@@ -85,6 +85,7 @@ public class GlobalConfig
                     DispatcherType.INCLUDE
                 ).permitAll()
                 // WARNING: order matters, since these paths are hierarchical; putting "/" 1st gives admin access to all
+                .requestMatchers("/portfolio/old/**").hasRole("ADMIN")
                 .requestMatchers("/portfolio/users/**").hasRole("ADMIN")
                 .requestMatchers("/portfolio/**").authenticated()
                 .requestMatchers("/", "/public/assets/**").permitAll()

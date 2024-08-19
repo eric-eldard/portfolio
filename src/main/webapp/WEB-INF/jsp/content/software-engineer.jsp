@@ -35,7 +35,7 @@
 </p>
 <jsp:include page="../widgets/project-specs.jsp">
     <jsp:param name="frontend" value="Freemarker, Google Web Toolkit, Google Material Design, jQuery"/>
-    <jsp:param name="backend" value="Java 17, Spring 5, Spring MVC, Spring Security, Akka, Jersey"/>
+    <jsp:param name="backend" value="Java 17, Spring 5, Spring Web, Spring Security, Akka, Jersey"/>
     <jsp:param name="persistence" value="Spring Data JPA"/>
     <jsp:param name="caching" value="Hazelcast"/>
     <jsp:param name="database" value="MySQL 8 in Amazon RDS"/>

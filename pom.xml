@@ -12,7 +12,7 @@
     <name>Eric Eldard Portfolio</name>
     <groupId>com.eric_eldard</groupId>
     <artifactId>portfolio</artifactId>
-    <version>0.8.1-prerelease</version>
+    <version>0.8.2-prerelease</version>
     <packaging>war</packaging>
 
     <properties>
@@ -23,10 +23,6 @@
     <dependencies>
 
         <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -58,6 +54,13 @@
             <groupId>jakarta.servlet.jsp.jstl</groupId>
             <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
             <version>${jstl.version}</version>
+            <exclusions>
+                <exclusion>
+                    <!-- providing newer version -->
+                    <groupId>jakarta.el</groupId>
+                    <artifactId>jakarta.el-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.glassfish.web</groupId>
@@ -76,6 +79,13 @@
             <artifactId>java-api-client</artifactId>
             <version>1.3.3</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <!-- providing newer version -->
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-lang3</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Utilities -->

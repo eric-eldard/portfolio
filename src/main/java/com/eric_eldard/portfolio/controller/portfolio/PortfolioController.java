@@ -132,8 +132,8 @@ public class PortfolioController
 
     private enum ResourceType
     {
-        DOCUMENTS(Constants.ASSETS_PATH + "**/*.pdf"),
-        IMAGES(Constants.ASSETS_PATH + "**/*.png");
+        DOCUMENTS(Constants.ASSETS_PATH + "/**/*.pdf"),
+        IMAGES(Constants.ASSETS_PATH + "/**/*.png");
 
         private final String path;
 

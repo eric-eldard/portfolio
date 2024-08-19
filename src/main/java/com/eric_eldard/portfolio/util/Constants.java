@@ -2,7 +2,9 @@ package com.eric_eldard.portfolio.util;
 
 public final class Constants
 {
-    public static final String ASSETS_PATH = "/portfolio/assets/";;
+    public static final String ASSETS_PATH = "/portfolio/assets";
+
+    public static final String OLD_PORTFOLIO_PATH = "/portfolio/old";
 
     public static final int FAILED_LOGINS_BEFORE_ACCOUNT_LOCK = 10;
 

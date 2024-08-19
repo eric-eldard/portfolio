@@ -6,7 +6,7 @@
     their shopping cart.
 </p>
 <jsp:include page="../widgets/project-specs.jsp">
-    <jsp:param name="frontend" value="JSP 2.1 w/ Scriplets, CSS2, JavaScript"/>
+    <jsp:param name="frontend" value="JSP 2 w/ Scriplets, CSS2, JavaScript"/>
     <jsp:param name="backend" value="Java 6 Servlet"/>
     <jsp:param name="persistence" value="JDBC"/>
     <jsp:param name="database" value="Oracle Database 10g XE"/>
@@ -31,8 +31,8 @@
     Brazen.
 </p>
 <jsp:include page="../widgets/project-specs.jsp">
-    <jsp:param name="frontend" value="JSP 2.1 w/ JSTL, CSS2, JavaScript"/>
-    <jsp:param name="backend" value="Spring 3, Struts 1.3 w/ tiles, EJB 2.1"/>
+    <jsp:param name="frontend" value="JSP 2 w/ JSTL, CSS2, JavaScript"/>
+    <jsp:param name="backend" value="Java 6, Spring 3, Struts 1 w/ Tiles, EJB 2"/>
     <jsp:param name="persistence" value="Hibernate"/>
     <jsp:param name="database" value="Oracle Database 10g XE"/>
     <jsp:param name="versioning" value="Subversion"/>
