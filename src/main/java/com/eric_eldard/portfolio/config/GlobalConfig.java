@@ -2,13 +2,18 @@ package com.eric_eldard.portfolio.config;
 
 import com.eric_eldard.portfolio.logging.AddUserToMdcFilter;
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
+import com.eric_eldard.portfolio.properties.AdditionalLocations;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import com.eric_eldard.portfolio.service.user.PortfolioUserServiceImpl;
 import com.eric_eldard.portfolio.service.user.SecurityContextService;
 import jakarta.servlet.DispatcherType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.server.CookieSameSiteSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -30,17 +35,28 @@ import static org.springframework.security.web.header.writers.CrossOriginResourc
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableConfigurationProperties(AdditionalLocations.class)
+@PropertySource(value = "file:${portfolio.additional-properties.location}", ignoreResourceNotFound = true)
 public class GlobalConfig
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalConfig.class);
+
+    private final AdditionalLocations additionalLocations;
+
     private final PasswordEncoder passwordEncoder;
 
     private final PortfolioUserServiceImpl portfolioUserDetailsService;
 
     private final SecurityContextService securityContextService;
 
-    public GlobalConfig(SecurityContextService securityContextService, PortfolioUserRepository portfolioUserRepo)
+    public GlobalConfig(AdditionalLocations additionalLocations,
+                        PortfolioUserRepository portfolioUserRepo,
+                        SecurityContextService securityContextService
+    )
     {
+        this.additionalLocations = additionalLocations;
         this.securityContextService = securityContextService;
+
         passwordEncoder = new BCryptPasswordEncoder();
 
         // Creating this bean here, instead of annotating its class for component scan, avoids a circular dependency
@@ -77,18 +93,30 @@ public class GlobalConfig
     @Bean
     public SecurityFilterChain portfolioFilterChain(HttpSecurity httpSecurity) throws Exception
     {
+        // Add any additional locations as admin-only areas
+        additionalLocations.getMappings().forEach((webPath, filePath) -> {
+            try
+            {
+                httpSecurity.authorizeHttpRequests(requests ->
+                    requests.requestMatchers(webPath + "/**").hasRole("ADMIN"));
+            }
+            catch (Exception ex)
+            {
+                LOGGER.error("Unable to load additional location [{}] for reason [{}]", webPath, ex.getMessage());
+            }
+        });
+
         httpSecurity
             .authorizeHttpRequests(requests -> requests
+                // WARNING: order matters, since these paths are hierarchical; putting "/" 1st gives admin access to all
+                .requestMatchers("/portfolio/users/**").hasRole("ADMIN")
+                .requestMatchers("/portfolio/**").authenticated()
+                .requestMatchers("/", "/public/assets/**").permitAll()
                 .dispatcherTypeMatchers(
                     DispatcherType.ERROR,
                     DispatcherType.FORWARD,
                     DispatcherType.INCLUDE
                 ).permitAll()
-                // WARNING: order matters, since these paths are hierarchical; putting "/" 1st gives admin access to all
-                .requestMatchers("/portfolio/old/**").hasRole("ADMIN")
-                .requestMatchers("/portfolio/users/**").hasRole("ADMIN")
-                .requestMatchers("/portfolio/**").authenticated()
-                .requestMatchers("/", "/public/assets/**").permitAll()
             )
             .authenticationManager(
                 makeAuthenticationManager(httpSecurity)

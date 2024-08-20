@@ -1,17 +1,21 @@
-package com.eric_eldard.portfolio.service.classpath;
+package com.eric_eldard.portfolio.service.resource;
 
 import org.springframework.core.io.Resource;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 
 /**
- * Utilities for working with classpath resources
+ * Utilities for working with file and classpath resources
  */
-public interface ClasspathService
+public interface ResourceService
 {
+    /**
+     * Get a list of resources from the file system using the provided pattern. Supports wildcards * and **.
+     */
+    List<Resource> getFileResources(String pathPattern) throws IOException;
+
     /**
      * Get a list of resources from the classpath using the provided pattern. Supports wildcards * and **.
      */
@@ -21,5 +25,5 @@ public interface ClasspathService
      * Swallow and log checked exceptions coming out of {@link Resource#getURI()}
      */
     @Nullable
-    URI getUriOfResource(Resource resource);
+    String getPathOfResource(Resource resource);
 }

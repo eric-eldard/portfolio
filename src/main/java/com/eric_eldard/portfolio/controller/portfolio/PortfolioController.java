@@ -1,12 +1,12 @@
 package com.eric_eldard.portfolio.controller.portfolio;
 
-import com.eric_eldard.portfolio.util.Constants;
-import com.eric_eldard.portfolio.service.classpath.ClasspathService;
+import com.eric_eldard.portfolio.service.resource.ResourceService;
 import com.eric_eldard.portfolio.service.video.EmbeddableVideo;
 import com.eric_eldard.portfolio.service.video.EmbeddableVideoService;
-import com.eric_eldard.portfolio.util.StringUtils;
+import com.eric_eldard.portfolio.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import video.api.client.api.ApiException;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,21 +25,26 @@ public class PortfolioController
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(PortfolioController.class);
 
-    private final ClasspathService classpathService;
-
     private final EmbeddableVideoService videoService;
 
-    public PortfolioController(ClasspathService classpathService, EmbeddableVideoService videoService)
+    private final ResourceService resourceService;
+
+    private final String assetsFilePath;
+
+    public PortfolioController(EmbeddableVideoService videoService,
+                               ResourceService resourceService,
+                               @Value("${portfolio.assets-path}") String assetsFilePath)
     {
-        this.classpathService = classpathService;
         this.videoService = videoService;
+        this.resourceService = resourceService;
+        this.assetsFilePath = assetsFilePath;
     }
 
     @GetMapping
     public String getPortfolio(Model model)
     {
-        addClasspathResources(model, ResourceType.DOCUMENTS);
-        addClasspathResources(model, ResourceType.IMAGES);
+        addFileResources(model, ResourceType.DOCUMENTS);
+        addFileResources(model, ResourceType.IMAGES);
         return "portfolio";
     }
 
@@ -107,12 +111,13 @@ public class PortfolioController
     /**
      * Adds paths to the model for all the resources of the given type; supports preloading assets on the browser side
      */
-    private void addClasspathResources(Model model, ResourceType type)
+    private void addFileResources(Model model, ResourceType type)
     {
         List<Resource> resources;
         try
         {
-            resources = classpathService.getClasspathResources("classpath:" + type.path);
+            String pathPattern = type.makePathPattern(assetsFilePath);
+            resources = resourceService.getFileResources(pathPattern);
         }
         catch (IOException ex)
         {
@@ -121,10 +126,10 @@ public class PortfolioController
         }
 
         List<String> filePaths = resources.stream()
-            .map(classpathService::getUriOfResource)
+            .map(resourceService::getPathOfResource)
             .filter(Objects::nonNull)
-            .map(URI::toString)
-            .map(filePath -> StringUtils.substringAt(filePath, Constants.ASSETS_PATH))
+            .map(filePath -> filePath.replace(assetsFilePath, ""))
+            .map(partialPath -> Constants.ASSETS_PATH + partialPath)
             .toList();
 
         model.addAttribute(type.name(), filePaths);
@@ -132,14 +137,19 @@ public class PortfolioController
 
     private enum ResourceType
     {
-        DOCUMENTS(Constants.ASSETS_PATH + "/**/*.pdf"),
-        IMAGES(Constants.ASSETS_PATH + "/**/*.png");
+        DOCUMENTS("/**/*.pdf"),
+        IMAGES("/**/*.png");
 
-        private final String path;
+        private final String pattern;
 
-        ResourceType(String path)
+        ResourceType(String pattern)
         {
-            this.path = path;
+            this.pattern = pattern;
+        }
+
+        public String makePathPattern(String basePath)
+        {
+            return basePath + pattern;
         }
     }
 }
