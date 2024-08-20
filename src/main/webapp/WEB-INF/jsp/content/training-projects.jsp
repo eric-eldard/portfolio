@@ -27,7 +27,7 @@
 <h2>Online Assessment Tool</h2>
 <p>
     The Online Assessment Tool was the culminating project for my Spring 2013 J2EE training.  This web-based system
-    included an proctor portal and a test-taker interface. This kind of form building would prove useful in my work at
+    included a proctor portal and a test-taker interface. This kind of form building would prove useful in my work at
     Brazen.
 </p>
 <jsp:include page="../widgets/project-specs.jsp">

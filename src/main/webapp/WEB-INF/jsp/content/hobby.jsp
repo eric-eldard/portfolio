@@ -90,7 +90,7 @@
     <jsp:param name="language" value="Java 11"/>
     <jsp:param name="versioning" value="GitHub"/>
     <jsp:param name="build" value="Maven"/>
-    <jsp:param name="env" value="Command line"/>
+    <jsp:param name="env" value="Command line or incorporate Core jar as a dependency"/>
 </jsp:include>
 <div id="steganos-example" class="screenshot solo">
     <a href="https://github.com/eric-eldard/steganos?tab=readme-ov-file#examples" target="_blank">
