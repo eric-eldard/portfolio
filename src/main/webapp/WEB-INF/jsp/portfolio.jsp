@@ -7,7 +7,7 @@
         <jsp:include page="widgets/headers.jsp"/>
     </head>
 
-    <body onload="ensureNotPopupState()">
+    <body>
         <div id="main">
             <jsp:include page="content/title-subtitle.jsp"/>
 
@@ -35,7 +35,7 @@
 
         <div id="loaded-docs"></div>
 
-        <script async defer>
+        <script async>
             // Pre-load images
             const imagePaths = document.getElementById("preload-images").getElementsByTagName('input');
             for (let path of imagePaths) {
@@ -56,6 +56,10 @@
             }
             console.log(docPaths.length + " portfolio documents preloaded");
             document.getElementById("preload-docs").remove();
+        </script>
+
+        <script defer>
+            retrieveAndShowContentIfPopupState();
         </script>
     </body>
 </html>

@@ -55,6 +55,6 @@
 
     document.getElementsByTagName("body")[0].appendChild(elem);
 
-    console.log(`Environment labeled as %c${label}%c by "Localhost-Prod Labeler" Tampermonkey script`, `color: ${borderColor}`, "color: black");
+    console.log(`%cEnvironment labeled as %c${label}%c by "Localhost-Prod Labeler" Tampermonkey script`, "color: #aaa", `color: ${borderColor}`, "color: #aaa");
 
 })();

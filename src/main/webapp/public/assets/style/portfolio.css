@@ -142,13 +142,13 @@ button, input[type=checkbox], label {
 
 .header-title {
     font-size: 64px;
-    left: 17px;
+    left: 13px;
     position: relative;
 }
 
 .header-subtitle {
     font-size: 24px;
-    left: 21px;
+    left: 17px;
     position: relative;
 }
 
@@ -262,10 +262,10 @@ img.solo {
     }
 
     .header-title {
-        left: -5px;
+        left: -4px;
     }
 
     .header-subtitle {
-        left: -1px;
+        left: 0;
     }
 }

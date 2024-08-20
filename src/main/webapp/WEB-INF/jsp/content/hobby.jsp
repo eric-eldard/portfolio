@@ -101,7 +101,11 @@
 
 <h2>MTG Player Aid</h2>
 <p>
-    I was hoping to get my fianc&eacute;e to try out the trading card game Magic: The Gathering, so I put this player aid together for her. It's just a simple html page. But as I wrote it, I got tired of constantly creating anchor tags to reference back to other parts of the aid. I ended up writing myself a little wiki-style linking library, allowing me to auto-link from tags like <span class="mono">[creature]</span> and <span class="mono">[Untap|tapping]</span>.
+    I was hoping to get my fianc&eacute;e to try out the trading card game Magic: The Gathering, so I put this player
+    aid together for her. It's just a simple html page. But as I wrote it, I got tired of constantly creating anchor
+    tags to reference back to other parts of the aid. I ended up writing myself a little wiki-style linking library,
+    allowing me to auto-link from tags like <span class="mono">[creature]</span> and
+    <span class="mono">[Untap|tapping]</span>.
 </p>
 <div id="mtg-links">
     <jsp:include page="../widgets/link-out.jsp">
@@ -124,7 +128,10 @@
 <h2><span id="fontColorsTitle">Cycling Font Colors</span></h2>
 <p>
     I saw this effect on another website and thought it would be a fun thing to build a tool for.<br>
-    <span id="back2back1">To get the colors to </span><span id="back2back2">fully cycle back and </span><span id="back2back3">forth, put opposite </span><span id="back2back4">strings back-to-back.</span>
+    <span id="back2back1">To get the colors to</span>
+    <span id="back2back2">fully cycle back and</span>
+    <span id="back2back3">forth, put opposite</span>
+    <span id="back2back4">strings back-to-back!</span>
 </p>
 <jsp:include page="../widgets/embedded-iframe.jsp">
     <jsp:param name="id" value="cycling-font-colors"/>

@@ -1,27 +1,55 @@
-const popupOpenParam = "#popup";
-const popstateListener = (event) => closePopup();
+const HASH_PATH_KEY = "hashPath";
+const POPSTATE_LISTENER = (event) => closePopup();
+
+// Reinstate content if a popup name is found in the url's hash or in session storage
+function retrieveAndShowContentIfPopupState() {
+    if (isPopupState()) {                                         // If page loads with a popup hash param, then...
+        sessionStorage.setItem(HASH_PATH_KEY, hashPath());        // store the requested popup name
+        console.debug(`Found path %c${sessionStorage.getItem(HASH_PATH_KEY)}%c in url; storing and reloading...`,
+            "color: blue", "color: unset");
+        reloadWithoutHash();                                      // reload w/o popup name so we have a clean back state
+    }
+    else if (sessionStorage.getItem(HASH_PATH_KEY)  !== null) {   // If the page loads with a stored hash path, then...
+        const storedPath = sessionStorage.getItem(HASH_PATH_KEY); // retrieve the stored value
+        sessionStorage.removeItem(HASH_PATH_KEY);                 // remove stored hash path so it doesn't trigger later
+        console.debug(`Found path %c${storedPath}%c in session storage; navigating to this content...`,
+            "color: blue", "color: unset");
+        retrieveAndShowContent(storedPath.substring(1));          // remove "#" and navigate to corresponding content
+    }
+}
 
 // Retrieve content and display it in the popup
 function retrieveAndShowContent(path) {
-    fetch("content/" + path)
-      .then(response => response.text())
-      .then(text => showPopup(text));
+    // Remove trailing slash if present, then always add it back (supports slash and no-slash paths)
+    const basePath = window.location.pathname.replace(/\/+$/, "") + "/content/";
+
+    fetch(basePath + path)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status} response returned for [${basePath + path}]`);
+            }
+            return response.text();
+        })
+        .then(text => showContentInPopup(text, path))
+        .catch(error => console.error(error.message));
 }
 
 //Show the content pop-up and populate w/ content
-function showPopup(content) {
+function showContentInPopup(content, path) {
     const main       = document.getElementById("main");
     const background = document.getElementById("popup-background");
     const popup      = document.getElementById("popup");
+    const hashPath   = `#${path}`;
 
     const innerHTML = `
         <div id="closeX">
-            <a href="javascript: closePopup('');" title="Close">&#x2715;</a>
+            <a href="javascript: closePopup();" title="Close">&#x2715;</a>
         </div>
         ${content}
     `;
 
     setInnerHTML(popup, innerHTML);
+    setDataName(popup, hashPath)
 
     // TODO ERIC position=fixed causing resizing of main content when popup open
     // main.style.overflow = "hidden";
@@ -35,28 +63,37 @@ function showPopup(content) {
 
         // Add listener for (mobile) back button, and push an extra frame onto history, so the
         // back button can be used to close the popup without navigating away from the page
-        history.pushState({ popupStatus : "open"}, "", popupOpenParam);
-        window.addEventListener("popstate", popstateListener);
+        history.pushState({ popupStatus : "open"}, "", hashPath);
+        window.addEventListener("popstate", POPSTATE_LISTENER);
+        console.debug(`Popup %c${hashPath}%c opened and added to history`, "color: blue", "color: unset");
     }, 100);
 }
 
 function closePopup() {
-    const main       = document.getElementById("main");
-    const background = document.getElementById("popup-background");
-    const popup      = document.getElementById("popup");
+    const main        = document.getElementById("main");
+    const background  = document.getElementById("popup-background");
+    const popup       = document.getElementById("popup");
+    const wasPopState = isPopupState();
 
-    window.removeEventListener("popstate", popstateListener);
+    window.removeEventListener("popstate", POPSTATE_LISTENER);
     if (isPopupState()) {
         history.back();
     }
 
+    // Must retrieve popup name from the popup element, because at this point the hash param has been removed from the
+    // address and the popstate event doesn't contain info about the popped-state (it points to the new history head)
+    console.debug(`Popup %c${getDataName(popup)}%c removed from history`, "color: blue", "color: unset");
+
     popup.classList.remove("open");
+    clearDataName(popup);
 
     // TODO ERIC position=fixed causing resizing of main content when popup open
     // main.style.overflow = "unset";
     // main.style.position = "unset";
 
     video.destroyAllPlayers();
+
+    console.debug(`Popup closed${wasPopState ? "" : " with back button"}`);
 
     setTimeout(function() {
         background.classList.remove("open");
@@ -65,9 +102,9 @@ function closePopup() {
 }
 
 //Jump straight from one content window to another
-function jumpTo(content) {
-    closePopup("");
-    setTimeout(function(){ showPopup(content); }, 501);
+function jumpTo(path) {
+    closePopup();
+    setTimeout(function(){ retrieveAndShowContent(path); }, 501);
 }
 
 // See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml
@@ -110,14 +147,29 @@ function makeRequestOptions(method, body, contentType) {
     };
 }
 
-function isPopupState() {
-    return window.location.hash === popupOpenParam;
+function getDataName(elem) {
+    return elem.dataset.name;
 }
 
-function ensureNotPopupState() {
-    if (isPopupState()) {
-        history.pushState("", "", window.location.pathname + window.location.search);
-    }
+function setDataName(elem, name) {
+    elem.dataset.name = name;
+}
+
+function clearDataName(elem) {
+    setDataName(elem, "");
+}
+
+function hashPath() {
+    return window.location.hash;
+}
+
+// Returns true if hash path is not empty and not just "#"
+function isPopupState() {
+    return hashPath().length > 1;
+}
+
+function reloadWithoutHash() {
+    window.location.replace(window.location.href.replace(window.location.hash, ""));
 }
 
 function setFrameSrc(frameElemId, src) {
