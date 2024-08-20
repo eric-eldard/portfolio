@@ -2,10 +2,12 @@ a {
     color: #555;
 }
 
+.connect-li,
 .connect-li:hover {
     color: #0A66C2;
 }
 
+.connect-li .linkedin img,
 .connect-li:hover .linkedin img {
     filter: saturate(1);
 }
@@ -19,6 +21,7 @@ a {
     line-height: 125%;
 }
 
+.have-password,
 .have-password:hover {
     color: #b00;
 }
@@ -53,7 +56,7 @@ a {
 .link-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
     justify-content: space-around;
 }
 
@@ -62,6 +65,18 @@ a {
 }
 
 @media screen and (min-width: 745px) {
+    .connect-li {
+        color: #555;
+    }
+
+    .connect-li .linkedin img {
+        filter: saturate(0);
+    }
+
+    .have-password {
+        color: #555;
+    }
+
     .link-card {
         margin-bottom: 15px;
         margin-top: 15px;
@@ -70,5 +85,9 @@ a {
     .link-card:hover {
         margin-bottom: 16px;
         margin-top: 14px;
+    }
+
+    .link-container {
+        gap: 10px;
     }
 }

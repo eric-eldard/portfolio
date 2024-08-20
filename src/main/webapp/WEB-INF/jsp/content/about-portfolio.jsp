@@ -1,10 +1,9 @@
 <h1>Portfolio App</h1>
 <p>
-    This portfolio is a Spring Boot app I built myself, originally written in version 2.7 and then upgraded to 3.3. It
-    features a mobile-friendly UI created from scratch, recursive asset preloading, orchestration of third-party video
-    players to prevent simultaneous play, Amazon Secrets Manager for database and API credentials, and an admin-only UI
-    sitting atop a robust RESTful user management suite. I'm constantly adding and upgrading, and it's been a blast to
-    work on!
+    This portfolio is a <b>Spring Boot</b> app I built myself, initially written in version 2.7 and then upgraded to
+    3.3. It features a mobile-friendly UI created from scratch, recursive asset preloading, orchestration of third-party
+    video players to prevent simultaneous play, pre-compiled JSPs for faster load times, and an admin-only UI sitting
+    atop a robust RESTful user management suite. I'm constantly adding and upgrading, and it's been a blast to work on!
 </p>
 
 <jsp:include page="../widgets/see-it-on-gh.jsp">

@@ -9,12 +9,12 @@ function retrieveAndShowContentIfPopupState() {
             "color: blue", "color: unset");
         reloadWithoutHash();                                      // reload w/o popup name so we have a clean back state
     }
-    else if (sessionStorage.getItem(HASH_PATH_KEY)  !== null) {   // If the page loads with a stored hash path, then...
-        const storedPath = sessionStorage.getItem(HASH_PATH_KEY); // retrieve the stored value
-        sessionStorage.removeItem(HASH_PATH_KEY);                 // remove stored hash path so it doesn't trigger later
+    else if (sessionStorage.getItem(HASH_PATH_KEY)  !== null) {   // If the page loads with a stored popup name, then...
+        const storedPath = sessionStorage.getItem(HASH_PATH_KEY); // retrieve the stored name
+        sessionStorage.removeItem(HASH_PATH_KEY);                 // remove stored name so it doesn't trigger later
         console.debug(`Found path %c${storedPath}%c in session storage; navigating to this content...`,
             "color: blue", "color: unset");
-        retrieveAndShowContent(storedPath.substring(1));          // remove "#" and navigate to corresponding content
+        retrieveAndShowContent(storedPath.substring(1));          // trim "#" and navigate to corresponding content
     }
 }
 

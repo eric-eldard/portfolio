@@ -10,7 +10,7 @@ BOLD_GREEN="\e[1;92m"
 BOLD_WHITE="\e[1;97m"
 RESET="\e[0m"
 
-printf "\n${BOLD_WHITE}Deploying Portfolio App${RESET}\n\n"
+printf "\n\n${BOLD_WHITE}Deploying Portfolio App${RESET}\n\n"
 
 if [[ ! -d $ROOT ]]
 then
@@ -43,5 +43,5 @@ fi
 printf "Changing ownership of ${CYAN}${ROOT}${RESET} to user ${MAGENTA}${USER}${RESET}...\n"
 sudo chown -R $USER $ROOT
 
-printf "\n${BOLD_GREEN}Portfolio app successfully deployed.${RESET}\n\n"
-printf "To run, execute ${YELLOW}run.sh${RESET} from ${CYAN}${ROOT}${RESET} as user ${MAGENTA}${USER}${RESET}\n\n"
+printf "\n${BOLD_GREEN}Portfolio app successfully deployed.${RESET}\n"
+printf "To run, execute ${YELLOW}run.sh${RESET} from ${CYAN}${ROOT}${RESET} as user ${MAGENTA}${USER}${RESET}\n\n\n"

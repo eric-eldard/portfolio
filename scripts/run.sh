@@ -9,7 +9,7 @@ BOLD_GREEN="\e[1;92m"
 BOLD_WHITE="\e[1;97m"
 RESET="\e[0m"
 
-printf "\n${BOLD_WHITE}Starting Portfolio App${RESET}\n\n"
+printf "\n\n${BOLD_WHITE}Starting Portfolio App${RESET}\n\n"
 
 printf "Killing any process already running on ${WHITE}:8080${RESET}...\n"
 fuser -k 8080/tcp
@@ -30,4 +30,5 @@ export SPRING_DATASOURCE_PASSWORD=`echo $json | jq -r ".password"`
 printf "Starting ${YELLOW}${ARTIFACT}${RESET}...\n"
 nohup java -jar ${ARTIFACT} > logs/output.log 2>&1 &
 
-printf "\n${BOLD_GREEN}Portfolio app has started.${RESET} It may take up to ${WHITE}30 seconds for Spring${RESET} to serve requests.\n\n"
+printf "\n${BOLD_GREEN}Portfolio app has started.${RESET}\n"
+printf "It may take up to ${WHITE}30 seconds for Spring${RESET} to serve requests\n\n\n"
