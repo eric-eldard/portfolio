@@ -32,7 +32,12 @@
       align-self: center;
     }
 
-    #steganos-example {
+    #steganos-example a:after {
+        bottom: 8px;
+        content: "Open GitHub";
+    }
+
+    #steganos-example a img {
         height: 183px;
         object-fit: cover;
         object-position: 0 1%;
@@ -87,12 +92,10 @@
     <jsp:param name="build" value="Maven"/>
     <jsp:param name="env" value="Command line"/>
 </jsp:include>
-<div>
+<div id="steganos-example" class="screenshot solo">
     <a href="https://github.com/eric-eldard/steganos?tab=readme-ov-file#examples" target="_blank">
-        <img id="steganos-example"
-             class="solo"
-             src="https://github.com/eric-eldard/steganos/raw/master/examples.png?raw=true"
-             alt="Link out to example output of steganos"
+        <img src="https://github.com/eric-eldard/steganos/raw/master/examples.png?raw=true"
+             alt="Link out to example output of steganos on GitHub"
         >
     </a>
 </div>
