@@ -1,14 +1,15 @@
 package com.eric_eldard.portfolio.interceptor;
 
-import com.eric_eldard.portfolio.model.AdditionalLocation;
-import com.eric_eldard.portfolio.properties.AdditionalLocations;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import com.eric_eldard.portfolio.model.AdditionalLocation;
+import com.eric_eldard.portfolio.properties.AdditionalLocations;
 
 @Component
 public class VersionInterceptor implements HandlerInterceptor
@@ -27,9 +28,9 @@ public class VersionInterceptor implements HandlerInterceptor
     }
 
     @Override
-    public void postHandle(@NotNull HttpServletRequest request,
-                           @NotNull HttpServletResponse response,
-                           @NotNull Object handler,
+    public void postHandle(HttpServletRequest request,
+                           HttpServletResponse response,
+                           Object handler,
                            ModelAndView modelAndView)
     {
         if (!isAdditionalLocationRequest(request) && modelAndView != null)

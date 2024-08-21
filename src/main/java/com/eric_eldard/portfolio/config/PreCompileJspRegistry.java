@@ -1,6 +1,5 @@
 package com.eric_eldard.portfolio.config;
 
-import jakarta.servlet.ServletRegistration;
 import org.apache.tomcat.util.descriptor.web.ServletDef;
 import org.apache.tomcat.util.descriptor.web.WebXml;
 import org.apache.tomcat.util.descriptor.web.WebXmlParser;
@@ -11,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.xml.sax.InputSource;
 
+import jakarta.servlet.ServletRegistration;
 import java.io.InputStream;
 import java.util.Map;
 

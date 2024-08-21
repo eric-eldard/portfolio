@@ -1,6 +1,5 @@
 package com.eric_eldard.portfolio.config;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
@@ -76,7 +75,7 @@ public class WebMvcConfig implements WebMvcConfigurer
      * @see AdditionalLocations
      */
     @Override
-    public void addViewControllers(@NotNull ViewControllerRegistry registry)
+    public void addViewControllers(ViewControllerRegistry registry)
     {
         for (AdditionalLocation location : additionalLocations.getLocations())
         {

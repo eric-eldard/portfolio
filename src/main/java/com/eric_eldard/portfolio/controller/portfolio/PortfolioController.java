@@ -1,9 +1,5 @@
 package com.eric_eldard.portfolio.controller.portfolio;
 
-import com.eric_eldard.portfolio.service.resource.ResourceService;
-import com.eric_eldard.portfolio.service.video.EmbeddableVideo;
-import com.eric_eldard.portfolio.service.video.EmbeddableVideoService;
-import com.eric_eldard.portfolio.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +14,11 @@ import video.api.client.api.ApiException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+
+import com.eric_eldard.portfolio.service.resource.ResourceService;
+import com.eric_eldard.portfolio.service.video.EmbeddableVideo;
+import com.eric_eldard.portfolio.service.video.EmbeddableVideoService;
+import com.eric_eldard.portfolio.util.Constants;
 
 @Controller
 @RequestMapping("/portfolio")

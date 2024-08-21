@@ -1,13 +1,14 @@
 package com.eric_eldard.portfolio.model.user;
 
-import com.eric_eldard.portfolio.util.Constants;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.Date;
+
+import com.eric_eldard.portfolio.util.Constants;
 
 @Getter @Setter
 public class PortfolioUserDto

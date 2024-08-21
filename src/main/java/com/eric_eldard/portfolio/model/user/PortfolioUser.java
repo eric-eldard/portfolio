@@ -27,6 +27,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.eric_eldard.portfolio.model.user.enumeration.LoginOutcome;
+import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
+
 @Entity
 @Getter @Setter
 public class PortfolioUser implements UserDetails

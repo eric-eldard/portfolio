@@ -1,9 +1,10 @@
 package com.eric_eldard.portfolio.security.listener;
 
-import com.eric_eldard.portfolio.model.user.LoginFailureReason;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.stereotype.Component;
+
+import com.eric_eldard.portfolio.model.user.enumeration.LoginFailureReason;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 
 @Component

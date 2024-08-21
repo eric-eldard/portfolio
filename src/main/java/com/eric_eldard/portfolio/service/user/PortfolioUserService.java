@@ -1,15 +1,16 @@
 package com.eric_eldard.portfolio.service.user;
 
-import com.eric_eldard.portfolio.model.user.LoginFailureReason;
-import com.eric_eldard.portfolio.model.user.PortfolioAuthority;
-import com.eric_eldard.portfolio.model.user.PortfolioUser;
-import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import com.eric_eldard.portfolio.model.user.PortfolioUser;
+import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
+import com.eric_eldard.portfolio.model.user.enumeration.LoginFailureReason;
+import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 
 public interface PortfolioUserService extends UserDetailsService
 {

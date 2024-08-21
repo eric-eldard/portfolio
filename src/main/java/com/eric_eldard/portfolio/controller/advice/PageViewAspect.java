@@ -1,6 +1,7 @@
 package com.eric_eldard.portfolio.controller.advice;
 
 import com.eric_eldard.portfolio.service.user.SecurityContextService;
+
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;

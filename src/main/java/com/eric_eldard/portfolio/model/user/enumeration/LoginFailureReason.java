@@ -1,4 +1,4 @@
-package com.eric_eldard.portfolio.model.user;
+package com.eric_eldard.portfolio.model.user.enumeration;
 
 public enum LoginFailureReason
 {

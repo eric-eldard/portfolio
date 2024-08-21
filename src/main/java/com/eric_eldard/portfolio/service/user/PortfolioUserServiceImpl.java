@@ -1,13 +1,5 @@
 package com.eric_eldard.portfolio.service.user;
 
-import com.eric_eldard.portfolio.model.user.LoginAttempt;
-import com.eric_eldard.portfolio.model.user.LoginFailureReason;
-import com.eric_eldard.portfolio.model.user.PortfolioAuthority;
-import com.eric_eldard.portfolio.model.user.PortfolioUser;
-import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
-import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
-import com.eric_eldard.portfolio.config.GlobalConfig;
-import com.eric_eldard.portfolio.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +7,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import com.eric_eldard.portfolio.config.GlobalConfig;
+import com.eric_eldard.portfolio.model.user.LoginAttempt;
+import com.eric_eldard.portfolio.model.user.PortfolioUser;
+import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
+import com.eric_eldard.portfolio.model.user.enumeration.LoginFailureReason;
+import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
+import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
+import com.eric_eldard.portfolio.util.Constants;
 
 /**
  * To avoid a circular dependency with {@link org.springframework.security.authentication.AuthenticationManager} and

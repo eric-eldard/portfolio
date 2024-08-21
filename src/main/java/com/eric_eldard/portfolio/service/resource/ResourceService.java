@@ -2,7 +2,7 @@ package com.eric_eldard.portfolio.service.resource;
 
 import org.springframework.core.io.Resource;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.io.IOException;
 import java.util.List;
 

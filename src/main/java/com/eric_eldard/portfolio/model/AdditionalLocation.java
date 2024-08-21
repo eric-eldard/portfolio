@@ -1,6 +1,6 @@
 package com.eric_eldard.portfolio.model;
 
-import com.eric_eldard.portfolio.model.user.PortfolioAuthority;
+import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 
 /**
  * Additional resources which are not part of the portfolio app, but will still sit behind its security.

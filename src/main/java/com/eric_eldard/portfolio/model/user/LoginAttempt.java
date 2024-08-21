@@ -1,5 +1,9 @@
 package com.eric_eldard.portfolio.model.user;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -7,11 +11,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.annotation.Nullable;
 import java.util.Date;
+
+import com.eric_eldard.portfolio.model.user.enumeration.LoginFailureReason;
+import com.eric_eldard.portfolio.model.user.enumeration.LoginOutcome;
 
 @Entity
 @Getter @Setter

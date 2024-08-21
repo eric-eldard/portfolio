@@ -1,15 +1,16 @@
 package com.eric_eldard.portfolio.logging;
 
-import com.eric_eldard.portfolio.service.user.SecurityContextService;
+import org.slf4j.MDC;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.GenericFilter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import org.slf4j.MDC;
-import org.springframework.security.web.context.SecurityContextHolderFilter;
-
 import java.io.IOException;
+
+import com.eric_eldard.portfolio.service.user.SecurityContextService;
 
 /**
  * Filter for adding the calling user's username to the MDC, exposing that info to the logging context. This filter

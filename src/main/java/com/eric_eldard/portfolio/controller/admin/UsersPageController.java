@@ -6,11 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.eric_eldard.portfolio.model.user.PortfolioUser;
-import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
+import com.eric_eldard.portfolio.model.user.PortfolioUser;
+import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 
 @Controller
 @RequestMapping("/portfolio/users")

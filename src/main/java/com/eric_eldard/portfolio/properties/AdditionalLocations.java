@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.eric_eldard.portfolio.model.AdditionalLocation;
-import com.eric_eldard.portfolio.model.user.PortfolioAuthority;
+import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 
 /**
  * Reads in and stores {@link AdditionalLocation}s which are not part of the portfolio app, but will still sit behind
