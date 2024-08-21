@@ -1,12 +1,7 @@
 package com.eric_eldard.portfolio.config;
 
-import com.eric_eldard.portfolio.logging.AddUserToMdcFilter;
-import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
-import com.eric_eldard.portfolio.properties.AdditionalLocations;
-import com.eric_eldard.portfolio.service.user.PortfolioUserService;
-import com.eric_eldard.portfolio.service.user.PortfolioUserServiceImpl;
-import com.eric_eldard.portfolio.service.user.SecurityContextService;
-import jakarta.servlet.DispatcherType;
+import static org.springframework.security.web.header.writers.CrossOriginResourcePolicyHeaderWriter.CrossOriginResourcePolicy.SAME_SITE;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -27,7 +22,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
-import static org.springframework.security.web.header.writers.CrossOriginResourcePolicyHeaderWriter.CrossOriginResourcePolicy.SAME_SITE;
+import jakarta.servlet.DispatcherType;
+import java.util.Collection;
+
+import com.eric_eldard.portfolio.logging.AddUserToMdcFilter;
+import com.eric_eldard.portfolio.model.AdditionalLocation;
+import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
+import com.eric_eldard.portfolio.properties.AdditionalLocations;
+import com.eric_eldard.portfolio.service.user.PortfolioUserService;
+import com.eric_eldard.portfolio.service.user.PortfolioUserServiceImpl;
+import com.eric_eldard.portfolio.service.user.SecurityContextService;
 
 /**
  * Master config for security, logging, and beans for which creation order prevents a circular dependency.
@@ -93,18 +97,7 @@ public class GlobalConfig
     @Bean
     public SecurityFilterChain portfolioFilterChain(HttpSecurity httpSecurity) throws Exception
     {
-        // Add any additional locations as admin-only areas
-        additionalLocations.getMappings().forEach((webPath, filePath) -> {
-            try
-            {
-                httpSecurity.authorizeHttpRequests(requests ->
-                    requests.requestMatchers(webPath + "/**").hasRole("ADMIN"));
-            }
-            catch (Exception ex)
-            {
-                LOGGER.error("Unable to load additional location [{}] for reason [{}]", webPath, ex.getMessage());
-            }
-        });
+        authorizeAdditionalLocationRequests(httpSecurity, additionalLocations.getLocations());
 
         httpSecurity
             .authorizeHttpRequests(requests -> requests
@@ -136,6 +129,29 @@ public class GlobalConfig
             );
 
         return httpSecurity.build();
+    }
+
+    /**
+     * Adds HTTP authorization rules to requests for {@link AdditionalLocation}s
+     */
+    private void authorizeAdditionalLocationRequests(HttpSecurity httpSecurity,
+                                                     Collection<AdditionalLocation> locations)
+    {
+        locations.forEach(location ->
+        {
+            String webPath = location.webPath();
+            String authority = location.authority().toString();
+            try
+            {
+                httpSecurity.authorizeHttpRequests(requests ->
+                    requests.requestMatchers(webPath + "/**").hasAuthority(authority)
+                );
+            }
+            catch (Exception ex)
+            {
+                LOGGER.error("Unable to load additional location [{}] for reason [{}]", webPath, ex.getMessage());
+            }
+        });
     }
 
     private AuthenticationManager makeAuthenticationManager(HttpSecurity httpSecurity) throws Exception

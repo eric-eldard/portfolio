@@ -2,11 +2,16 @@ package com.eric_eldard.portfolio.model.user;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import lombok.Getter;
@@ -16,10 +21,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -52,6 +58,12 @@ public class PortfolioUser implements UserDetails
 
     private boolean admin;
 
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = PortfolioAuthority.class)
+    @Column(name = "authority")
+    @JoinTable(name = "grant_authority", joinColumns = @JoinColumn(name = "user_id"))
+    private Set<PortfolioAuthority> portfolioAuthorities;
+
     public PortfolioUser()
     {
         // framework ctor
@@ -83,6 +95,34 @@ public class PortfolioUser implements UserDetails
     }
 
     @Transient
+    public boolean addAuthority(PortfolioAuthority authority)
+    {
+        ensureAuthorityCollection();
+        return portfolioAuthorities.add(authority);
+    }
+
+    @Transient
+    public boolean removeAuthority(PortfolioAuthority authority)
+    {
+        ensureAuthorityCollection();
+        return portfolioAuthorities.remove(authority);
+    }
+
+    @Transient
+    public boolean hasAuthority(PortfolioAuthority authority)
+    {
+        return portfolioAuthorities != null && portfolioAuthorities.contains(authority);
+    }
+
+    private void ensureAuthorityCollection()
+    {
+        if (portfolioAuthorities == null)
+        {
+            portfolioAuthorities = new HashSet<>();
+        }
+    }
+
+    @Transient
     public void incrementFailedPasswordAttempts()
     {
         failedPasswordAttempts++;
@@ -92,11 +132,18 @@ public class PortfolioUser implements UserDetails
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
+        Set<SimpleGrantedAuthority> grantAuthorities = new HashSet<>();
         if (admin)
         {
-            return Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            grantAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
-        return null;
+        if (portfolioAuthorities != null)
+        {
+            portfolioAuthorities.forEach(auth ->
+                grantAuthorities.add(new SimpleGrantedAuthority(auth.toString()))
+            );
+        }
+        return Set.copyOf(grantAuthorities);
     }
 
     @Override

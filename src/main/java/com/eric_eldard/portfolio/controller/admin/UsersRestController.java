@@ -1,5 +1,6 @@
 package com.eric_eldard.portfolio.controller.admin;
 
+import com.eric_eldard.portfolio.model.user.PortfolioAuthority;
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import jakarta.validation.Valid;
@@ -83,5 +84,11 @@ public class UsersRestController
     public void toggleRole(@PathVariable long id)
     {
         userService.toggleRole(id);
+    }
+
+    @PutMapping("/{id}/toggle-auth/{authority}")
+    public void toggleAuth(@PathVariable long id, @PathVariable PortfolioAuthority authority)
+    {
+        userService.toggleAuth(id, authority);
     }
 }

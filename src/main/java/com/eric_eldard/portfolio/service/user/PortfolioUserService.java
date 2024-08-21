@@ -1,9 +1,10 @@
 package com.eric_eldard.portfolio.service.user;
 
 import com.eric_eldard.portfolio.model.user.LoginFailureReason;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.eric_eldard.portfolio.model.user.PortfolioAuthority;
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.annotation.Nonnull;
 import java.util.Date;
@@ -31,6 +32,8 @@ public interface PortfolioUserService extends UserDetailsService
     void toggleEnabled(long id);
 
     void toggleRole(long id);
+
+    void toggleAuth(long id, @Nonnull PortfolioAuthority authority);
 
     void recordSuccessfulLogin(@Nonnull String username);
 

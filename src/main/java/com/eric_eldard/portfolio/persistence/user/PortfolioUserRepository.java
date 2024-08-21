@@ -12,6 +12,6 @@ public interface PortfolioUserRepository extends JpaRepository<PortfolioUser, Lo
 {
     boolean existsByUsername(String username);
 
-    @EntityGraph(attributePaths = "loginAttempts")
+    @EntityGraph(attributePaths = {"loginAttempts", "portfolioAuthorities"})
     Optional<PortfolioUser> findByUsername(String username);
 }

@@ -77,6 +77,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Old Portfolio Auth</td>
+                    <td class="binary-field" onclick="toggleAuth(${user.id}, 'OLD_PORTFOLIO')" title="${user.hasAuthority('OLD_PORTFOLIO') ? 'Remove' : 'Grant'}">
+                        ${user.hasAuthority("OLD_PORTFOLIO") ? "&check;" : ""}
+                    </td>
+                </tr>
+                <tr>
                     <td colspan="2">
                         <div class="button-cell">
                             <button onclick="resetPword(${user.id}, '${user.username}')">Set Password</button>

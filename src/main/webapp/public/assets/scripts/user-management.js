@@ -81,6 +81,11 @@ function toggleRole(id) {
         .then(response => handleResponse(response));
 }
 
+function toggleAuth(id, authority) {
+    fetch(`${USER_ADMIN_PATH}/${id}/toggle-auth/${authority}`, makeRequestOptions("PUT"))
+        .then(response => handleResponse(response));
+}
+
 /**
  * @param {successCallback} optional action to run on success; omit for default behavior (reload page)
  */

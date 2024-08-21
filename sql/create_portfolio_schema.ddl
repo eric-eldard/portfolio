@@ -29,3 +29,10 @@ CREATE TABLE login_attempt(
     timeStamp       DATETIME                    NOT NULL,
     FOREIGN KEY (user_id) REFERENCES portfolio_user(id)
 );
+
+CREATE TABLE grant_authority(
+    user_id         BIGINT                 NOT NULL,
+    authority       ENUM('OLD_PORTFOLIO')  NOT NULL,
+    PRIMARY KEY (user_id, authority),
+    FOREIGN KEY (user_id) REFERENCES portfolio_user(id)
+);

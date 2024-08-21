@@ -1,8 +1,5 @@
 package com.eric_eldard.portfolio.config;
 
-import com.eric_eldard.portfolio.interceptor.VersionInterceptor;
-import com.eric_eldard.portfolio.properties.AdditionalLocations;
-import com.eric_eldard.portfolio.util.Constants;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +11,12 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import com.eric_eldard.portfolio.interceptor.VersionInterceptor;
+import com.eric_eldard.portfolio.model.AdditionalLocation;
+import com.eric_eldard.portfolio.properties.AdditionalLocations;
+import com.eric_eldard.portfolio.util.Constants;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer
@@ -63,24 +64,23 @@ public class WebMvcConfig implements WebMvcConfigurer
             .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
 
         // Exposes additional locations to which only admins will have access
-        for (Map.Entry<String, String> mapping : additionalLocations.getMappings().entrySet())
+        for (AdditionalLocation location : additionalLocations.getLocations())
         {
-            String webPath = mapping.getKey();
-            String filePath = mapping.getValue();
-            registry.addResourceHandler(webPath + "/**")
-                .addResourceLocations(new FileSystemResource(filePath + '/'));
+            registry.addResourceHandler(location.webPath() + "/**")
+                .addResourceLocations(new FileSystemResource(location.filePath() + '/'));
         }
     }
 
     /**
-     * Adds redirects to index.html pages for additional locations
+     * Adds redirects to index.html pages for {@link AdditionalLocation}s
      * @see AdditionalLocations
      */
     @Override
     public void addViewControllers(@NotNull ViewControllerRegistry registry)
     {
-        for (String webPath : additionalLocations.getMappings().keySet())
+        for (AdditionalLocation location : additionalLocations.getLocations())
         {
+            String webPath = location.webPath();
             registry.addRedirectViewController(webPath, webPath + "/index.html");
         }
     }

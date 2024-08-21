@@ -1,58 +1,56 @@
 package com.eric_eldard.portfolio.properties;
 
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.eric_eldard.portfolio.model.AdditionalLocation;
+import com.eric_eldard.portfolio.model.user.PortfolioAuthority;
 
 /**
- * Reads in and stores additional locations which are not part of the portfolio app, but will still sit behind its
- * security. Specify locations as properties in the format
+ * Reads in and stores {@link AdditionalLocation}s which are not part of the portfolio app, but will still sit behind
+ * its security. Specify locations as properties in the format
  * <br><br>
- * {@code portfolio.additional-locations.locations[i]=/web/path=/file/path}
+ * {@code portfolio.additional-locations.locations[i]:/web/path=/file/path:PORTFOLIO_AUTHORITY}
  * <br><br>
  * in which {@code i} is incremented sequentially from {@code 0} with each additional location, {@code /web/path} is
- * the absolute path where the resource will be exposed in the portfolio app, and {@code /file/path} is the absolute
- * location of the resource's base directory in the file system.
+ * the absolute path where the resource will be exposed in the portfolio app, {@code /file/path} is the absolute
+ * location of the resource's base directory in the file system, and {@code PORTFOLIO_AUTHORITY} is a value of
+ * {@link PortfolioAuthority}.
  * <br><br>
  * Example:
  * <br><br>
- * {@code portfolio.additional-locations.locations[0]=/portfolio/old=/opt/portfolio/assets/old-portfolio}
+ * {@code portfolio.additional-locations.locations[0]:/portfolio/old=/opt/portfolio/assets/old-portfolio:OLD_PORTFOLIO}
  * <br><br>
  * The resource should have an {@code index.html} in its base directory, to which calls to the {@code /web/path} will
  * redirect.
  */
+@Getter
 @ConfigurationProperties(prefix = "portfolio.additional-locations")
 public class AdditionalLocations
 {
-    private final Map<String, String> additionalLocationMappings;
+    private final Set<AdditionalLocation> locations;
 
     @ConstructorBinding
     public AdditionalLocations(List<String> locations)
     {
         if (locations == null)
         {
-            additionalLocationMappings = Collections.emptyMap();
+            this.locations = Set.of();
         }
         else
         {
-            this.additionalLocationMappings = new HashMap<>(locations.size());
-            locations.forEach(location ->
-            {
-                String[] split = location.split("=");
-                additionalLocationMappings.put(split[0], split[1]);
-            });
+            this.locations = locations.stream()
+                .map(location ->
+                {
+                    String[] split = location.split(":");
+                    return new AdditionalLocation(split[0], split[1], PortfolioAuthority.valueOf(split[2]));
+                })
+                .collect(Collectors.toUnmodifiableSet());
         }
-    }
-
-    /**
-     * @return an unmodifiable mapping of web path->file path for all additional locations
-     */
-    public Map<String, String> getMappings()
-    {
-        return Collections.unmodifiableMap(additionalLocationMappings);
     }
 }

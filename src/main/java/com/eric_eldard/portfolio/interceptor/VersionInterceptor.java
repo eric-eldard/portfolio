@@ -1,5 +1,6 @@
 package com.eric_eldard.portfolio.interceptor;
 
+import com.eric_eldard.portfolio.model.AdditionalLocation;
 import com.eric_eldard.portfolio.properties.AdditionalLocations;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,9 +43,9 @@ public class VersionInterceptor implements HandlerInterceptor
      */
     private boolean isAdditionalLocationRequest(HttpServletRequest request)
     {
-        return additionalLocations.getMappings()
-            .keySet()
+        return additionalLocations.getLocations()
             .stream()
-            .anyMatch(basePath -> request.getRequestURI().startsWith(basePath));
+            .map(AdditionalLocation::webPath)
+            .anyMatch(webPath -> request.getRequestURI().startsWith(webPath));
     }
 }

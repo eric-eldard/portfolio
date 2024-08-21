@@ -102,6 +102,7 @@
                     <th>Locked On</th>
                     <th>Disabled</th>
                     <th>Admin</th>
+                    <th>Old Portfolio Auth</th>
                     <th>Actions</th>
                 </tr>
                 <c:forEach items="${userList}" var="user">
@@ -125,6 +126,9 @@
                     </td>
                     <td class="binary-field" onclick="toggleRole(${user.id})" title="${user.admin ? 'Demote' : 'Promote'}">
                         ${user.admin ? "&check;" : ""}
+                    </td>
+                    <td class="binary-field" onclick="toggleAuth(${user.id}, 'OLD_PORTFOLIO')" title="${user.hasAuthority('OLD_PORTFOLIO') ? 'Remove' : 'Grant'}">
+                        ${user.hasAuthority("OLD_PORTFOLIO") ? "&check;" : ""}
                     </td>
                     <td>
                         <button onclick="resetPword(${user.id}, '${user.username}')">Password</button>

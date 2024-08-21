@@ -2,6 +2,7 @@ package com.eric_eldard.portfolio.service.user;
 
 import com.eric_eldard.portfolio.model.user.LoginAttempt;
 import com.eric_eldard.portfolio.model.user.LoginFailureReason;
+import com.eric_eldard.portfolio.model.user.PortfolioAuthority;
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
@@ -189,6 +190,34 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
             user.getUsername(),
             user.isAdmin() ? "promoted to admin" : "demoted to standard user",
             getRequesterUsername()
+        );
+    }
+
+    @Override
+    public void toggleAuth(long id, @Nonnull PortfolioAuthority authority)
+    {
+        PortfolioUser user = findById(id)
+            .orElseThrow(() -> new IllegalArgumentException(
+                "Cannot grant/remove authority [" + authority + "] for user with id [" + id + "]; user not found"));
+
+        if (user.hasAuthority(authority))
+        {
+            user.removeAuthority(authority);
+        }
+        else
+        {
+            user.addAuthority(authority);
+        }
+
+        boolean granted = user.hasAuthority(authority);
+
+        portfolioUserRepo.save(user);
+        LOGGER.info("[{}] {} authority [{}] {} user [{}]",
+            getRequesterUsername(),
+            granted ? "granted" : "removed",
+            authority,
+            granted ? "to" : "from",
+            user.getUsername()
         );
     }
 
