@@ -76,12 +76,14 @@
                         ${user.admin ? "&check;" : ""}
                     </td>
                 </tr>
+                <c:forEach items="<%=com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority.values()%>" var="authority">
                 <tr>
-                    <td>Old Portfolio Auth</td>
-                    <td class="binary-field" onclick="toggleAuth(${user.id}, 'OLD_PORTFOLIO')" title="${user.hasAuthority('OLD_PORTFOLIO') ? 'Remove' : 'Grant'}">
-                        ${user.hasAuthority("OLD_PORTFOLIO") ? "&check;" : ""}
+                    <td>${authority.pretty()}</td>
+                    <td class="binary-field" onclick="toggleAuth(${user.id}, '${authority}')" title="${user.hasAuthority(authority) ? 'Remove' : 'Grant'}">
+                        ${user.hasAuthority(authority) ? "&check;" : ""}
                     </td>
                 </tr>
+                </c:forEach>
                 <tr>
                     <td colspan="2">
                         <div class="button-cell">

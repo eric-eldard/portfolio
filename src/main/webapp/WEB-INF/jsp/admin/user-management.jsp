@@ -102,7 +102,7 @@
                     <th>Locked On</th>
                     <th>Disabled</th>
                     <th>Admin</th>
-                    <th>Old Portfolio Auth</th>
+                    <th>Granted Auths</th>
                     <th>Actions</th>
                 </tr>
                 <c:forEach items="${userList}" var="user">
@@ -127,13 +127,22 @@
                     <td class="binary-field" onclick="toggleRole(${user.id})" title="${user.admin ? 'Demote' : 'Promote'}">
                         ${user.admin ? "&check;" : ""}
                     </td>
-                    <td class="binary-field" onclick="toggleAuth(${user.id}, 'OLD_PORTFOLIO')" title="${user.hasAuthority('OLD_PORTFOLIO') ? 'Remove' : 'Grant'}">
-                        ${user.hasAuthority("OLD_PORTFOLIO") ? "&check;" : ""}
-                    </td>
+                    <c:choose>
+                        <c:when test="${user.portfolioAuthorities.size() > 0}">
+                            <td class="summation"
+                                title="&#013;<c:forEach items='${user.portfolioAuthorities}' var='authority'>${authority.pretty()}&#013;</c:forEach>">
+                                <a href="/portfolio/users/${user.id}">
+                                    ${user.portfolioAuthorities.size()}
+                                </a>
+                            </td>
+                        </c:when>
+                        <c:otherwise>
+                            <td></td>
+                        </c:otherwise>
+                    </c:choose>
                     <td>
                         <button onclick="resetPword(${user.id}, '${user.username}')">Password</button>
                         <button onclick="deleteUser(${user.id}, '${user.username}')">Delete</button>
-                        &nbsp;<!-- prevents wonky collapsed border on mobile/grid view -->
                     </td>
                 </tr>
                 </c:forEach>
