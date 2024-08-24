@@ -3,9 +3,9 @@ package com.eric_eldard.portfolio.controller.admin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -15,8 +15,8 @@ import jakarta.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
+import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 
 @RestController
@@ -32,9 +32,9 @@ public class UsersRestController
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody @Valid PortfolioUserDto dto)
+    public long create(@RequestBody @Valid PortfolioUserDto dto)
     {
-        userService.create(dto);
+        return userService.create(dto).getId();
     }
 
     @DeleteMapping("/{id}")
@@ -43,19 +43,19 @@ public class UsersRestController
         userService.delete(id);
     }
 
-    @PutMapping("/{id}/unlock")
+    @PatchMapping("/{id}/unlock")
     public void unlock(@PathVariable long id)
     {
         userService.unlock(id);
     }
 
-    @PutMapping(value = "/{id}/password", consumes = MediaType.TEXT_PLAIN_VALUE)
+    @PatchMapping(value = "/{id}/password", consumes = MediaType.TEXT_PLAIN_VALUE)
     public void setPassword(@PathVariable long id, @RequestBody String password)
     {
         userService.setPassword(id, password);
     }
 
-    @PutMapping("/{id}/authorized-until/{until}")
+    @PatchMapping("/{id}/authorized-until/{until}")
     public void setAuthorizedUntil(@PathVariable long id, @PathVariable String until)
     {
         if ("forever".equalsIgnoreCase(until))
@@ -75,19 +75,19 @@ public class UsersRestController
         }
     }
 
-    @PutMapping("/{id}/toggle-enabled")
+    @PatchMapping("/{id}/toggle-enabled")
     public void toggleEnabled(@PathVariable long id)
     {
         userService.toggleEnabled(id);
     }
 
-    @PutMapping("/{id}/toggle-admin")
+    @PatchMapping("/{id}/toggle-admin")
     public void toggleRole(@PathVariable long id)
     {
         userService.toggleRole(id);
     }
 
-    @PutMapping("/{id}/toggle-auth/{authority}")
+    @PatchMapping("/{id}/toggle-auth/{authority}")
     public void toggleAuth(@PathVariable long id, @PathVariable PortfolioAuthority authority)
     {
         userService.toggleAuth(id, authority);

@@ -28,7 +28,7 @@ function deleteUser(id, username, successCallback = undefined) {
 function unlockUser(id, username) {
     const confirmed = confirm("Confirm unlocking account for " + username);
     if (confirmed === true) {
-        fetch(`${USER_ADMIN_PATH}/${id}/unlock`, makeRequestOptions("PUT"))
+        fetch(`${USER_ADMIN_PATH}/${id}/unlock`, makeRequestOptions("PATCH"))
             .then(response => handleResponse(response));
     }
 }
@@ -42,7 +42,7 @@ function resetPword(id, username) {
         alert(`Password for user ${username} was not changed\nNew password must be at least ${MIN_PASSWORD_CHARS} characters`);
     }
     else {
-        fetch(`${USER_ADMIN_PATH}/${id}/password`, makeRequestOptions("PUT", password, "text/plain"))
+        fetch(`${USER_ADMIN_PATH}/${id}/password`, makeRequestOptions("PATCH", password, "text/plain"))
             .then(response => handleResponse(response, (response => alert("Password updated for user " + username))));
     }
 }
@@ -50,7 +50,7 @@ function resetPword(id, username) {
 function setAuthUntil(id, username, date) {
     const confirmed = confirm(`Confirm ${date} as new authorized-until date for ${username}`);
     if (confirmed === true) {
-            fetch(`${USER_ADMIN_PATH}/${id}/authorized-until/${date}`, makeRequestOptions("PUT"))
+            fetch(`${USER_ADMIN_PATH}/${id}/authorized-until/${date}`, makeRequestOptions("PATCH"))
                 .then(response => handleResponse(response));
     }
     else {
@@ -62,7 +62,7 @@ function setAuthUntil(id, username, date) {
 function setInfiniteAuth(id, username) {
     const confirmed = confirm("Confirm infinite authorization for " + username);
     if (confirmed === true) {
-            fetch(`${USER_ADMIN_PATH}/${id}/authorized-until/forever`, makeRequestOptions("PUT"))
+            fetch(`${USER_ADMIN_PATH}/${id}/authorized-until/forever`, makeRequestOptions("PATCH"))
                 .then(response => handleResponse(response));
     }
     else {
@@ -72,17 +72,17 @@ function setInfiniteAuth(id, username) {
 }
 
 function toggleUser(id) {
-    fetch(`${USER_ADMIN_PATH}/${id}/toggle-enabled`, makeRequestOptions("PUT"))
+    fetch(`${USER_ADMIN_PATH}/${id}/toggle-enabled`, makeRequestOptions("PATCH"))
         .then(response => handleResponse(response));
 }
 
 function toggleRole(id) {
-    fetch(`${USER_ADMIN_PATH}/${id}/toggle-admin`, makeRequestOptions("PUT"))
+    fetch(`${USER_ADMIN_PATH}/${id}/toggle-admin`, makeRequestOptions("PATCH"))
         .then(response => handleResponse(response));
 }
 
 function toggleAuth(id, authority) {
-    fetch(`${USER_ADMIN_PATH}/${id}/toggle-auth/${authority}`, makeRequestOptions("PUT"))
+    fetch(`${USER_ADMIN_PATH}/${id}/toggle-auth/${authority}`, makeRequestOptions("PATCH"))
         .then(response => handleResponse(response));
 }
 

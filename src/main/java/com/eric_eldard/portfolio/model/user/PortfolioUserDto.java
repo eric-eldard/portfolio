@@ -1,5 +1,6 @@
 package com.eric_eldard.portfolio.model.user;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,9 @@ import java.util.Date;
 
 import com.eric_eldard.portfolio.util.Constants;
 
-@Getter @Setter
+@Builder
+@Getter
+@Setter
 public class PortfolioUserDto
 {
     @Pattern(regexp = "^[A-Za-z0-9\\-_+@.]+$")
