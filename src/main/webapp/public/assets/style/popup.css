@@ -8,22 +8,24 @@
 	height: 88%;
 	margin: auto;
 	max-width: 1100px;
+	opacity: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
 	overscroll-behavior: contain;
 	padding-bottom: 15px;
 	padding-left: 15px;
 	padding-right: 15px;
 	padding-top: 10px;
 	padding-bottom: 24px;
-	overflow-x: hidden;
-	overflow-y: scroll;
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
-	transition: padding 1s, width 0.3s;
+	transition: opacity 0.3s, padding 1s, width 0.3s;
 	width: 0;
 }
 
 #popup.open {
+    opacity: 1;
     width: 85%;
 }
 
@@ -108,7 +110,10 @@
 
 /* A full-page div for preventing interaction with the main page while content is being displayed in #popup */
 #popup-background {
-	background: rgba(128, 128, 128, 0.5);
+	/*
+	    popup background color removed in favor of blurring main content
+	    background: rgba(128, 128, 128, 0.5);
+    */
 	cursor: pointer;
 	display: none;
 	height: 100%;

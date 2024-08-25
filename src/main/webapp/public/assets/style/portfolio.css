@@ -34,7 +34,7 @@ button, input[type=checkbox], label {
 #main {
 	padding-top: 15px;
 	position: relative;
-	transition: padding 1s;
+	transition: filter 1s, padding 1s;
 	width: 100%;
 	z-index: 1;
 }
@@ -52,6 +52,10 @@ button, input[type=checkbox], label {
     display: none;
 }
 
+
+.blur {
+    filter: blur(3px);
+}
 
 .center {
     margin-left: auto;

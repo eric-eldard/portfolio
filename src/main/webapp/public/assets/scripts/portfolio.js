@@ -56,6 +56,12 @@ function showContentInPopup(content, path) {
     // main.style.position = "fixed";
 
     background.classList.add("open");
+    main.classList.add("blur");
+
+    // Previous color not removed in closePopup() because it needs time to fade from opaque to transparent
+    removeClassesStartingWith(document.body, "color-");
+    document.body.classList.add(`color-${path}`);
+    document.body.classList.add("opaque");
 
     setTimeout(function() {
         popup.classList.add("open");
@@ -84,6 +90,8 @@ function closePopup() {
     // address and the popstate event doesn't contain info about the popped-state (it points to the new history head)
     console.debug(`Popup %c${getDataName(popup)}%c removed from history`, "color: blue", "color: unset");
 
+    document.body.classList.remove("opaque");
+    main.classList.remove("blur");
     popup.classList.remove("open");
     clearDataName(popup);
 
@@ -156,6 +164,15 @@ function setDataName(elem, name) {
 
 function clearDataName(elem) {
     setDataName(elem, "");
+}
+
+function removeClassesStartingWith(elem, clazzStub) {
+    let classToRemove;
+    do {
+        classToRemove = Array.from(elem.classList).find(clazz => clazz.startsWith(clazzStub));
+        elem.classList.remove(classToRemove);
+    }
+    while (classToRemove);
 }
 
 function hashPath() {
