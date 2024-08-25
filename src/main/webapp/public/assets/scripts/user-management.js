@@ -16,6 +16,7 @@ function postNewUser(newUser) {
 
 function deleteUser(id, username, successCallback = undefined) {
     const confirmed = confirm(`Are you sure you want to delete user ${username}?`);
+
     if (confirmed) {
         fetch(USER_ADMIN_PATH + "/" + id, makeRequestOptions("DELETE"))
             .then(response => handleResponse(response, successCallback));
@@ -27,14 +28,16 @@ function deleteUser(id, username, successCallback = undefined) {
 
 function unlockUser(id, username) {
     const confirmed = confirm("Confirm unlocking account for " + username);
+
     if (confirmed === true) {
         fetch(`${USER_ADMIN_PATH}/${id}/unlock`, makeRequestOptions("PATCH"))
             .then(response => handleResponse(response));
     }
 }
 
-function resetPword(id, username) {
+function setPassword(id, username) {
     const password = prompt("Set new password for user " + username);
+
     if (typeof password === "undefined" || password === null) {
         alert(`Password change for user ${username} was canceled`);
     }
@@ -42,42 +45,54 @@ function resetPword(id, username) {
         alert(`Password for user ${username} was not changed\nNew password must be at least ${MIN_PASSWORD_CHARS} characters`);
     }
     else {
-        fetch(`${USER_ADMIN_PATH}/${id}/password`, makeRequestOptions("PATCH", password, "text/plain"))
+        const user = {
+            "password": password,
+        }
+        fetch(`${USER_ADMIN_PATH}/${id}/password`, makeRequestOptions("PATCH", user))
             .then(response => handleResponse(response, (response => alert("Password updated for user " + username))));
     }
 }
 
 function setAuthUntil(id, username, date) {
-    const confirmed = confirm(`Confirm ${date} as new authorized-until date for ${username}`);
+    let confirmed;
+
+    if (date) {
+        confirmed = confirm(`Confirm ${date} as new authorized-until date for ${username}`);
+    }
+    else {
+        confirmed = confirm("Confirm infinite authorization for " + username);
+    }
+
     if (confirmed === true) {
-            fetch(`${USER_ADMIN_PATH}/${id}/authorized-until/${date}`, makeRequestOptions("PATCH"))
-                .then(response => handleResponse(response));
+        const user = {
+            "authorizedUntil": date,
+        }
+        fetch(`${USER_ADMIN_PATH}/${id}/authorized-until`, makeRequestOptions("PATCH", user))
+            .then(response => handleResponse(response));
     }
     else {
         alert(`Authorized-until date for user ${username} not changed`);
-        Window.location.reload();
+        window.location.reload();
     }
 }
 
 function setInfiniteAuth(id, username) {
-    const confirmed = confirm("Confirm infinite authorization for " + username);
-    if (confirmed === true) {
-            fetch(`${USER_ADMIN_PATH}/${id}/authorized-until/forever`, makeRequestOptions("PATCH"))
-                .then(response => handleResponse(response));
-    }
-    else {
-        alert(`Authorized-until date for user ${username} not changed`);
-        Window.location.reload();
-    }
+    setAuthUntil(id, username, null);
 }
 
-function toggleUser(id) {
-    fetch(`${USER_ADMIN_PATH}/${id}/toggle-enabled`, makeRequestOptions("PATCH"))
+function setEnabled(id, enabled) {
+    const user = {
+        "enabled": enabled,
+    }
+    fetch(`${USER_ADMIN_PATH}/${id}/enabled`, makeRequestOptions("PATCH", user))
         .then(response => handleResponse(response));
 }
 
-function toggleRole(id) {
-    fetch(`${USER_ADMIN_PATH}/${id}/toggle-admin`, makeRequestOptions("PATCH"))
+function setIsAdmin(id, isAdmin) {
+    const user = {
+        "admin": isAdmin,
+    }
+    fetch(`${USER_ADMIN_PATH}/${id}/admin`, makeRequestOptions("PATCH", user))
         .then(response => handleResponse(response));
 }
 

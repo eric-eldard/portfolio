@@ -12,7 +12,7 @@
     <name>Eric Eldard Portfolio</name>
     <groupId>com.eric_eldard</groupId>
     <artifactId>portfolio</artifactId>
-    <version>0.9.1-prerelease</version>
+    <version>0.10-prerelease</version>
     <packaging>war</packaging>
 
     <properties>
@@ -259,6 +259,22 @@
                         </replacement>
                     </replacements>
                 </configuration>
+            </plugin>
+
+            <!--
+                Though ITs should be automatically run during the integration-test phase, explicitly including latest
+                surefire and failsafe dependencies prevents some JUnit dependency conflict that causes ITs to be skipped
+                https://stackoverflow.com/a/74223102/1908807
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.4.0</version>
             </plugin>
 
         </plugins>

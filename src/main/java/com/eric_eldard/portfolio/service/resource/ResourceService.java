@@ -22,8 +22,13 @@ public interface ResourceService
     List<Resource> getClasspathResources(String classpathPattern) throws IOException;
 
     /**
+     * Get a file system, web, or classpath resource, based on the path's prefix.
+     */
+    Resource resolveResource(String path);
+
+    /**
      * Swallow and log checked exceptions coming out of {@link Resource#getURI()}
      */
     @Nullable
-    String getPathOfResource(Resource resource);
+    String resourceUriToString(Resource resource);
 }

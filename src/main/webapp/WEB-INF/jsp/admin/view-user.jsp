@@ -61,18 +61,23 @@
                 <c:if test="${user.lockedOn != null}">
                 <tr>
                     <td>Locked On</td>
-                    <td>${user.lockedOn}</td>
+                    <td>
+                        ${user.lockedOn}
+                        <c:if test="${user.lockedOn != null}">
+                            <a href="javascript: unlockUser(${user.id}, '${user.username}')" class="emoji-silhouette" title="Unlock">&#128275;</a>
+                        </c:if>
+                    </td>
                 </tr>
                 </c:if>
                 <tr>
                     <td>Disabled</td>
-                    <td class="binary-field" onclick="toggleUser(${user.id})" title="${user.enabled ? 'Disable' : 'Enable'}">
+                    <td class="binary-field" onclick="setEnabled(${user.id}, ${!user.enabled})" title="${user.enabled ? 'Disable' : 'Enable'}">
                         ${!user.enabled ? "&cross;" : ""}
                     </td>
                 </tr>
                 <tr>
                     <td>Is Admin</td>
-                    <td class="binary-field" onclick="toggleRole(${user.id})" title="${user.admin ? 'Demote' : 'Promote'}">
+                    <td class="binary-field" onclick="setIsAdmin(${user.id}, ${!user.admin})" title="${user.admin ? 'Demote' : 'Promote'}">
                         ${user.admin ? "&check;" : ""}
                     </td>
                 </tr>
@@ -87,7 +92,7 @@
                 <tr>
                     <td colspan="2">
                         <div class="button-cell">
-                            <button onclick="resetPword(${user.id}, '${user.username}')">Set Password</button>
+                            <button onclick="setPassword(${user.id}, '${user.username}')">Set Password</button>
                             <button onclick="deleteUser(${user.id}, '${user.username}', (response => window.location = '/portfolio/users'));">Delete</button>
                         </div>
                     </td>

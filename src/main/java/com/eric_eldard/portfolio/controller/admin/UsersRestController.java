@@ -1,7 +1,6 @@
 package com.eric_eldard.portfolio.controller.admin;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
 import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
@@ -49,42 +47,36 @@ public class UsersRestController
         userService.unlock(id);
     }
 
-    @PatchMapping(value = "/{id}/password", consumes = MediaType.TEXT_PLAIN_VALUE)
-    public void setPassword(@PathVariable long id, @RequestBody String password)
+    @PatchMapping(value = "/{id}/password")
+    public void setPassword(@PathVariable long id, @RequestBody @Valid PortfolioUserDto dto)
     {
-        userService.setPassword(id, password);
+        userService.setPassword(id, dto.getPassword());
     }
 
-    @PatchMapping("/{id}/authorized-until/{until}")
-    public void setAuthorizedUntil(@PathVariable long id, @PathVariable String until)
+    @PatchMapping("/{id}/authorized-until")
+    public void setAuthorizedUntil(@PathVariable long id, @RequestBody PortfolioUserDto dto)
     {
-        if ("forever".equalsIgnoreCase(until))
+        Date until = dto.getAuthorizedUntil();
+        if (until == null)
         {
             userService.setInfiniteAuthorization(id);
         }
         else
         {
-            try
-            {
-                userService.setAuthorizedUntil(id, new SimpleDateFormat("yyyy-MM-dd").parse(until));
-            }
-            catch (ParseException ex)
-            {
-                throw new IllegalArgumentException("[" + until + "] is not a valid date in the format yyyy-MM-dd");
-            }
+            userService.setAuthorizedUntil(id, until);
         }
     }
 
-    @PatchMapping("/{id}/toggle-enabled")
-    public void toggleEnabled(@PathVariable long id)
+    @PatchMapping("/{id}/enabled")
+    public void setEnabled(@PathVariable long id, @RequestBody PortfolioUserDto dto)
     {
-        userService.toggleEnabled(id);
+        userService.setEnabled(id, dto.isEnabled());
     }
 
-    @PatchMapping("/{id}/toggle-admin")
-    public void toggleRole(@PathVariable long id)
+    @PatchMapping("/{id}/admin")
+    public void setIsAdmin(@PathVariable long id, @RequestBody PortfolioUserDto dto)
     {
-        userService.toggleRole(id);
+        userService.setIsAdmin(id, dto.isAdmin());
     }
 
     @PatchMapping("/{id}/toggle-auth/{authority}")

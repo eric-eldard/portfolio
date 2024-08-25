@@ -40,7 +40,7 @@ import com.eric_eldard.portfolio.service.user.SecurityContextService;
 @EnableWebSecurity
 @EnableMethodSecurity
 @EnableConfigurationProperties(AdditionalLocations.class)
-@PropertySource(value = "file:${portfolio.additional-properties.location}", ignoreResourceNotFound = true)
+@PropertySource(value = "${portfolio.additional-properties.location}", ignoreResourceNotFound = true)
 public class GlobalConfig
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalConfig.class);

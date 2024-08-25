@@ -30,9 +30,9 @@ public interface PortfolioUserService extends UserDetailsService
 
     void setInfiniteAuthorization(long id);
 
-    void toggleEnabled(long id);
+    void setEnabled(long id, boolean enabled);
 
-    void toggleRole(long id);
+    void setIsAdmin(long id, boolean isAdmin);
 
     void toggleAuth(long id, @Nonnull PortfolioAuthority authority);
 

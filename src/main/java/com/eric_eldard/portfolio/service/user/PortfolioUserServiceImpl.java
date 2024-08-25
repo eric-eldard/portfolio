@@ -83,7 +83,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
         );
 
         user = portfolioUserRepo.save(user);
-        LOGGER.info("User [{}] created by [{}]", username, getRequesterUsername());
+        LOGGER.info("User [{}] created by [{}]", user.getUsername(), getRequesterUsername());
 
         return user;
     }
@@ -124,7 +124,12 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
 
         user.setPassword(passwordEncoder.encode(password.trim()));
         user.setFailedPasswordAttempts(0);
-        portfolioUserRepo.save(user);
+        user = portfolioUserRepo.save(user);
+
+        LOGGER.info("[{}] changed password for user [{}]",
+            getRequesterUsername(),
+            user.getUsername()
+        );
     }
 
     @Override
@@ -135,11 +140,11 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
                 new IllegalArgumentException("Cannot set access date for user with id [" + id + "]; user not found"));
 
         user.setAuthorizedUntil(date);
+        user = portfolioUserRepo.save(user);
 
-        portfolioUserRepo.save(user);
         LOGGER.info("User [{}] is authorized until {}; set by [{}]",
             user.getUsername(),
-            date,
+            user.getAuthorizedUntil(),
             getRequesterUsername()
         );
     }
@@ -152,8 +157,8 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
                 new IllegalArgumentException("Cannot set infinite access for user id [" + id + "]; user not found"));
 
         user.setAuthorizedUntil(null);
-
         portfolioUserRepo.save(user);
+
         LOGGER.info("User [{}] is authorized forever; set by [{}]",
             user.getUsername(),
             getRequesterUsername()
@@ -161,15 +166,15 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     }
 
     @Override
-    public void toggleEnabled(long id)
+    public void setEnabled(long id, boolean enabled)
     {
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
                 new IllegalArgumentException("Cannot enable/disable user with id [" + id + "]; user not found"));
 
-        user.setEnabled(!user.isEnabled());
+        user.setEnabled(enabled);
+        user = portfolioUserRepo.save(user);
 
-        portfolioUserRepo.save(user);
         LOGGER.info("User [{}] {} by [{}]",
             user.getUsername(),
             user.isEnabled() ? "enabled" : "disabled",
@@ -178,15 +183,15 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     }
 
     @Override
-    public void toggleRole(long id)
+    public void setIsAdmin(long id, boolean isAdmin)
     {
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
                 new IllegalArgumentException("Cannot promote/demote user with id [" + id + "]; user not found"));
 
-        user.setAdmin(!user.isAdmin());
+        user.setAdmin(isAdmin);
+        user = portfolioUserRepo.save(user);
 
-        portfolioUserRepo.save(user);
         LOGGER.info("User [{}] {} by [{}]",
             user.getUsername(),
             user.isAdmin() ? "promoted to admin" : "demoted to standard user",
@@ -210,9 +215,9 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
             user.addAuthority(authority);
         }
 
+        user = portfolioUserRepo.save(user);
         boolean granted = user.hasAuthority(authority);
 
-        portfolioUserRepo.save(user);
         LOGGER.info("[{}] {} authority [{}] {} user [{}]",
             getRequesterUsername(),
             granted ? "granted" : "removed",

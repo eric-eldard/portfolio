@@ -15,16 +15,16 @@ import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
  * Reads in and stores {@link AdditionalLocation}s which are not part of the portfolio app, but will still sit behind
  * its security. Specify locations as properties in the format
  * <br><br>
- * {@code portfolio.additional-locations.locations[i]:/web/path=/file/path:PORTFOLIO_AUTHORITY}
+ * {@code portfolio.additional-locations.locations[i]=/web/path | /web/or/file/or/classpath/redirect | PORTFOLIO_AUTHORITY}
  * <br><br>
- * in which {@code i} is incremented sequentially from {@code 0} with each additional location, {@code /web/path} is
- * the absolute path where the resource will be exposed in the portfolio app, {@code /file/path} is the absolute
- * location of the resource's base directory in the file system, and {@code PORTFOLIO_AUTHORITY} is a value of
- * {@link PortfolioAuthority}.
+ * in which {@code i} is incremented sequentially from {@code 0} with each additional location,
+ * {@code /web/path} is the absolute path where the resource will be exposed in the portfolio app,
+ * {@code /web/or/file/or/classpath/redirect} is the absolute URI of the base directory (web, local file, or classpath)
+ * to give access to, and {@code PORTFOLIO_AUTHORITY} is a value of {@link PortfolioAuthority}.
  * <br><br>
  * Example:
  * <br><br>
- * {@code portfolio.additional-locations.locations[0]:/portfolio/old=/opt/portfolio/assets/old-portfolio:OLD_PORTFOLIO}
+ * {@code portfolio.additional-locations.locations[0]=/portfolio/old | file:/opt/portfolio/assets/old-portfolio | OLD_PORTFOLIO}
  * <br><br>
  * The resource should have an {@code index.html} in its base directory, to which calls to the {@code /web/path} will
  * redirect.
@@ -47,7 +47,7 @@ public class AdditionalLocations
             this.locations = locations.stream()
                 .map(location ->
                 {
-                    String[] split = location.split(":");
+                    String[] split = location.split(" \\| ");
                     return new AdditionalLocation(split[0], split[1], PortfolioAuthority.valueOf(split[2]));
                 })
                 .collect(Collectors.toUnmodifiableSet());

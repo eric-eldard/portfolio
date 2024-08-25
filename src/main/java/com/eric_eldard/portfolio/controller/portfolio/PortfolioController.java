@@ -127,9 +127,9 @@ public class PortfolioController
         }
 
         List<String> filePaths = resources.stream()
-            .map(resourceService::getPathOfResource)
+            .map(resourceService::resourceUriToString)
             .filter(Objects::nonNull)
-            .map(filePath -> filePath.replace(assetsFilePath, ""))
+            .map(filePath -> filePath.replace(assetsFilePath, "/"))
             .map(partialPath -> Constants.ASSETS_PATH + partialPath)
             .toList();
 
@@ -138,8 +138,8 @@ public class PortfolioController
 
     private enum ResourceType
     {
-        DOCUMENTS("/**/*.pdf"),
-        IMAGES("/**/*.png");
+        DOCUMENTS("**/*.pdf"),
+        IMAGES("**/*.png");
 
         private final String pattern;
 
