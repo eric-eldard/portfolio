@@ -106,27 +106,27 @@ body.opaque:after {
 }
 
 .color-movie-theater:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(128, 32, 128, 1) 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(128, 16, 128, 1) 100%);
 }
 
 .color-training-projects:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(32, 32, 176, 1) 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(8, 8, 192, 1) 100%);
 }
 
 .color-software-engineer:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 144, 144, 1) 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 160, 160, 1) 100%);
 }
 
 .color-solutions:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 96, 0, 1) 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(16, 128, 16, 1) 100%);
 }
 
 .color-executive:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(176, 160, 0, 1) 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(224, 192, 32, 1) 100%);
 }
 
 .color-hobby:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(192, 80, 0, 1) 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(192, 96, 0, 1) 100%);
 }
 
 .color-about-portfolio:after {
