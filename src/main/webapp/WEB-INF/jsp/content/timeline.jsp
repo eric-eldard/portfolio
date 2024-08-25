@@ -22,7 +22,7 @@
 
     <style>
         .timeline .timeline-events.chrome-shim {
-            bottom: -2px;
+            bottom: -3px;
         }
     </style>
 
