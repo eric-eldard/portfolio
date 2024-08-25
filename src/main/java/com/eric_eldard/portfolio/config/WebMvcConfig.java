@@ -64,6 +64,7 @@ public class WebMvcConfig implements WebMvcConfigurer
             .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
 
         // Exposes protected assets, stored in the file system, to authenticated users
+        String assetsFilePath = StringUtils.withTrailingString(this.assetsFilePath, "/");
         registry.addResourceHandler(Constants.ASSETS_PATH + "/**")
             .addResourceLocations(resourceService.resolveResource(assetsFilePath))
             .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
