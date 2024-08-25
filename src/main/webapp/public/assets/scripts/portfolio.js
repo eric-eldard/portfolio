@@ -175,6 +175,10 @@ function setFrameSrc(frameElemId, src) {
     document.getElementById(frameElemId).contentWindow.location.replace(src);
 }
 
+function isChromeMobile() {
+    return /Chrome\/[0-9\.]+ Mobile/i.test(navigator.userAgent);
+}
+
 function cycleFontColors(containerId, rBegin, gBegin, bBegin, rEnd, gEnd, bEnd) {
     const container = document.getElementById(containerId);
     const text = container.innerText;

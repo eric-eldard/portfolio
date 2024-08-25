@@ -19,4 +19,17 @@
             <span>2024</span>
         </div>
     </div>
+
+    <style>
+        .timeline .timeline-events.chrome-shim {
+            bottom: -2px;
+        }
+    </style>
+
+    <script>
+        if (isChromeMobile()) {
+            console.debug("Mobile Chrome detected; adding portfolio timeline CSS shim");
+            document.querySelector(".timeline-events").classList.add("chrome-shim");
+        }
+    </script>
 </div>
