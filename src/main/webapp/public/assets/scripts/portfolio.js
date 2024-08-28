@@ -1,6 +1,15 @@
 const HASH_PATH_KEY = "hashPath";
 const POPSTATE_LISTENER = (event) => closePopup();
 
+window.addEventListener('DOMContentLoaded', browserDetect, false);
+
+function browserDetect() {
+    if (isChromeMobile()) {
+        console.debug("Mobile Chrome detected; adding portfolio CSS shim");
+        document.body.classList.add("chrome-mobile-shim");
+    }
+}
+
 // Reinstate content if a popup name is found in the url's hash or in session storage
 function retrieveAndShowContentIfPopupState() {
     if (isPopupState()) {                                         // If page loads with a popup hash param, then...
@@ -23,10 +32,19 @@ function retrieveAndShowContent(path) {
     // Remove trailing slash if present, then always add it back (supports slash and no-slash paths)
     const basePath = window.location.pathname.replace(/\/+$/, "") + "/content/";
 
-    fetch(basePath + path)
+    fetch(basePath + path, {redirect: "manual"})
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status} response returned for [${basePath + path}]`);
+            // No access to the location response header here, but the only
+            // redirect the app issues for a GET /content request is to login
+            if (response.status === 401 || response.status === 403 || response.type === "opaqueredirect") {
+                window.location.assign("/login");
+                return;
+            }
+            else if (!response.ok) {
+                if (response.status === 502 || response.status === 503) {
+                    alert("It looks like we're offline for maintenance.\n\nPlease try back shortly!");
+                }
+                throw new Error(`HTTP ${response.status} response returned for [${basePath}${path}]`);
             }
             return response.text();
         })
@@ -49,7 +67,9 @@ function showContentInPopup(content, path) {
     `;
 
     setInnerHTML(popup, innerHTML);
-    setDataName(popup, hashPath)
+
+    // Tracking the path for the open popup solely for logging purposes when page is refreshed while popup is open
+    setDataName(popup, hashPath);
 
     // TODO ERIC position=fixed causing resizing of main content when popup open
     // main.style.overflow = "hidden";
@@ -58,10 +78,7 @@ function showContentInPopup(content, path) {
     background.classList.add("open");
     main.classList.add("blur");
 
-    // Previous color not removed in closePopup() because it needs time to fade from opaque to transparent
-    removeClassesStartingWith(document.body, "color-");
-    document.body.classList.add(`color-${path}`);
-    document.body.classList.add("opaque");
+    setBodyBackgroundColor(path);
 
     setTimeout(function() {
         popup.classList.add("open");
@@ -134,8 +151,22 @@ function setInnerHTML(container, html) {
     });
 }
 
+function setBodyBackgroundColor(path) {
+    // Previous color not removed in closePopup() because it needs time to fade from opaque to transparent
+    removeClassesStartingWith(document.body, "timeline-color-");
+
+    const elem = document.querySelectorAll(`[data-timeline-path=${path}]`)[0];
+
+    if (elem) {
+        const position = Array.prototype.indexOf.call(elem.parentNode.children, elem);
+        document.body.classList.add(`timeline-color-${position}`);
+        document.body.classList.add("opaque");
+    }
+}
+
 function getMetaValue(name) {
-    return document.querySelector(`meta[name="${name}"`).getAttribute('content');
+    const metaElem = document.querySelector(`meta[name="${name}"]`);
+    return metaElem ? metaElem.getAttribute("content") : null;
 }
 
 function makeRequestOptions(method) {
@@ -144,11 +175,14 @@ function makeRequestOptions(method) {
 
 function makeRequestOptions(method, body) {
     const hasBody = typeof body !== 'undefined';
+    const csrfToken = getMetaValue("_csrf");
+    const hasCsrf = typeof csrfToken !== 'undefined';
+
     return {
         method: method,
         headers: {
             ...(hasBody ? {"Content-Type": "application/json"} : {}),
-            "X-CSRF-TOKEN": getMetaValue("_csrf")
+            ...(hasCsrf ? {"X-CSRF-TOKEN": getMetaValue("_csrf")} : {})
         },
         ...(hasBody ? (hasBody ? {body: JSON.stringify(body)} : {body: body}) : {})
     };
@@ -194,6 +228,23 @@ function setFrameSrc(frameElemId, src) {
 
 function isChromeMobile() {
     return /Chrome\/[0-9\.]+ Mobile/i.test(navigator.userAgent);
+}
+
+function togglePasswordVisibility(container) {
+    const inputElem = document.querySelector(`#${container} input`);
+    inputElem.type = inputElem.type === "password" ? "text" : "password";
+
+    const showElem = document.querySelector(`#${container} .visibility-toggle .password-show`);
+    const hideElem = document.querySelector(`#${container} .visibility-toggle .password-hide`);
+
+    if (showElem.style.display === "none") {
+        showElem.style.display = "block";
+        hideElem.style.display = "none";
+    }
+    else {
+        showElem.style.display = "none";
+        hideElem.style.display = "block";
+    }
 }
 
 function cycleFontColors(containerId, rBegin, gBegin, bBegin, rEnd, gEnd, bEnd) {

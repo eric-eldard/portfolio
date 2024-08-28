@@ -20,7 +20,7 @@ public class BadCredentialsListener implements ApplicationListener<Authenticatio
     @Override
     public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent event)
     {
-        String username = event.getAuthentication().getName();
+        String username = (String) event.getAuthentication().getPrincipal();
         portfolioUserService.recordFailedLogin(username, LoginFailureReason.BAD_CREDENTIALS);
     }
 }

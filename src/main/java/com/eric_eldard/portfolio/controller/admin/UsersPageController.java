@@ -27,7 +27,7 @@ public class UsersPageController
     @GetMapping
     public String getUserManagementPage(Model model)
     {
-        List<PortfolioUser> allUsers = userService.findAll();
+        List<PortfolioUser> allUsers = userService.findAllFullyHydrated();
         model.addAttribute("userList", allUsers);
         return "admin/user-management";
     }
@@ -35,7 +35,7 @@ public class UsersPageController
     @GetMapping("/{id}")
     public String getUserManagementPage(@PathVariable long id, Model model)
     {
-        PortfolioUser user = userService.findById(id).
+        PortfolioUser user = userService.findFullyHydratedById(id).
             orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         model.addAttribute("user", user);

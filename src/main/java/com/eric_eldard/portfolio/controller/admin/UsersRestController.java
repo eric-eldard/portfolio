@@ -47,7 +47,7 @@ public class UsersRestController
         userService.unlock(id);
     }
 
-    @PatchMapping(value = "/{id}/password")
+    @PatchMapping("/{id}/password")
     public void setPassword(@PathVariable long id, @RequestBody @Valid PortfolioUserDto dto)
     {
         userService.setPassword(id, dto.getPassword());

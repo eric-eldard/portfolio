@@ -3,8 +3,6 @@
 @import url("screenshot-gridding.css");
 @import url("tagging.css");
 @import url("third-party-logos.css");
-@import url("timeline.css");
-@import url("timeline-impl.css");
 
 
 a {
@@ -25,16 +23,22 @@ body {
 	font-family: Helvetica, sans-serif;
 }
 
-button, input[type=checkbox], label {
+button,
+input[type=button],
+input[type=checkbox],
+label {
     cursor: pointer;
 }
 
 
 /* Main content, before opening the popup */
 #main {
-	padding-top: 15px;
-	position: relative;
-	transition: filter 1s, padding 1s;
+    box-sizing: border-box;
+    left: 0;
+	padding: 10px;
+	position: absolute;
+	top: 0;
+	transition: filter 1s, padding 1s, top 1s, transform 1s;
 	width: 100%;
 	z-index: 1;
 }
@@ -101,35 +105,11 @@ button, input[type=checkbox], label {
 	margin-left: 15px;
 	margin-right: 15px;
 	text-align: justify;
+	transition: margin 1s;
 }
 
-.content .footer {
-    color: #666;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    font-size: 18px;
+.content > .footer {
     margin-bottom: 25px;
-}
-.content .footer #footer-fs-resume {
-    display: none;
-}
-
-.content .footer .gh:hover {
-	color: #000;
-}
-
-.content .footer .gh:before {
-	filter: brightness(40%);
-	transition: filter 0.75s;
-}
-
-.content .footer .gh:hover:before {
-	filter: brightness(0%);
-}
-
-.content .footer #footer-home-link {
-    display: none;
 }
 
 .details {
@@ -185,6 +165,36 @@ button, input[type=checkbox], label {
     font-family: Consolas, monospace;
 }
 
+.password {
+    position: relative;
+}
+
+.password input {
+    box-sizing: border-box;
+    padding-right: 26px;
+    width: 100%;
+}
+
+.password .visibility-toggle {
+    display: inline-block;
+    height: 21px;
+    position: absolute;
+    right: 3px;
+    top: 20px;
+    width: 24px;
+}
+
+.password .visibility-toggle .password-hide {
+    display: none;
+}
+
+.password .visibility-toggle img {
+    left: 1px;
+    position: absolute;
+    top: 3px;
+    width: 22px;
+}
+
 .screenshot a {
 	position: relative;
 }
@@ -198,6 +208,7 @@ button, input[type=checkbox], label {
     display: block;
     font-size: 18px;
     font-weight: normal;
+    text-wrap: nowrap;
 }
 
 img.solo {
@@ -219,18 +230,6 @@ img.solo {
 
 
 @media screen and (min-width: 600px) {
-    .content .footer #footer-fs-resume {
-        display: unset;
-    }
-
-    .content .footer #footer-mobile-resume {
-        display: none;
-    }
-
-    .content .footer #footer-home-link {
-        display: unset;
-    }
-
     img.solo {
         width: 90%;
     }
@@ -255,12 +254,15 @@ img.solo {
     }
 }
 
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 800px) {
     #main {
-        /* centers main content a bit more on desktop, but not in landscape mobile where it would add to scrolling */
-        padding-top: 75px;
+        /* Provide a more vertically-centered experience, once we're sure the content won't go off the top of the page */
+        top: 35%;
+        transform: translateY(-35%);
     }
+}
 
+@media screen and (min-width: 1100px) {
     #main > * {
         box-sizing: unset; /* box-sizing needed on mobile view to include auto margins in 100% width */
         width: 900px;
@@ -269,6 +271,14 @@ img.solo {
     .content > div {
     	margin-left: 50px;
     	margin-right: 50px;
+    }
+
+    .content .intro-heading {
+        margin-bottom: 30px;
+    }
+
+    .footer {
+        margin-top: 45px
     }
 
     .header-title {

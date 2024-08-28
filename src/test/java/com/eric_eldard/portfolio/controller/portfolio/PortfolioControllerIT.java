@@ -35,7 +35,8 @@ public class PortfolioControllerIT extends BaseMvcIntegrationTest
     public void testUnauthenticatedCannotViewPortfolio()
     {
         getPage(makePortoflioUri())
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isFound())
+            .andDo(this::assertRedirectToLogin);
     }
 
 

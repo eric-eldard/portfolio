@@ -14,9 +14,13 @@ import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 
 public interface PortfolioUserService extends UserDetailsService
 {
-    List<PortfolioUser> findAll();
+    List<PortfolioUser> findAllFullyHydrated();
 
     Optional<PortfolioUser> findById(long id);
+
+    Optional<PortfolioUser> findWithAuthoritiesById(long id);
+
+    Optional<PortfolioUser> findFullyHydratedById(long id);
 
     PortfolioUser create(@Nonnull PortfolioUserDto dto);
 

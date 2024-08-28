@@ -25,4 +25,10 @@ public class SecurityContextServiceImpl implements SecurityContextService
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth == null ? null : auth.getName();
     }
+
+    @Override
+    public void setAuthentication(Authentication authentication)
+    {
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 }

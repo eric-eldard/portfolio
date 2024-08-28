@@ -10,9 +10,12 @@
         <link rel="stylesheet" type="text/css" href="/public/assets/style/user-management.css">
 
         <style>
+            h1 {
+                text-align: center;
+            }
+
             .horizontal-table tr td:last-of-type {
                 border-width: 0 1px 1px 0;
-                display: grid;
                 font-family: unset;
                 font-size: 0;
                 padding: 0;
@@ -27,13 +30,27 @@
                 margin: 3px;
             }
 
+            .horizontal-table tr td:nth-child(3),
+            .horizontal-table tr th:nth-child(3),
+            .horizontal-table tr td:nth-last-child(-n + 6),
+            .horizontal-table tr th:nth-last-child(-n + 6) {
+                display: none;
+            }
+
             .vertical-table tr td input {
-                width: 250px;
+                width: 175px;
             }
 
             @media screen and (min-width: 1000px) {
-                .horizontal-table tr td:last-of-type {
+                .horizontal-table tr td:nth-child(3),
+                .horizontal-table tr th:nth-child(3),
+                .horizontal-table tr td:nth-last-child(-n + 6),
+                .horizontal-table tr th:nth-last-child(-n + 6) {
                     display: table-cell;
+                }
+
+                .vertical-table tr td input {
+                    width: 250px;
                 }
             }
         </style>

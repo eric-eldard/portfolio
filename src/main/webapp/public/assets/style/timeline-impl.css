@@ -90,50 +90,6 @@
 }
 
 
-body:after {
-    content: "";
-    height: 100%;
-    left: 0;
-    opacity: 0;
-    position: fixed;
-    top: 0;
-    transition: opacity 2s;
-    width: 100%;
-}
-
-body.opaque:after {
-    opacity: 1;
-}
-
-.color-movie-theater:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(128, 16, 128, 1) 100%);
-}
-
-.color-training-projects:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(8, 8, 192, 1) 100%);
-}
-
-.color-software-engineer:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 160, 160, 1) 100%);
-}
-
-.color-solutions:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(16, 128, 16, 1) 100%);
-}
-
-.color-executive:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(224, 192, 32, 1) 100%);
-}
-
-.color-hobby:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(192, 96, 0, 1) 100%);
-}
-
-.color-about-portfolio:after {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(176, 0, 0, 1) 100%);
-}
-
-
 @media screen and (min-width: 475px) {
     .content .timeline {
         margin-bottom: 20px;

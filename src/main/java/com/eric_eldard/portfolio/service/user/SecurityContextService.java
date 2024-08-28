@@ -1,5 +1,7 @@
 package com.eric_eldard.portfolio.service.user;
 
+import org.springframework.security.core.Authentication;
+
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -13,4 +15,6 @@ public interface SecurityContextService
 
     @Nullable
     String getCurrentUsersNameNullable();
+
+    void setAuthentication(Authentication authentication);
 }

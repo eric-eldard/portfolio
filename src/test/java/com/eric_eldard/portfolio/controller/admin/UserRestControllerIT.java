@@ -62,7 +62,7 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
         post(makeUsersUri(), makeNonAdminUser())
             .andExpect(status().isForbidden());
 
-        assertTrue(userService().findAll().isEmpty());
+        assertTrue(userService().findAllFullyHydrated().isEmpty());
     }
 
     @Test
@@ -70,9 +70,10 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
     public void testUnauthenticatedCannotCreateUser()
     {
         post(makeUsersUri(), makeNonAdminUser())
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isFound())
+            .andDo(this::assertRedirectToLogin);
 
-        assertTrue(userService().findAll().isEmpty());
+        assertTrue(userService().findAllFullyHydrated().isEmpty());
     }
 
 
@@ -108,7 +109,8 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
     {
         long userId = makeAndSaveNonAdminUser().getId();
         delete(makeUsersUri(userId))
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isFound())
+            .andDo(this::assertRedirectToLogin);
 
         Optional<PortfolioUser> user = userService().findById(userId);
         assertTrue(user.isPresent());
@@ -153,7 +155,9 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
         patch(
             makeUsersUri(userId, "admin"),
             PortfolioUserDto.builder().admin(true).build()
-        ).andExpect(status().isUnauthorized());
+        )
+            .andExpect(status().isFound())
+            .andDo(this::assertRedirectToLogin);
 
         PortfolioUser user = userService().findById(userId).get();
         assertFalse(user.isAdmin());
@@ -218,7 +222,9 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
         patch(
             makeUsersUri(userId, "password"),
             PortfolioUserDto.builder().password("abcdefgh").build()
-        ).andExpect(status().isUnauthorized());
+        )
+            .andExpect(status().isFound())
+            .andDo(this::assertRedirectToLogin);
 
         Optional<PortfolioUser> updatedUser = userService().findById(userId);
         assertEquals(user.getPassword(), updatedUser.get().getPassword());

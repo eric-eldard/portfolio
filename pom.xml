@@ -12,7 +12,7 @@
     <name>Eric Eldard Portfolio</name>
     <groupId>com.eric_eldard</groupId>
     <artifactId>portfolio</artifactId>
-    <version>0.10.2-prerelease</version>
+    <version>0.11-prerelease</version>
     <packaging>war</packaging>
 
     <properties>
@@ -118,6 +118,12 @@
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.1.0</version> <!-- 3.2.0 not yet supported by Spring Boot -->
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.12.6</version>
         </dependency>
 
         <dependency>

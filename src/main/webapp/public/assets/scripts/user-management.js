@@ -49,7 +49,10 @@ function setPassword(id, username) {
             "password": password,
         }
         fetch(`${USER_ADMIN_PATH}/${id}/password`, makeRequestOptions("PATCH", user))
-            .then(response => handleResponse(response, (response => alert("Password updated for user " + username))));
+            .then(response => handleResponse(response, (response => {
+                alert("Password updated for user " + username);
+                window.location.reload(); // reload to refresh "failed attempts" count
+            })));
     }
 }
 
@@ -107,6 +110,10 @@ function toggleAuth(id, authority) {
 function handleResponse(response, successCallback = (response => window.location.reload())) {
     if (response.ok) {
         successCallback(response);
+    }
+    else if (response.status === 403) {
+        alert("Response from server: 403\nRefreshing for possible stale CSRF token...");
+        window.location.reload();
     }
     else {
         alert("Response from server: " + response.status);

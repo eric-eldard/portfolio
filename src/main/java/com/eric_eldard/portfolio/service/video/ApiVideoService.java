@@ -16,9 +16,8 @@ public class ApiVideoService implements EmbeddableVideoService
 {
     private final ApiVideoClient apiVideoClient;
 
-    public ApiVideoService(
-        @Value("${apiVideo.key}") String apiVideoKey,
-        @Value("${apiVideo.env:PRODUCTION}") Environment apiVideoEnv
+    public ApiVideoService(@Value("${apiVideo.key}") String apiVideoKey,
+                           @Value("${apiVideo.env:PRODUCTION}") Environment apiVideoEnv
     )
     {
         if (StringUtils.isBlank(apiVideoKey))

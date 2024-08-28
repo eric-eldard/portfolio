@@ -1,0 +1,130 @@
+.footer {
+    color: #666;
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: 18px;
+    justify-content: space-between;
+}
+
+.footer > * {
+    line-height: 19px;
+    position: relative;
+    overflow: clip;
+    text-wrap: nowrap;
+    transition: max-width 0.75s, color 0.75s;
+}
+
+.footer #footer-fs-resume {
+    display: none;
+}
+
+.footer #footer-home-link {
+    top: -4px;
+}
+
+.footer #footer-home-link .icon {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: bold;
+    height: fit-content;
+    margin-right: -2px;
+    position: relative;
+    top: 2px;
+}
+
+.footer #footer-logout-link {
+    margin-left: -7px;
+    max-width: 25px;
+}
+
+.footer #footer-logout-link .icon-stack {
+    display: inline-block;
+    height: fit-content;
+    margin-right: 24px;
+    position: relative;
+    top: -17px;
+}
+
+.footer #footer-logout-link .icon-stack .icon {
+    display: inline-block;
+    height: fit-content;
+    position: absolute;
+    top: 1px;
+}
+
+.footer #footer-logout-link .icon-stack #footer-logout-icon-arrow {
+    font-size: 23px;
+    left: 0;
+    top: 2px;
+    transform: rotate(180deg);
+}
+
+.footer #footer-logout-link .icon-stack #footer-logout-icon-box {
+    font-size: 34px;
+    left: 6px;
+    top: -1px;
+}
+
+.footer #footer-home-link,
+.footer .github ,
+.footer .linkedin {
+    max-width: 20px;
+}
+
+.footer .linkedin img {
+    transform: translateX(-55px);
+    transition: filter 0.75s, transform 0.5s;
+}
+
+
+.chrome-mobile-shim .footer #footer-home-link {
+    top: -1px;
+}
+
+.chrome-mobile-shim .footer #footer-home-link .icon {
+    font-size: 24px;
+}
+
+.chrome-mobile-shim .footer #footer-logout-link {
+    top: 1px;
+}
+
+.chrome-mobile-shim .footer #footer-logout-link .icon-stack {
+    top: -16px;
+}
+
+.chrome-mobile-shim .footer #footer-logout-link .icon-stack #footer-logout-icon-arrow {
+    font-size: 20px;
+}
+
+.chrome-mobile-shim .footer #footer-logout-link .icon-stack #footer-logout-icon-box {
+    font-size: 27px;
+    left: 7px;
+    top: 1px;
+}
+
+
+@media screen and (min-width: 600px) {
+    .footer #footer-fs-resume {
+        display: unset;
+    }
+
+    .footer #footer-mobile-resume {
+        display: none;
+    }
+
+    .footer .linkedin img {
+        transform: translateX(0); /* for transition animation */
+    }
+
+    .footer #footer-home-link,
+    .footer #footer-logout-link,
+    .footer .github,
+    .footer .linkedin {
+        /*
+            Using max-width because its a transition-capable property, but unlike width, it can still
+            collapse on each element. 100px is arbitrary; it just has to be larger than every element.
+        */
+        max-width: 100px;
+    }
+}

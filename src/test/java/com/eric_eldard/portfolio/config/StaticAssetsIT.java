@@ -40,7 +40,8 @@ public class StaticAssetsIT extends BaseMvcIntegrationTest
     public void testUnauthenticatedCannotAccessStaticAssets()
     {
         getPage(makeAssetsUri())
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isFound())
+            .andDo(this::assertRedirectToLogin);
     }
 
     @SneakyThrows

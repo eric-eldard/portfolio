@@ -64,6 +64,7 @@
 <jsp:include page="../widgets/screenshot-solo.jsp" >
     <jsp:param name="path" value="brazen-dev-resources.png"/>
     <jsp:param name="description" value="Brazen Developer Resources"/>
+    <jsp:param name="href" value="https://developers.brazen.com/"/>
 </jsp:include>
 
 <hr>

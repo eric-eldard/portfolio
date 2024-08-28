@@ -1,5 +1,7 @@
 package com.eric_eldard.portfolio.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +12,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -33,6 +36,8 @@ import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 @ActiveProfiles("test")
 public class BaseMvcIntegrationTest
 {
+    private static final String BASE_URL = "http://localhost:8080";
+
     @LocalServerPort
     private int port;
 
@@ -122,7 +127,21 @@ public class BaseMvcIntegrationTest
     protected UriComponentsBuilder makeBaseUri()
     {
         return UriComponentsBuilder
-            .fromHttpUrl("http://localhost")
+            .fromHttpUrl(BASE_URL)
             .port(port);
+    }
+
+    protected void assertRedirectPath(MvcResult result, String path)
+    {
+        String redirectUrl = result.getResponse().getRedirectedUrl();
+        assertNotNull(redirectUrl);
+
+        String redirectPath = redirectUrl.replace(makeBaseUri().toUriString(), "");
+        assertEquals(path, redirectPath);
+    }
+
+    protected void assertRedirectToLogin(MvcResult result)
+    {
+        assertRedirectPath(result, "/login");
     }
 }

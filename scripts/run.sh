@@ -14,10 +14,6 @@ printf "\n\n${BOLD_WHITE}Starting Portfolio App${RESET}\n\n"
 printf "Killing any process already running on ${WHITE}:8080${RESET}...\n"
 fuser -k 8080/tcp
 
-printf "Fetching ${WHITE}api.video API key${RESET}...\n"
-json=`aws secretsmanager get-secret-value --secret-id apiVideo --query SecretString --output text`
-export API_VIDEO_KEY=`echo $json | jq -r ".apiKey"`
-
 printf "Fetching ${WHITE}database credentials${RESET}...\n"
 json=`aws secretsmanager get-secret-value --secret-id portfolio-app-rds-access --query SecretString --output text`
 host=`echo $json | jq -r ".host"`
@@ -26,6 +22,14 @@ db=`echo $json | jq -r ".dbInstanceIdentifier"`
 export SPRING_DATASOURCE_URL="jdbc:mysql://${host}:${port}/${db}"
 export SPRING_DATASOURCE_USERNAME=`echo $json | jq -r ".username"`
 export SPRING_DATASOURCE_PASSWORD=`echo $json | jq -r ".password"`
+
+printf "Fetching ${WHITE}JWT signing key${RESET}...\n"
+json=`aws secretsmanager get-secret-value --secret-id jwt-signing-key --query SecretString --output text`
+export JWT_SIGNING_KEY=`echo $json | jq -r ".key"`
+
+printf "Fetching ${WHITE}api.video API key${RESET}...\n"
+json=`aws secretsmanager get-secret-value --secret-id apiVideo --query SecretString --output text`
+export API_VIDEO_KEY=`echo $json | jq -r ".apiKey"`
 
 printf "Starting ${YELLOW}${ARTIFACT}${RESET}...\n"
 nohup java -jar ${ARTIFACT} > logs/output.log 2>&1 &

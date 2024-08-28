@@ -11,7 +11,7 @@
 }
 
 .linkedin img {
-    aspect-ratio: 268 / 65;
+    aspect-ratio: 256 / 65;
     filter: saturate(0) brightness(1.1);
     height: 19px;
     margin-bottom: -3px;

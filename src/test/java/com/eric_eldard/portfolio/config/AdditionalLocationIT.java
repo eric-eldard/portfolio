@@ -68,7 +68,8 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
     public void testUnauthenticatedCannotAccessAdditionalLocations()
     {
         getPage(makeOldPortoflioUri())
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isFound())
+            .andDo(this::assertRedirectToLogin);
     }
 
     private URI makeOldPortoflioUri()

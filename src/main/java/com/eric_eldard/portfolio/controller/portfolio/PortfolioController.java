@@ -19,6 +19,7 @@ import com.eric_eldard.portfolio.service.resource.ResourceService;
 import com.eric_eldard.portfolio.service.video.EmbeddableVideo;
 import com.eric_eldard.portfolio.service.video.EmbeddableVideoService;
 import com.eric_eldard.portfolio.util.Constants;
+import com.eric_eldard.portfolio.util.StringUtils;
 
 @Controller
 @RequestMapping("/portfolio")
@@ -38,7 +39,7 @@ public class PortfolioController
     {
         this.videoService = videoService;
         this.resourceService = resourceService;
-        this.assetsFilePath = assetsFilePath;
+        this.assetsFilePath = StringUtils.withTrailingString(assetsFilePath, "/");
     }
 
     @GetMapping
@@ -87,6 +88,15 @@ public class PortfolioController
     }
 
     /**
+     * Forwards <tt>/portfolio/logout</tt> to <tt>/logout</tt>
+     */
+    @GetMapping("/logout")
+    public String logout()
+    {
+        return "forward:/logout";
+    }
+
+    /**
      * Get a pre-baked iframe for the given video from the video vendor
      */
     private String retrieveVideoIframe(EmbeddableVideo embeddableVideo)
@@ -114,10 +124,11 @@ public class PortfolioController
      */
     private void addFileResources(Model model, ResourceType type)
     {
+        String pathPattern = type.makePathPattern(assetsFilePath);
         List<Resource> resources;
+
         try
         {
-            String pathPattern = type.makePathPattern(assetsFilePath);
             resources = resourceService.getFileResources(pathPattern);
         }
         catch (IOException ex)

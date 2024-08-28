@@ -38,7 +38,8 @@ public class UserPageControllerIT extends BaseMvcIntegrationTest
     public void testUnauthenticatedCannotViewAllUsers()
     {
         getPage(makeUsersUri())
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isFound())
+            .andDo(this::assertRedirectToLogin);
     }
 
 
@@ -68,7 +69,8 @@ public class UserPageControllerIT extends BaseMvcIntegrationTest
     {
         long userId = makeAndSaveNonAdminUser().getId();
         getPage(makeUsersUri(userId))
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isFound())
+            .andDo(this::assertRedirectToLogin);
     }
 
 

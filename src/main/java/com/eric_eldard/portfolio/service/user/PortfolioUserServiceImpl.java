@@ -6,13 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Nonnull;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.eric_eldard.portfolio.config.GlobalConfig;
 import com.eric_eldard.portfolio.model.user.LoginAttempt;
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
@@ -21,10 +21,7 @@ import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
 import com.eric_eldard.portfolio.util.Constants;
 
-/**
- * To avoid a circular dependency with {@link org.springframework.security.authentication.AuthenticationManager} and
- * {@link PasswordEncoder}, this bean is created in {@link GlobalConfig}, where the PasswordEncoder is also created.
- */
+@Service
 public class PortfolioUserServiceImpl implements PortfolioUserService
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(PortfolioUserServiceImpl.class);
@@ -35,10 +32,10 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
 
     private final SecurityContextService securityContextService;
 
-    public PortfolioUserServiceImpl(
-        PasswordEncoder passwordEncoder,
-        PortfolioUserRepository portfolioUserRepo,
-        SecurityContextService securityContextService
+
+    public PortfolioUserServiceImpl(PasswordEncoder passwordEncoder,
+                                    PortfolioUserRepository portfolioUserRepo,
+                                    SecurityContextService securityContextService
     )
     {
         this.securityContextService = securityContextService;
@@ -46,16 +43,29 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
         this.portfolioUserRepo = portfolioUserRepo;
     }
 
+
     @Override
-    public List<PortfolioUser> findAll()
+    public List<PortfolioUser> findAllFullyHydrated()
     {
-        return portfolioUserRepo.findAll();
+        return portfolioUserRepo.findAllFullyHydrated();
     }
 
     @Override
     public Optional<PortfolioUser> findById(long id)
     {
         return portfolioUserRepo.findById(id);
+    }
+
+    @Override
+    public Optional<PortfolioUser> findWithAuthoritiesById(long id)
+    {
+        return portfolioUserRepo.findWithAuthoritiesById(id);
+    }
+
+    @Override
+    public Optional<PortfolioUser> findFullyHydratedById(long id)
+    {
+        return portfolioUserRepo.findFullyHydratedById(id);
     }
 
     @Override
@@ -72,7 +82,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
         {
             throw new IllegalArgumentException("A user with the username [" + username + "] already exists");
         }
-        
+
         String hashedPassword = passwordEncoder.encode(dto.getPassword().trim());
         PortfolioUser user = new PortfolioUser(
             username,
@@ -92,7 +102,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     public void delete(long id)
     {
         PortfolioUser user = findById(id)
-            .orElseThrow(() -> 
+            .orElseThrow(() ->
                 new IllegalArgumentException("Cannot delete user with id [" + id + "]; user not found"));
 
         portfolioUserRepo.delete(user);
@@ -108,8 +118,8 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
 
         user.setLockedOn(null);
         user.setFailedPasswordAttempts(0);
+        user = portfolioUserRepo.save(user);
 
-        portfolioUserRepo.save(user);
         LOGGER.info("User [{}] unlocked by [{}]", user.getUsername(), getRequesterUsername());
     }
 
@@ -157,7 +167,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
                 new IllegalArgumentException("Cannot set infinite access for user id [" + id + "]; user not found"));
 
         user.setAuthorizedUntil(null);
-        portfolioUserRepo.save(user);
+        user = portfolioUserRepo.save(user);
 
         LOGGER.info("User [{}] is authorized forever; set by [{}]",
             user.getUsername(),
@@ -230,7 +240,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     @Override
     public UserDetails loadUserByUsername(@Nonnull String username) throws UsernameNotFoundException
     {
-        PortfolioUser user = portfolioUserRepo.findByUsername(username)
+        PortfolioUser user = portfolioUserRepo.findWithAuthoritiesByUsername(username)
             .orElseThrow(() ->
                 new UsernameNotFoundException("User with username [" + username + "] not found"));
         return user;
@@ -239,7 +249,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     @Override
     public void recordSuccessfulLogin(@Nonnull String username)
     {
-        PortfolioUser user = portfolioUserRepo.findByUsername(username)
+        PortfolioUser user = portfolioUserRepo.findFullyHydratedByUsername(username)
             .orElseThrow(() ->
                 new IllegalStateException(
                     "Cannot find user [" + username + "] after they successfully logged in...highly unusual"));
@@ -252,7 +262,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     @Override
     public void recordFailedLogin(@Nonnull String username, @Nonnull LoginFailureReason failureReason)
     {
-        Optional<PortfolioUser> optUser = portfolioUserRepo.findByUsername(username);
+        Optional<PortfolioUser> optUser = portfolioUserRepo.findFullyHydratedByUsername(username);
         if (optUser.isEmpty())
         {
             LOGGER.info("Failed login for non-existent user [{}]", username);

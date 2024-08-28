@@ -18,9 +18,8 @@ public class VersionInterceptor implements HandlerInterceptor
 
     private final String version;
 
-    public VersionInterceptor(
-        AdditionalLocations additionalLocations,
-        @Value("${portfolio.app.version:unset}") String version
+    public VersionInterceptor(AdditionalLocations additionalLocations,
+                              @Value("${portfolio.app.version:unset}") String version
     )
     {
         this.version = version;

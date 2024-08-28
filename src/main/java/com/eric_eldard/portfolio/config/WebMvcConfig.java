@@ -30,11 +30,10 @@ public class WebMvcConfig implements WebMvcConfigurer
 
     private final String assetsFilePath;
 
-    public WebMvcConfig(
-        AdditionalLocations additionalLocations,
-        ResourceService resourceService,
-        VersionInterceptor versionInterceptor,
-        @Value("${portfolio.assets-path}") String assetsFilePath
+    public WebMvcConfig(AdditionalLocations additionalLocations,
+                        ResourceService resourceService,
+                        VersionInterceptor versionInterceptor,
+                        @Value("${portfolio.assets-path}") String assetsFilePath
     )
     {
         this.additionalLocations = additionalLocations;

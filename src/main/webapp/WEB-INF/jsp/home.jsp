@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <jsp:include page="widgets/no-viewport-zoom.jsp"/>
         <jsp:include page="widgets/headers.jsp"/>
         <link rel="stylesheet" type="text/css" href="/public/assets/style/home.css">
     </head>

@@ -60,14 +60,14 @@ th, td {
 
 .authorization-container input {
     font-size: 12px;
-    width: 95px;
+    width: 100px;
 }
 
 .authorization-container .clock {
     font-size: 21px;
     font-weight: bold;
     line-height: 12px;
-    margin-left: 29px;
+    margin-left: 28px;
     padding-top: 1px;
     position: absolute;
     transform: rotate(-45deg);

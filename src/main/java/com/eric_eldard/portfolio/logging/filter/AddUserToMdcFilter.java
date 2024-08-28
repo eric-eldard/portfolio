@@ -1,4 +1,4 @@
-package com.eric_eldard.portfolio.logging;
+package com.eric_eldard.portfolio.logging.filter;
 
 import org.slf4j.MDC;
 import org.springframework.security.web.context.SecurityContextHolderFilter;
