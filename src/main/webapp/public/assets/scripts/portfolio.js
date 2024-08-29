@@ -126,6 +126,15 @@ function closePopup() {
     }, 300);
 }
 
+function showResume() {
+    if (window.innerWidth < 800) {
+        alert('TODO ERIC - updated resume');
+    }
+    else {
+        retrieveAndShowContent('resume');
+    }
+}
+
 //Jump straight from one content window to another
 function jumpTo(path) {
     closePopup();

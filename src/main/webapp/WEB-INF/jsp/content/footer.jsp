@@ -1,5 +1,5 @@
 <div class="footer">
-    <a href="javascript: retrieveAndShowContent('resume')" title="View my resume" id="footer-resume" class="resume-link">
+    <a href="javascript: showResume()" title="View my resume" id="footer-resume" class="resume-link">
         <div class="icon-container">
             <img src="/public/assets/images/icons/nav/resume.png" alt="Resume">
         </div>
