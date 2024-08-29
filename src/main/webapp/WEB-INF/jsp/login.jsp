@@ -87,8 +87,8 @@
         function login() {
             showErrorMessage("message-placeholder");
 
-            const username = document.getElementById("login-username").value;
-            const password = document.getElementById("login-password").value;
+            const username = document.getElementById("login-username").value.trim();
+            const password = document.getElementById("login-password").value.trim();
 
             if (username.length < 1 || password.length < 1) {
                 showErrorMessage("message-incomplete");
