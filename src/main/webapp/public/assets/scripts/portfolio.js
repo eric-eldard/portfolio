@@ -1,7 +1,7 @@
 const HASH_PATH_KEY = "hashPath";
 const POPSTATE_LISTENER = (event) => closePopup();
 
-window.addEventListener('DOMContentLoaded', browserDetect, false);
+window.addEventListener("DOMContentLoaded", browserDetect, false);
 
 function browserDetect() {
     if (isChromeMobile()) {
@@ -230,6 +230,21 @@ function isChromeMobile() {
     return /Chrome\/[0-9\.]+ Mobile/i.test(navigator.userAgent);
 }
 
+function focusElement(elemId) {
+    window.setTimeout(() => {
+        const elem = document.getElementById(elemId);
+        if (elem.tagName.toLowerCase() !== "a" &&
+            elem.tagName.toLowerCase() !== "button" &&
+            elem.tagName.toLowerCase() !== "input" &&
+            elem.getAttribute("tabIndex") == null
+        ) {
+            // If the element wasn't already focusable, make it focusable
+            elem.setAttribute("tabIndex", 0);
+        }
+        elem.focus();
+    }, 0)
+}
+
 function togglePasswordVisibility(container) {
     const inputElem = document.querySelector(`#${container} input`);
     inputElem.type = inputElem.type === "password" ? "text" : "password";
@@ -238,12 +253,12 @@ function togglePasswordVisibility(container) {
     const hideElem = document.querySelector(`#${container} .visibility-toggle .password-hide`);
 
     if (showElem.style.display === "none") {
-        showElem.style.display = "block";
+        showElem.style.display = "unset";
         hideElem.style.display = "none";
     }
     else {
         showElem.style.display = "none";
-        hideElem.style.display = "block";
+        hideElem.style.display = "unset";
     }
 }
 

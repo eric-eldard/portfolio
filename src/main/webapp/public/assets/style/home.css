@@ -28,6 +28,7 @@ a {
 
 .intro-text p {
     line-height: 120%;
+    text-align: justify;
 }
 
 .link-card {

@@ -40,6 +40,7 @@
 
             .login-form #login-username {
                 box-sizing: border-box;
+                height: 24px; /* Use explicit height because browsers vary on input default height */
                 width: 100%;
             }
 
@@ -56,11 +57,6 @@
 
             .login-form .password {
                 margin-top: 12px;
-            }
-
-            .login-form .username label,
-            .login-form .password label {
-                margin-bottom: 4px;
             }
 
 
@@ -90,8 +86,13 @@
             const username = document.getElementById("login-username").value.trim();
             const password = document.getElementById("login-password").value.trim();
 
-            if (username.length < 1 || password.length < 1) {
+            if (username.length < 1) {
                 showErrorMessage("message-incomplete");
+                focusElement("login-username");
+            }
+            else if (password.length < 1) {
+                showErrorMessage("message-incomplete");
+                focusElement("login-password");
             }
             else {
                 const submit = document.getElementById("login-submit");
@@ -119,6 +120,7 @@
                             showErrorMessage("message-unknown");
                         }
 
+                        focusElement("login-password");
                         submit.disabled = false;
                     });
             }
@@ -137,6 +139,8 @@
                 document.getElementById(elemId).style.display = "block";
             }
         }
+
+        window.addEventListener("DOMContentLoaded", focusElement("login-username"), false);
     </script>
     <div id="main">
             <div class="content">
@@ -144,11 +148,11 @@
                     <div class="intro-heading">Login</div>
                     <form>
                         <div class="username">
-                            <label>Username</label>
+                            <div class="label">Username</div>
                             <input id="login-username" autocomplete="username" onkeydown="submitOnEnter(event)">
                         </div>
                         <div class="password">
-                            <label>Password</label>
+                            <div class="label">Password</div>
                             <jsp:include page="widgets/password-input.jsp">
                                 <jsp:param name="id" value="login-password"/>
                                 <jsp:param name="onKeyDownAction" value="submitOnEnter(event)"/>

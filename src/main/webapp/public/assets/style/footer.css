@@ -1,4 +1,5 @@
 .footer {
+    align-items: center;
     color: #666;
     display: flex;
     flex-wrap: nowrap;
@@ -6,125 +7,88 @@
     justify-content: space-between;
 }
 
-.footer > * {
+.footer img {
+    height: 26px; /* icons hard to tap at 20px */
+    transition: height 1s;
+}
+
+.footer a {
     line-height: 19px;
+    max-width: 30px;
+    overflow-x: clip;
     position: relative;
-    overflow: clip;
     text-wrap: nowrap;
     transition: max-width 0.75s, color 0.75s;
 }
 
-.footer #footer-fs-resume {
-    display: none;
+.footer > * > * {
+    vertical-align: middle;
 }
 
-.footer #footer-home-link {
-    top: -4px;
+.footer #footer-home-link img {
+    margin-top: 3px;
 }
 
-.footer #footer-home-link .icon {
-    display: inline-block;
-    font-size: 32px;
-    font-weight: bold;
-    height: fit-content;
-    margin-right: -2px;
-    position: relative;
-    top: 2px;
+.footer #footer-logout-link img,
+.footer #footer-resume img {
+    margin-top: 6px;
 }
 
-.footer #footer-logout-link {
-    margin-left: -7px;
-    max-width: 25px;
-}
-
-.footer #footer-logout-link .icon-stack {
-    display: inline-block;
-    height: fit-content;
-    margin-right: 24px;
-    position: relative;
-    top: -17px;
-}
-
-.footer #footer-logout-link .icon-stack .icon {
-    display: inline-block;
-    height: fit-content;
-    position: absolute;
-    top: 1px;
-}
-
-.footer #footer-logout-link .icon-stack #footer-logout-icon-arrow {
-    font-size: 23px;
-    left: 0;
-    top: 2px;
-    transform: rotate(180deg);
-}
-
-.footer #footer-logout-link .icon-stack #footer-logout-icon-box {
-    font-size: 34px;
-    left: 6px;
+.footer .github,
+.footer .linkedin {
     top: -1px;
 }
 
-.footer #footer-home-link,
-.footer .github ,
-.footer .linkedin {
-    max-width: 20px;
+.footer a .icon-container {
+    display: inline-block;
+    filter: grayscale(100%) invert(40%);
+    transition: filter 0.65s; /* not sure why, but a marginally faster timing seems to match the text timing better */
+}
+
+.footer a:hover .icon-container {
+    filter: grayscale(0%) invert(0%);
+}
+
+.footer a .icon-container img {
+    aspect-ratio: 1 / 1;
+    /* This is a color shift for an image from black to #b00...trust me */
+    filter: invert(13%) sepia(92%) saturate(4488%) hue-rotate(359deg) brightness(79%) contrast(118%);
 }
 
 .footer .linkedin img {
-    transform: translateX(-55px);
-    transition: filter 0.75s, transform 0.5s;
+    position: relative;
+    /* LI's icon is on the right; attaching it to the right side of its container smooths the translate animation */
+    right: 0;
+    transform: translateX(-75px);
+    transition: filter 0.75s, height 1s, transform 0.75s;
 }
 
-
-.chrome-mobile-shim .footer #footer-home-link {
-    top: -1px;
-}
-
-.chrome-mobile-shim .footer #footer-home-link .icon {
-    font-size: 24px;
-}
-
-.chrome-mobile-shim .footer #footer-logout-link {
-    top: 1px;
-}
-
-.chrome-mobile-shim .footer #footer-logout-link .icon-stack {
-    top: -16px;
-}
-
-.chrome-mobile-shim .footer #footer-logout-link .icon-stack #footer-logout-icon-arrow {
-    font-size: 20px;
-}
-
-.chrome-mobile-shim .footer #footer-logout-link .icon-stack #footer-logout-icon-box {
-    font-size: 27px;
-    left: 7px;
-    top: 1px;
+.footer .footer-text {
+    display: inline-block;
+    margin-top: 4px;
 }
 
 
 @media screen and (min-width: 600px) {
-    .footer #footer-fs-resume {
-        display: unset;
-    }
-
-    .footer #footer-mobile-resume {
-        display: none;
+    .footer img {
+        height: 20px;
     }
 
     .footer .linkedin img {
         transform: translateX(0); /* for transition animation */
     }
 
-    .footer #footer-home-link,
-    .footer #footer-logout-link,
-    .footer .github,
-    .footer .linkedin {
+    .footer a {
         /*
             Using max-width because its a transition-capable property, but unlike width, it can still
             collapse on each element. 100px is arbitrary; it just has to be larger than every element.
         */
         max-width: 100px;
+    }
+
+    .footer #footer-logout-link img,
+    .footer #footer-resume img {
+        /* While technically 6px provides perfect icon alignment, 5px looks more centered next to text */
+        margin-top: 5px;
     }
 }
