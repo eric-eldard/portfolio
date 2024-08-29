@@ -23,8 +23,7 @@
         leading all of Brazen's IT personnel after the exit of our CTO in January of that year.
     </p>
     <p>
-        After a little break, I'm hungry to build something new. <i>What</i> that next thing will be is less important
-        to me than <i>how</i> and <i>why</i>. So you bring the <i>what</i>, and let's team up to build your next great
-        idea!
+        After a little break, I'm hungry to build something new. Figuring out <i>how</i> things are built is what gets
+        me up in the morning, so you bring the <i>what</i>, and let's team up to build your next great idea!
     </p>
 </div>

@@ -18,8 +18,7 @@ a:hover {
 
 body {
     background-attachment: fixed !important;
-	background-color: #000; /* fallback */
-    background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(96,96,96,1) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(96,96,96,1) 100%) #666;
 	font-family: Helvetica, sans-serif;
 }
 
