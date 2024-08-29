@@ -9,7 +9,7 @@
 
 .footer img {
     height: 26px; /* icons hard to tap at 20px */
-    transition: height 1s;
+    transition: filter 0.75s, height 1s, transform 0.75s;
 }
 
 .footer a {
@@ -41,12 +41,12 @@
 
 .footer a .icon-container {
     display: inline-block;
-    filter: grayscale(100%) invert(40%);
+    filter: grayscale(1) invert(0.4);
     transition: filter 0.65s; /* not sure why, but a marginally faster timing seems to match the text timing better */
 }
 
 .footer a:hover .icon-container {
-    filter: grayscale(0%) invert(0%);
+    filter: grayscale(0) invert(0);
 }
 
 .footer a .icon-container img {
@@ -60,7 +60,6 @@
     /* LI's icon is on the right; attaching it to the right side of its container smooths the translate animation */
     right: 0;
     transform: translateX(-75px);
-    transition: filter 0.75s, height 1s, transform 0.75s;
 }
 
 .footer .footer-text {
