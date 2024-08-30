@@ -55,14 +55,21 @@ public class JwtFilter extends OncePerRequestFilter
         // requesting a public resource, their token must be well-formed and valid.
 
         // Get claims and validate
-        Jws<Claims> signedToken = authenticationService.resolveClaims(cookie.get().getValue());
-        if (!authenticationService.valid(signedToken))
+        Jws<Claims> signedToken;
+        try
         {
-            LOGGER.info("User presented a malformed/invalid auth token; performing logout");
-            authenticationService.logUserOut(request, response);
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            // Don't continue filter chain; kill this request now
-            return;
+            signedToken = authenticationService.resolveClaims(cookie.get().getValue());
+
+            if (!authenticationService.valid(signedToken))
+            {
+                handleUnauthorized(request, response, "User presented an invalid auth token; performing logout");
+                return; // Don't continue filter chain; kill this request now
+            }
+        }
+        catch (Exception ex)
+        {
+            handleUnauthorized(request, response, "User presented a malformed auth token; performing logout");
+            return; // Don't continue filter chain; kill this request now
         }
 
         // Currently looking user up on each request.
@@ -77,14 +84,12 @@ public class JwtFilter extends OncePerRequestFilter
         }
         catch (Exception ex)
         {
-            LOGGER.info("Re-authentication failed for reason: {}", ex.getMessage());
-            authenticationService.logUserOut(request, response);
-            response.setStatus(ex instanceof AccountStatusException ?
+            String message = "Re-authentication failed for reason: " + ex.getMessage();
+            int statusCode = ex instanceof AccountStatusException ?
                 HttpServletResponse.SC_FORBIDDEN :
-                HttpServletResponse.SC_UNAUTHORIZED
-            );
-            // Don't continue filter chain; kill this request now
-            return;
+                HttpServletResponse.SC_UNAUTHORIZED;
+            handleUnauthorizedForStatus(request, response, statusCode, message);
+            return; // Don't continue filter chain; kill this request now
         }
 
         chain.doFilter(request, response);
@@ -102,5 +107,25 @@ public class JwtFilter extends OncePerRequestFilter
             .filter(cookie -> cookie.getName().equals(Constants.JWT_COOKIE_NAME))
             .filter(cookie -> StringUtils.isNotBlank(cookie.getValue()))
             .findFirst();
+    }
+
+    private void handleUnauthorized(HttpServletRequest request,
+                                           HttpServletResponse response,
+                                           String message
+    ) throws ServletException
+    {
+        handleUnauthorizedForStatus(request, response, HttpServletResponse.SC_UNAUTHORIZED, message);
+    }
+
+    private void handleUnauthorizedForStatus(HttpServletRequest request,
+                                                    HttpServletResponse response,
+                                                    int statusCode,
+                                                    String message
+    ) throws ServletException
+    {
+        LOGGER.info(message);
+        request.logout();
+        authenticationService.logUserOut(response); // TODO ERIC why is request.logout() not clearing cookies?
+        response.setStatus(statusCode);
     }
 }

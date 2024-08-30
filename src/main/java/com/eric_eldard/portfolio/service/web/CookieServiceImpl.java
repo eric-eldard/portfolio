@@ -14,7 +14,7 @@ public class CookieServiceImpl implements CookieService
 
 
     /**
-     * @param secure defaults to true in application.properties; supports override for non-SSL test environments
+     * @param secure defaults to <tt>true</tt> in application.properties; supports override for non-SSL test envs
      */
     public CookieServiceImpl(@Value("${portfolio.cookie.secure}") boolean secure)
     {
@@ -26,7 +26,7 @@ public class CookieServiceImpl implements CookieService
      * Note: SameSite attribute controlled in {@link GlobalConfig}
      */
     @Override
-    public Cookie makeCookie(String name, String content)
+    public Cookie makeSessionCookie(String name, String content)
     {
         Cookie cookie = new Cookie(name, content);
         cookie.setPath("/");
@@ -36,10 +36,16 @@ public class CookieServiceImpl implements CookieService
     }
 
     @Override
+    public Cookie makePersistentCookie(String name, String content, int ttlSeconds)
+    {
+        Cookie cookie = makeSessionCookie(name, content);
+        cookie.setMaxAge(ttlSeconds);
+        return cookie;
+    }
+
+    @Override
     public Cookie makeExpiredCookie(String name)
     {
-        Cookie cookie = makeCookie(name, "");
-        cookie.setMaxAge(0);
-        return cookie;
+        return makePersistentCookie(name, "" , 0);
     }
 }

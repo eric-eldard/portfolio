@@ -4,7 +4,9 @@ import jakarta.servlet.http.Cookie;
 
 public interface CookieService
 {
-    Cookie makeCookie(String name, String content);
+    Cookie makeSessionCookie(String name, String content);
+
+    Cookie makePersistentCookie(String name, String content, int ttlSeconds);
 
     Cookie makeExpiredCookie(String name);
 }

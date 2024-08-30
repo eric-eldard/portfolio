@@ -51,7 +51,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
     private final JwtUtil jwtUtil;
 
-    private final long jwtTtlMillis;
+    private final int jwtTtlSeconds;
 
     private final PortfolioUserService portfolioUserService;
 
@@ -60,7 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     private AuthenticationManager authenticationManager;
 
 
-    public AuthenticationServiceImpl(@Value("${portfolio.security.jwt.ttl:10080}") long jwtTtlMins,
+    public AuthenticationServiceImpl(@Value("${portfolio.security.jwt.ttl-mins}") long jwtTtlMins,
                                      CookieService cookieService,
                                      JwtUtil jwtUtil,
                                      PortfolioUserService portfolioUserService,
@@ -68,7 +68,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     )
     {
         this.cookieService = cookieService;
-        this.jwtTtlMillis = TimeUnit.MINUTES.toMillis(jwtTtlMins);
+        this.jwtTtlSeconds = (int) TimeUnit.MINUTES.toSeconds(jwtTtlMins);
         this.jwtUtil = jwtUtil;
         this.portfolioUserService = portfolioUserService;
         this.securityContextService = securityContextService;
@@ -98,7 +98,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     public String issueToken(PortfolioUser user)
     {
         Date issuedAt = new Date();
-        Date expiry = new Date(issuedAt.getTime() + jwtTtlMillis);
+        Date expiry = new Date(issuedAt.getTime() + (jwtTtlSeconds * 1_000L));
         return issueToken(user, issuedAt, expiry);
     }
 
@@ -160,14 +160,16 @@ public class AuthenticationServiceImpl implements AuthenticationService
     }
 
     @Override
-    public void logUserOut(HttpServletRequest request, HttpServletResponse response)
+    public void setAuthTokenCookie(String token, HttpServletResponse response)
     {
-        request.getSession().invalidate();
+        Cookie tokenCookie = cookieService.makePersistentCookie(Constants.JWT_COOKIE_NAME, token, jwtTtlSeconds);
+        response.addCookie(tokenCookie);
+    }
 
-        Cookie expiredSessionCookie = cookieService.makeExpiredCookie(Constants.SESSION_COOKIE_NAME);
-        Cookie expiredTokenCookie = cookieService.makeExpiredCookie(Constants.JWT_COOKIE_NAME);
-
-        response.addCookie(expiredSessionCookie);
-        response.addCookie(expiredTokenCookie);
+    @Override
+    public void logUserOut(HttpServletResponse response)
+    {
+        response.addCookie(cookieService.makeExpiredCookie(Constants.JWT_COOKIE_NAME));
+        response.addCookie(cookieService.makeExpiredCookie(Constants.SESSION_COOKIE_NAME));
     }
 }

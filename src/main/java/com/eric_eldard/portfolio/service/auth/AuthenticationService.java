@@ -27,5 +27,7 @@ public interface AuthenticationService
 
     void setAuthentication(PortfolioUser user, HttpServletRequest source);
 
-    void logUserOut(HttpServletRequest request, HttpServletResponse response);
+    void setAuthTokenCookie(String token, HttpServletResponse response);
+
+    void logUserOut(HttpServletResponse response);
 }

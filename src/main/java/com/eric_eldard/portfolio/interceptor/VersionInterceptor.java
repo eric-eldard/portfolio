@@ -1,6 +1,7 @@
 package com.eric_eldard.portfolio.interceptor;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,7 +33,10 @@ public class VersionInterceptor implements HandlerInterceptor
                            Object handler,
                            ModelAndView modelAndView)
     {
-        if (!isAdditionalLocationRequest(request) && modelAndView != null)
+        if (!isAdditionalLocationRequest(request) &&
+            isNotRedirect(response) &&
+            modelAndView != null
+        )
         {
             modelAndView.getModelMap().addAttribute("portfolio_app_version", version);
         }
@@ -47,5 +51,10 @@ public class VersionInterceptor implements HandlerInterceptor
             .stream()
             .map(AdditionalLocation::webPath)
             .anyMatch(webPath -> request.getRequestURI().startsWith(webPath));
+    }
+
+    private boolean isNotRedirect(HttpServletResponse response)
+    {
+        return !HttpStatusCode.valueOf(response.getStatus()).is3xxRedirection();
     }
 }

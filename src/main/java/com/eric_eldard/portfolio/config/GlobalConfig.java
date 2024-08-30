@@ -22,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import jakarta.servlet.DispatcherType;
 import java.util.Collection;
@@ -33,6 +34,7 @@ import com.eric_eldard.portfolio.security.filter.JwtFilter;
 import com.eric_eldard.portfolio.service.auth.AuthenticationService;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import com.eric_eldard.portfolio.service.user.SecurityContextService;
+import com.eric_eldard.portfolio.util.Constants;
 
 /**
  * Master config for security, logging, and beans for which creation order prevents a circular dependency.
@@ -107,7 +109,14 @@ public class GlobalConfig
                 .requireExplicitSave(false) // makes sec context available for logging, even on unauthenticated pages
             )
             .csrf(csrf ->
-                csrf.ignoringRequestMatchers("/login")
+                csrf.ignoringRequestMatchers("/login", "/logout") // allow GET-style logout (w/o CSRF token)
+            )
+            .logout(logout ->
+                logout
+                    .permitAll()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) // reinstate GET /logout (removed by CSRF config)
+                    .deleteCookies(Constants.JWT_COOKIE_NAME, Constants.SESSION_COOKIE_NAME)
+                    .logoutSuccessUrl("/")
             )
             .exceptionHandling(ex ->
                 ex.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
