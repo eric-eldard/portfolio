@@ -95,7 +95,13 @@ public class GlobalConfig
                 // WARNING: order matters, since these paths are hierarchical; putting "/" 1st gives admin access to all
                 .requestMatchers("/portfolio/users/**").hasRole("ADMIN")
                 .requestMatchers("/portfolio/**").authenticated()
-                .requestMatchers("/", "/login", "/logout", "/public/assets/**").permitAll()
+                .requestMatchers(
+                    "/",
+                    "/login",
+                    "/logout",
+                    "/public/assets/**",
+                    "/favicon.ico"
+                ).permitAll()
                 .dispatcherTypeMatchers(
                     DispatcherType.ERROR,
                     DispatcherType.FORWARD,

@@ -57,6 +57,11 @@ public class WebMvcConfig implements WebMvcConfigurer
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry)
     {
+        // Maps favicon
+        registry.addResourceHandler("/favicon.ico")
+            .addResourceLocations("/public/assets/images/icons/favicon/favicon.ico")
+            .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
+
         // Public classpath assets already exposed; this adds cache control to public images
         registry.addResourceHandler("/public/assets/images/**")
             .addResourceLocations("/public/assets/images/")
