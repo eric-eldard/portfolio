@@ -88,7 +88,7 @@ public class PortfolioController
     }
 
     /**
-     * Forwards <tt>/portfolio/logout</tt> to <tt>/logout</tt>
+     * Forwards {@code /portfolio/logout} to {@code /logout}
      */
     @GetMapping("/logout")
     public String logout()

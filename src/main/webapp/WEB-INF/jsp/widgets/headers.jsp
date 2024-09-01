@@ -16,6 +16,6 @@
         <link rel="stylesheet" type="text/css" href="/public/assets/style/portfolio.css">
 
         <script src="/public/assets/scripts/portfolio.js"></script>
-        <script src="/public/assets/scripts/swipe-events.js"></script>
         <script src="/public/assets/scripts/video.js"></script>
+        <script src="/public/assets/scripts/first-party/swipe-events.js"></script>
         <script src="https://unpkg.com/@api.video/player-sdk" defer></script>

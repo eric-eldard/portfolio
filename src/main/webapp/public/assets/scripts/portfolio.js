@@ -46,7 +46,7 @@ const POPUP_SWIPE_LISTENER = function(e) {
                 // We need to be able to react to really quick, short swipes, then finger speed impact falls off quickly
                 // as a factor in movement of the popup. Impact of acceleration must be at least 1 to avoid nerfing the
                 // distance factor.
-                const speedFactor = Math.max(Math.pow(e.detail.speedX, 4), 1);
+                const speedFactor = Math.max(Math.pow(e.detail.latestSpeedX, 4), 1);
 
                 // We won't let the popup go too far off screen left or right, as distance traveled during the return
                 // animation will directly affect the visual speed of that animation.
@@ -80,14 +80,14 @@ const POPUP_SWIPE_LISTENER = function(e) {
                 // desire to navigate back/forward in the content.
                 const thresholdToJump = width * 0.6;
 
-                if (swipeEvents.telemetryLoggingEnabled()) {
+                if (SwipeEvents.telemetryLoggingEnabled()) {
                     const padding = newLeft < 0 ? " " : "";
                     console.info(`
                         Popup position updated by swipe gesture
                         \tDistance factor:       ${padding + distanceFactor}
                         \tSpeed factor:          ${padding + speedFactor}
                         \tNew popup left value:  ${popup.style.left}
-                        \tCutoff to jump:        (-/+)${thresholdToJump}
+                        \Threshold to jump:      (-/+)${thresholdToJump}
                         `.replace(/\n[ ]+/g, "\n")
                     );
                 }

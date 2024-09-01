@@ -14,7 +14,7 @@ public class CookieServiceImpl implements CookieService
 
 
     /**
-     * @param secure defaults to <tt>true</tt> in application.properties; supports override for non-SSL test envs
+     * @param secure defaults to {@code true} in application.properties; supports override for non-SSL test envs
      */
     public CookieServiceImpl(@Value("${portfolio.cookie.secure}") boolean secure)
     {
