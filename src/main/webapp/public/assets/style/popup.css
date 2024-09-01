@@ -6,6 +6,7 @@
 	cursor: default;
 	color: #fff;
 	height: 88%;
+	left: 0; /* for swipe calculations */
 	margin: auto;
 	max-width: 1100px;
 	opacity: 0;
@@ -19,9 +20,11 @@
 	padding-bottom: 24px;
 	position: relative;
 	top: 50%;
-	transform: translateY(-50%);
-	transition: opacity 0.3s, padding 1s, width 0.3s;
+	transform: rotate(0deg) translateY(-50%);
+	transform-origin: bottom center;
+	transition: left 0.5s, opacity 0.3s, padding 1s, transform 0.5s, width 0.3s;
 	width: 0;
+	will-change: transform; /* needed to prevent jittery swipe behavior on iOS Safari */
 }
 
 #popup.open {
@@ -76,6 +79,36 @@
     margin-left: 2px;
 }
 
+#popup .popup-nav {
+    display: none;
+    height: 0;
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999999;
+}
+
+#popup .popup-nav:hover {
+    opacity: 1;
+}
+
+#popup .popup-nav:after {
+    align-items: center;
+    background-color: rgb(200, 200, 200, 0.5);
+    display: flex;
+    height: 600px;
+    justify-content: center;
+    opacity: 0.35;
+    position: absolute;
+    transform: translateY(-50%);
+    transition: opacity 0.5s;
+    width: 23px;
+}
+
+#popup .popup-nav:hover:after {
+    opacity: 1;
+}
+
 #popup .screenshot.grid1and3 {
     width: 99%;
 }
@@ -98,14 +131,47 @@
 
 /* The "X" for closing #popup */
 #popup #closeX {
-    cursor: pointer;
-    font-size: 20px;
-	font-weight: bold;
-	text-align: right;
+	left: 100%; /* that is, right: 0, but sticky requires the container to have an explicit width for this and the popup doesn't */
+	line-height: 24px; /* this is the only way to give some additional margin below the X */
+	position: sticky;
+	top: 5px;
+    z-index: 999999;
 }
 
-#popup #closeX a {
-	color: #fff;
+#popup #closeX:after {
+    color: #fff;
+    content: "\02715";
+    font-size: 20px;
+	font-weight: bold;
+    text-shadow:  0px  2px  2px #000,
+                  0px -2px  2px #000,
+                  2px  0px  2px #000,
+                 -2px  0px  2px #000,
+                  2px  2px  2px #000,
+                  2px -2px  2px #000,
+                 -2px  2px  2px #000,
+                 -2px -2px  2px #000;
+    transition: opacity 0.5s;
+}
+
+#popup #closeX:hover:after {
+	opacity: 1;
+}
+
+#popup #move-back:after {
+    border-radius: 0 100% 100% 0 / 50%;
+    content: "\025C0";
+    left: -25px;
+}
+
+#popup #move-forward {
+    left: 100%;
+}
+
+#popup #move-forward:after {
+    border-radius: 100% 0 0 100% / 50%;
+    content: "\025B6";
+    margin-left: 2px;
 }
 
 /* A full-page div for preventing interaction with the main page while content is being displayed in #popup */
@@ -146,7 +212,21 @@
     }
 }
 
+
 @media screen and (min-width: 1100px) {
+    #popup #closeX:after {
+        opacity: 0.35;
+    }
+
+    /* nav arrows don't appear until there's enough room for them in the gutters */
+    #popup #move-back {
+        display: block;
+    }
+
+    #popup #move-forward {
+        display: inline-block;
+    }
+
     #popup .screenshot.solo {
         width: 90%;
     }

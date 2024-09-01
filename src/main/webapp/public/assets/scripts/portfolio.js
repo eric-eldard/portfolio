@@ -1,13 +1,136 @@
+const SWIPE_SUBSCRIBE_FREQUENCY = 1000 / 120; // 120fps necessary for smooth (non-jittery) animation on iOS Safari
+const MAX_POPUP_ROTATION = 30;
 const HASH_PATH_KEY = "hashPath";
-const POPSTATE_LISTENER = (event) => closePopup();
+const POPSTATE_LISTENER = (event) => closePopup(); // Close popup on a history pop-state event (back button pressed)
 
-window.addEventListener("DOMContentLoaded", browserDetect, false);
+// Listen for swipe events and move the popup accordingly if it's open
+let lastSwipeEventTime = 0;
+const POPUP_SWIPE_LISTENER = function(e) {
+
+    // We're publishing swipe events at roughly screen refresh rate, which could be as a high as 120fps. Here we'll
+    // check if we've waited the desired interval since the last time we updated the popup's position. If not, we'll
+    // short-circuit and try again next time——unless this is a terminating event, in which case we'll process anyway.
+    const ongoing = e.detail.ongoing;
+    const millisSinceLastPublish = e.detail.eventTime - lastSwipeEventTime;
+    if (ongoing && millisSinceLastPublish < SWIPE_SUBSCRIBE_FREQUENCY) {
+        return;
+    }
+
+    lastSwipeEventTime = e.detail.eventTime;
+
+    if (ongoing) {
+        const dir = e.detail.cardinal4dir;
+
+        if (dir === "W" || dir === "E") {
+            const popup   = getPopup();
+            const oldLeft = popup.style.left.replace("px", "");
+            const width   = popup.offsetWidth; // doesn't have an explicit CSS width
+
+            // Stop updating the popup's left value once it's off the screen in either direction
+            const shouldUpdate = dir === "W" ? (oldLeft > -width) : (oldLeft < width);
+
+            if (shouldUpdate) {
+                let newLeft;
+
+                // Using total distance, instead of just X distance, because element traversal distance should feel like
+                // finger distance travelled, even if some of the finger movement was actually vertical. Overall, this
+                // still has to be a left/right swipe——if the user swipes left, but then starts dragging their finger up
+                // the screen, once the Y distance exceeds the X distance, it will become an up-swipe and we'll stop
+                // animating the popup. Using 75% of this distance helps the popup feel heavier at low accelerations,
+                // and feel like it's sticking to the finger more.
+                const distanceFactor = e.detail.totalDistance * 0.75;
+
+                // We need to be able to react to really quick, short swipes, then finger speed impact falls off quickly
+                // as a factor in movement of the popup. Impact of acceleration must be at least 1 to avoid nerfing the
+                // distance factor.
+                const speedFactor = Math.max(Math.pow(e.detail.speedX, 4), 1);
+
+                // We won't let the popup go too far off screen left or right, as distance traveled during the return
+                // animation will directly affect the visual speed of that animation.
+                if (dir === "W") {
+                    newLeft = Math.max(-distanceFactor * speedFactor, -2 * width);
+                }
+                else {
+                    newLeft = Math.min(distanceFactor * speedFactor, 2 * width);
+                }
+
+                // If we're at the beginning or end of the timeline, don't let a swipe wildly fling the popup, since
+                // the same popup will just return to screen.
+                const timelineElem = getCurrentTimelineElem();
+                const swipingPastFirstElem = timelineElem && dir === "E" && !timelineElem.previousElementSibling;
+                const swipingPastLastElem = timelineElem && dir === "W" && !timelineElem.nextElementSibling;
+
+                if (swipingPastFirstElem) {
+                    newLeft = Math.min(newLeft, 50)
+                }
+                else if (swipingPastLastElem) {
+                    newLeft = Math.max(newLeft, -50)
+                }
+
+                // Set new position and rotation values for the popup
+                popup.style.left = newLeft + "px";
+                const rotation = Math.min(newLeft / 5, (dir === "W" ? -MAX_POPUP_ROTATION : MAX_POPUP_ROTATION));
+                rotatePopup(newLeft / 5);
+
+                // Your finger is at about the 60% demarcation horizontally on a mobile screen when the popup has
+                // disappeared off screen, even at the slowest speeds. We'll interpret crossing this threshold as a
+                // desire to navigate back/forward in the content.
+                const thresholdToJump = width * 0.6;
+
+                if (swipeEvents.telemetryLoggingEnabled()) {
+                    const padding = newLeft < 0 ? " " : "";
+                    console.info(`
+                        Popup position updated by swipe gesture
+                        \tDistance factor:       ${padding + distanceFactor}
+                        \tSpeed factor:          ${padding + speedFactor}
+                        \tNew popup left value:  ${popup.style.left}
+                        \tCutoff to jump:        (-/+)${thresholdToJump}
+                        `.replace(/\n[ ]+/g, "\n")
+                    );
+                }
+
+                if (newLeft < -thresholdToJump) {
+                    // If you swiped left, you should see the next content element, coming from the right
+                    jumpToNext();
+                }
+                else if (newLeft > thresholdToJump) {
+                    // If you swiped right, you should see the previous content element, coming from the left
+                    jumpToPrevious();
+                }
+            }
+        }
+    }
+    else {
+        // Wait the duration of the popup's CSS left transition before returning it to where it started; without this
+        // delay, the popup returns to its starting position as soon as you take your finger off the screen, even if
+        // you flung it really hard.
+        window.setTimeout(() => {
+            popup.style.left = "0";
+            rotatePopup(0);
+        }, 501);
+    }
+};
+
+
+window.addEventListener("DOMContentLoaded", e => {
+    browserDetect();
+    bindPopupCloseToEsc();
+});
+
 
 function browserDetect() {
     if (isChromeMobile()) {
         console.debug("Mobile Chrome detected; adding portfolio CSS shim");
         document.body.classList.add("chrome-mobile-shim");
     }
+}
+
+function bindPopupCloseToEsc() {
+    window.addEventListener("keyup", function (e) {
+        if (popupIsOpen() && event.keyCode == 27) {
+            closePopup();
+        }
+    });
 }
 
 // Reinstate content if a popup name is found in the url's hash or in session storage
@@ -29,6 +152,13 @@ function retrieveAndShowContentIfPopupState() {
 
 // Retrieve content and display it in the popup
 function retrieveAndShowContent(path) {
+
+    // If a timeline event kicked this method off, highlight that event
+    const elem = getTimelineElem(path);
+    if (elem) {
+        elem.classList.add("focused");
+    }
+
     // Remove trailing slash if present, then always add it back (supports slash and no-slash paths)
     const basePath = window.location.pathname.replace(/\/+$/, "") + "/content/";
 
@@ -54,33 +184,26 @@ function retrieveAndShowContent(path) {
 
 //Show the content pop-up and populate w/ content
 function showContentInPopup(content, path) {
-    const main       = document.getElementById("main");
-    const background = document.getElementById("popup-background");
-    const popup      = document.getElementById("popup");
-    const hashPath   = `#${path}`;
+    const main         = document.getElementById("main");
+    const background   = document.getElementById("popup-background");
+    const popup        = getPopup();
+    const popupContent = document.getElementById("popup-content");
+    const hashPath     = `#${path}`;
 
-    const innerHTML = `
-        <div id="closeX">
-            <a href="javascript: closePopup();" title="Close">&#x2715;</a>
-        </div>
-        ${content}
-    `;
-
-    setInnerHTML(popup, innerHTML);
+    setInnerHTML(popupContent, content);
+    determineNavigationVisibility(path);
 
     // Tracking the path for the open popup solely for logging purposes when page is refreshed while popup is open
     setDataName(popup, hashPath);
 
-    // TODO ERIC position=fixed causing resizing of main content when popup open
-    // main.style.overflow = "hidden";
-    // main.style.position = "fixed";
-
+    // Changing effects behind the popup
     background.classList.add("open");
     main.classList.add("blur");
-
     setBodyBackgroundColor(path);
 
-    setTimeout(function() {
+    document.addEventListener("swipe", POPUP_SWIPE_LISTENER);
+
+    window.setTimeout(() => {
         popup.classList.add("open");
         popup.scrollTop = 0;
 
@@ -89,16 +212,28 @@ function showContentInPopup(content, path) {
         history.pushState({ popupStatus : "open"}, "", hashPath);
         window.addEventListener("popstate", POPSTATE_LISTENER);
         console.debug(`Popup %c${hashPath}%c opened and added to history`, "color: blue", "color: unset");
+
+        window.setTimeout(() => {
+            // Give a little buffer for loading before calling the popup back to center screen
+            rotatePopup(0);
+            popup.style.left = "0";
+        }, 400);
     }, 100);
 }
 
 function closePopup() {
-    const main        = document.getElementById("main");
-    const background  = document.getElementById("popup-background");
-    const popup       = document.getElementById("popup");
-    const wasPopState = isPopupState();
+    const main         = document.getElementById("main");
+    const background   = document.getElementById("popup-background");
+    const popup        = getPopup();
+    const popupContent = document.getElementById("popup-content");
+    const wasPopState  = isPopupState();
 
     window.removeEventListener("popstate", POPSTATE_LISTENER);
+    document.removeEventListener("swipe", POPUP_SWIPE_LISTENER);
+
+    // If the popup's hash param is currently in browser history, we'll pop it off. It may not be, if the hash param url
+    // was directly navigated to. I've attempted to push an event into history in this case, but Chrome and Safari don't
+    // recognize it (though Firefox does), so a history.back() op would cause the user to leave the site.
     if (isPopupState()) {
         history.back();
     }
@@ -107,22 +242,33 @@ function closePopup() {
     // address and the popstate event doesn't contain info about the popped-state (it points to the new history head)
     console.debug(`Popup %c${getDataName(popup)}%c removed from history`, "color: blue", "color: unset");
 
-    document.body.classList.remove("opaque");
+    document.body.classList.remove("opaque-bg-color");
     main.classList.remove("blur");
-    popup.classList.remove("open");
-    clearDataName(popup);
 
-    // TODO ERIC position=fixed causing resizing of main content when popup open
-    // main.style.overflow = "unset";
-    // main.style.position = "unset";
+    // Perform fade-out animation if we're closing the popup entirely, but not if we're swiping between content
+    if (popup.classList.contains("swiping")) {
+        popup.classList.remove("swiping");
+    }
+    else {
+        popup.classList.remove("open");
+    }
+
+    clearDataName(popup);
 
     video.destroyAllPlayers();
 
     console.debug(`Popup closed${wasPopState ? "" : " with back button"}`);
 
-    setTimeout(function() {
+    // Finish CSS animations before completely hiding
+    window.setTimeout(() => {
         background.classList.remove("open");
-        popup.innerHTML = "";
+        setInnerHTML(popupContent, "");
+
+        window.setTimeout(() =>
+            Array.from(document.querySelectorAll(".timeline .timeline-events .timeline-event"))
+                .forEach(elem => elem.classList.remove("focused"))
+        , 700);
+
     }, 300);
 }
 
@@ -135,10 +281,66 @@ function showResume() {
     }
 }
 
-//Jump straight from one content window to another
-function jumpTo(path) {
+// Jump straight from one content popup to another. "comingFrom" specifies where the new popup should enter the screen
+// from and values are "left", "center" (or null), and "right"
+function jumpTo(path, comingFrom = "center") {
+    const popup = getPopup();
+    popup.classList.add("swiping");
+
     closePopup();
-    setTimeout(function(){ retrieveAndShowContent(path); }, 501);
+
+    window.setTimeout(() => {
+        // Push the popup to it's new starting position
+        if (comingFrom === "left") {
+            popup.style.left = -window.screen.availWidth + "px";
+            rotatePopup(-MAX_POPUP_ROTATION);
+        }
+        else if (comingFrom === "right") {
+            popup.style.left = window.screen.availWidth + "px";
+            rotatePopup(MAX_POPUP_ROTATION);
+        }
+
+        // Show the new content
+        retrieveAndShowContent(path);
+    }, 501);
+}
+
+// Jump to the content popup that comes sequentially before the open one (if present)
+function jumpToPrevious() {
+    // Remove focus from any active timeline element
+    const elem = getCurrentTimelineElem();
+    if (elem) {
+        elem.classList.remove("focused");
+    }
+
+    // Fling the current popup off screen
+    getPopup().style.left = window.screen.availWidth + "px";
+    rotatePopup(MAX_POPUP_ROTATION);
+
+    // If there's content before the current popup, show it
+    if (elem.previousElementSibling) {
+        elem.previousElementSibling.classList.add("focused");
+        jumpTo(elem.previousElementSibling.dataset.timelinePath, "left");
+    }
+}
+
+// Jump to the content popup that comes sequentially after the open one (if present)
+function jumpToNext() {
+    // Remove focus from any active timeline element
+    const elem = getCurrentTimelineElem();
+    if (elem) {
+        elem.classList.remove("focused");
+    }
+
+    // Fling the current popup off screen
+    getPopup().style.left = -window.screen.availWidth + "px";
+    rotatePopup(-MAX_POPUP_ROTATION);
+
+    // If there's content after the current popup, show it
+    if (elem.nextElementSibling) {
+        elem.nextElementSibling.classList.add("focused");
+        jumpTo(elem.nextElementSibling.dataset.timelinePath, "right");
+    }
 }
 
 // See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml
@@ -160,17 +362,48 @@ function setInnerHTML(container, html) {
     });
 }
 
+// Change the background color of the body to match the given path, if that path matches a timeline element
 function setBodyBackgroundColor(path) {
     // Previous color not removed in closePopup() because it needs time to fade from opaque to transparent
     removeClassesStartingWith(document.body, "timeline-color-");
 
-    const elem = document.querySelectorAll(`[data-timeline-path=${path}]`)[0];
+    const elem = getTimelineElem(path);
 
     if (elem) {
         const position = Array.prototype.indexOf.call(elem.parentNode.children, elem);
         document.body.classList.add(`timeline-color-${position}`);
-        document.body.classList.add("opaque");
+        document.body.classList.add("opaque-bg-color");
     }
+}
+
+// Desktop only
+// Only show the back and forward arrows if the content is for a timeline event. If it is, only show back if there's
+// previous content on the timeline and only show forward if there's more content.
+function determineNavigationVisibility(path) {
+    const elem = getTimelineElem(path);
+    if (elem) {
+        document.getElementById("move-back").style.visibility = elem.previousElementSibling ? "visible" : "hidden";
+        document.getElementById("move-forward").style.visibility = elem.nextElementSibling ? "visible" : "hidden";
+    }
+    else {
+        document.getElementById("move-back").style.visibility = "hidden";
+        document.getElementById("move-forward").style.visibility = "hidden";
+    }
+}
+
+function getTimelineElem(path) {
+    if (path && path !== "") {
+        return document.querySelectorAll(`[data-timeline-path=${path}]`)[0];
+    }
+    return null;
+}
+
+function getCurrentTimelineElem() {
+    const path = hashPath().substring(1);
+    if (path && path !== "") {
+        return document.querySelectorAll(`[data-timeline-path=${path}]`)[0];
+    }
+    return null;
 }
 
 function getMetaValue(name) {
@@ -220,6 +453,18 @@ function removeClassesStartingWith(elem, clazzStub) {
 
 function hashPath() {
     return window.location.hash;
+}
+
+function getPopup() {
+    return document.getElementById("popup");
+}
+
+function popupIsOpen() {
+    return getPopup().classList.contains("open");
+}
+
+function rotatePopup(deg) {
+    getPopup().style.transform = `rotate(${deg}deg) translateY(-50%)`;
 }
 
 // Returns true if hash path is not empty and not just "#"

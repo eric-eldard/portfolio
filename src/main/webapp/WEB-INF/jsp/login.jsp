@@ -140,7 +140,7 @@
             }
         }
 
-        window.addEventListener("DOMContentLoaded", focusElement("login-username"), false);
+        window.addEventListener("DOMContentLoaded", focusElement("login-username"));
     </script>
     <div id="main">
             <div class="content">

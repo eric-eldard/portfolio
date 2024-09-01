@@ -22,7 +22,12 @@
         </div>
 
         <div id="popup-background" onclick="closePopup()">
-            <div id="popup" onclick="event.stopPropagation()"></div>
+            <div id="popup" onclick="event.stopPropagation()">
+                <a href="javascript: closePopup();" id="closeX" title="Close"></a>
+                <a href="javascript: jumpToPrevious();" id="move-back" class="popup-nav" title="Move back"></a>
+                <a href="javascript: jumpToNext();" id="move-forward" class="popup-nav" title="Move forward"></a>
+                <div id="popup-content"></div>
+            </div>
         </div>
 
         <div id="preload-images">
