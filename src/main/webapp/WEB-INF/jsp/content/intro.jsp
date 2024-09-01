@@ -1,6 +1,6 @@
 <div class="intro-text">
     <p>
-        I've been building stuff my whole life. Long before I was writing code professionally, I was a software
+        I've been building stuff my whole life. Long before I was writing code professionally, I was still a software
         engineer&mdash;as a hobbyist and in my first career running movie theaters&mdash;using programming skills to
         maximize the time and effectiveness of myself and my team. I believe in automating the mundane, delivering high
         value quickly, and building things that are extensible and easily maintained. And I enjoy refactors&mdash;making

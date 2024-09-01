@@ -26,6 +26,9 @@ const POPUP_SWIPE_LISTENER = function(e) {
             const oldLeft = popup.style.left.replace("px", "");
             const width   = popup.offsetWidth; // doesn't have an explicit CSS width
 
+            // Stop scrolling while we're swiping
+            popup.style.overflowY = "hidden";
+
             // Stop updating the popup's left value once it's off the screen in either direction
             const shouldUpdate = dir === "W" ? (oldLeft > -width) : (oldLeft < width);
 
@@ -61,10 +64,10 @@ const POPUP_SWIPE_LISTENER = function(e) {
                 const swipingPastLastElem = timelineElem && dir === "W" && !timelineElem.nextElementSibling;
 
                 if (swipingPastFirstElem) {
-                    newLeft = Math.min(newLeft, 50)
+                    newLeft = Math.min(newLeft, 20)
                 }
                 else if (swipingPastLastElem) {
-                    newLeft = Math.max(newLeft, -50)
+                    newLeft = Math.max(newLeft, -20)
                 }
 
                 // Set new position and rotation values for the popup
@@ -107,6 +110,7 @@ const POPUP_SWIPE_LISTENER = function(e) {
         window.setTimeout(() => {
             popup.style.left = "0";
             rotatePopup(0);
+            popup.style.overflowY = "scroll";
         }, 501);
     }
 };
@@ -205,6 +209,7 @@ function showContentInPopup(content, path) {
 
     window.setTimeout(() => {
         popup.classList.add("open");
+        popup.style.overflowY = "scroll"; // we may have frozen this for swiping; let's make double sure it's unfrozen
         popup.scrollTop = 0;
 
         // Add listener for (mobile) back button, and push an extra frame onto history, so the
@@ -318,7 +323,7 @@ function jumpToPrevious() {
     rotatePopup(MAX_POPUP_ROTATION);
 
     // If there's content before the current popup, show it
-    if (elem.previousElementSibling) {
+    if (elem && elem.previousElementSibling) {
         elem.previousElementSibling.classList.add("focused");
         jumpTo(elem.previousElementSibling.dataset.timelinePath, "left");
     }
@@ -337,7 +342,7 @@ function jumpToNext() {
     rotatePopup(-MAX_POPUP_ROTATION);
 
     // If there's content after the current popup, show it
-    if (elem.nextElementSibling) {
+    if (elem && elem.nextElementSibling) {
         elem.nextElementSibling.classList.add("focused");
         jumpTo(elem.nextElementSibling.dataset.timelinePath, "right");
     }
