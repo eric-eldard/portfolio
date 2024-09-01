@@ -1,9 +1,13 @@
 <h1>Portfolio App</h1>
 <p>
     This portfolio is an app I built myself, initially written in <b>Spring Boot</b> 2.7 and then upgraded to 3.3. It
-    features a mobile-friendly UI created from scratch, my own JavaScript swipe-detection library, pre-compiled JSPs for
-    faster load times, recursive asset preloading, third-party video integration, JWT auth tokens, and robust admin-only
-    user management. I'm constantly adding and upgrading, and it's been a blast to work on!
+    features a mobile-friendly UI created from scratch, my own
+    <jsp:include page="../widgets/link-out.jsp">
+        <jsp:param name="text" value="JavaScript swipe-detection library"/>
+        <jsp:param name="href" value="https://github.com/eric-eldard/swipe-events.js"/>
+    </jsp:include>
+    pre-compiled JSPs for faster load times, recursive asset preloading, third-party video integration, JWT auth tokens,
+    and robust admin-only user management. I'm constantly adding and upgrading, and it's been a blast to work on!
 </p>
 
 <jsp:include page="../widgets/see-it-on-gh.jsp">
