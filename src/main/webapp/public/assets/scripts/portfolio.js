@@ -87,7 +87,7 @@ const POPUP_SWIPE_LISTENER = function(e) {
                         \tDistance factor:       ${padding + distanceFactor}
                         \tSpeed factor:          ${padding + speedFactor}
                         \tNew popup left value:  ${popup.style.left}
-                        \Threshold to jump:      (-/+)${thresholdToJump}
+                        \tThreshold to jump:      (-/+)${thresholdToJump}
                         `.replace(/\n[ ]+/g, "\n")
                     );
                 }
