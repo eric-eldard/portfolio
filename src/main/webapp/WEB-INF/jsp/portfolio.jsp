@@ -23,7 +23,14 @@
 
         <div id="popup-background" onclick="closePopup()">
             <div id="popup" onclick="event.stopPropagation()">
-                <a href="javascript: closePopup();" id="closeX" title="Close"></a>
+                <div id="top-controls">
+                    <div id="swipe-indicators">
+                        <div id="swipe-right" class="swipe-arrow"></div>
+                        <div id="swipe-text">swipe</div>
+                        <div id="swipe-left" class="swipe-arrow"></div>
+                    </div>
+                    <a href="javascript: closePopup();" id="closeX" title="Close"></a>
+                </div>
                 <a href="javascript: jumpToPrevious();" id="move-back" class="popup-nav" title="Move back"></a>
                 <a href="javascript: jumpToNext();" id="move-forward" class="popup-nav" title="Move forward"></a>
                 <div id="popup-content"></div>

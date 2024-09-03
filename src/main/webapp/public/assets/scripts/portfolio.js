@@ -1,11 +1,11 @@
 const SWIPE_SUBSCRIBE_FREQUENCY = 1000 / 120; // 120fps necessary for smooth (non-jittery) animation on iOS Safari
 const MAX_POPUP_ROTATION = 30;
 const HASH_PATH_KEY = "hashPath";
-const POPSTATE_LISTENER = (event) => closePopup(); // Close popup on a history pop-state event (back button pressed)
+const POPSTATE_LISTENER = (e) => closePopup(); // Close popup on a history pop-state event (back button pressed)
 
 // Listen for swipe events and move the popup accordingly if it's open
 let lastSwipeEventTime = 0;
-const POPUP_SWIPE_LISTENER = function(e) {
+const POPUP_SWIPE_LISTENER = e => {
 
     // We're publishing swipe events at roughly screen refresh rate, which could be as a high as 120fps. Here we'll
     // check if we've waited the desired interval since the last time we updated the popup's position. If not, we'll
@@ -59,21 +59,25 @@ const POPUP_SWIPE_LISTENER = function(e) {
 
                 // If we're at the beginning or end of the timeline, don't let a swipe wildly fling the popup, since
                 // the same popup will just return to screen.
-                const timelineElem = getCurrentTimelineElem();
-                const swipingPastFirstElem = timelineElem && dir === "E" && !timelineElem.previousElementSibling;
-                const swipingPastLastElem = timelineElem && dir === "W" && !timelineElem.nextElementSibling;
+                const canSwipeBack = showingTimelineElemWithPrevious();
+                const canSwipeForward = showingTimelineElemWithNext();
 
-                if (swipingPastFirstElem) {
-                    newLeft = Math.min(newLeft, 20)
+                if (dir === "E" && !canSwipeBack) {
+                    newLeft = Math.min(newLeft, 10);
                 }
-                else if (swipingPastLastElem) {
-                    newLeft = Math.max(newLeft, -20)
+                else if (dir === "W" && !canSwipeForward) {
+                    newLeft = Math.max(newLeft, -10);
                 }
 
                 // Set new position and rotation values for the popup
                 popup.style.left = newLeft + "px";
                 const rotation = Math.min(newLeft / 5, (dir === "W" ? -MAX_POPUP_ROTATION : MAX_POPUP_ROTATION));
                 rotatePopup(newLeft / 5);
+
+                // Show swipe indicators while swiping
+                toggleStyle("swipe-indicators", "pause", true); // if the indicator flash is still playing, pause it
+                toggleStyle("swipe-indicators", "sustain-swipe-left", canSwipeBack);
+                toggleStyle("swipe-indicators", "sustain-swipe-right", canSwipeForward);
 
                 // Your finger is at about the 60% demarcation horizontally on a mobile screen when the popup has
                 // disappeared off screen, even at the slowest speeds. We'll interpret crossing this threshold as a
@@ -104,6 +108,11 @@ const POPUP_SWIPE_LISTENER = function(e) {
         }
     }
     else {
+        // Hide swipe indicators
+        toggleStyle("swipe-indicators", "sustain-swipe-right", false);
+        toggleStyle("swipe-indicators", "sustain-swipe-left", false);
+        toggleStyle("swipe-indicators", "pause", false);
+
         // Wait the duration of the popup's CSS left transition before returning it to where it started; without this
         // delay, the popup returns to its starting position as soon as you take your finger off the screen, even if
         // you flung it really hard.
@@ -222,6 +231,10 @@ function showContentInPopup(content, path) {
             // Give a little buffer for loading before calling the popup back to center screen
             rotatePopup(0);
             popup.style.left = "0";
+
+            // Flash appropriate swipe indicators when card loads
+            toggleStyle("swipe-indicators", "flash-swipe-left", showingTimelineElemWithNext());
+            toggleStyle("swipe-indicators", "flash-swipe-right", showingTimelineElemWithPrevious());
         }, 400);
     }, 100);
 }
@@ -257,6 +270,14 @@ function closePopup() {
     else {
         popup.classList.remove("open");
     }
+
+    // Hide all swipe indicators
+    toggleStyle("swipe-indicators", "pause", false);
+    toggleStyle("swipe-indicators", "flash-swipe-right", false);
+    toggleStyle("swipe-indicators", "flash-swipe-left", false);
+    toggleStyle("swipe-indicators", "sustain-swipe-right", false);
+    toggleStyle("swipe-indicators", "sustain-swipe-left", false);
+
 
     clearDataName(popup);
 
@@ -411,6 +432,16 @@ function getCurrentTimelineElem() {
     return null;
 }
 
+function showingTimelineElemWithPrevious() {
+    const elem = getCurrentTimelineElem();
+    return elem && elem.previousElementSibling !== null;
+}
+
+function showingTimelineElemWithNext() {
+    const elem = getCurrentTimelineElem();
+    return elem && elem.nextElementSibling !== null;
+}
+
 function getMetaValue(name) {
     const metaElem = document.querySelector(`meta[name="${name}"]`);
     return metaElem ? metaElem.getAttribute("content") : null;
@@ -502,6 +533,16 @@ function focusElement(elemId) {
         }
         elem.focus();
     }, 0)
+}
+
+function toggleStyle(elemId, className, toggleOn) {
+    const elem = document.getElementById(elemId);
+    if (toggleOn && !elem.classList.contains(className)) {
+        elem.classList.add(className);
+    }
+    else if (!toggleOn && elem.classList.contains(className)) {
+        elem.classList.remove(className);
+    }
 }
 
 function togglePasswordVisibility(container) {

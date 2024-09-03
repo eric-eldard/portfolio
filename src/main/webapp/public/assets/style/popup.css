@@ -113,29 +113,11 @@
     width: 99%;
 }
 
-/* A table for listing project specs */
-#popup .specs {
-    font-size: 14px;
-	margin-bottom: 10px;
-}
-
-#popup .specs td {
-    vertical-align: top;
-}
-
-/* Replacement for colgroup */
-#popup .specs tr td:first-child {
-	font-weight: bold;
-	padding-right: 5px;
-}
-
-/* The "X" for closing #popup */
 #popup #closeX {
-	left: 100%; /* that is, right: 0, but sticky requires the container to have an explicit width for this and the popup doesn't */
-	line-height: 24px; /* this is the only way to give some additional margin below the X */
-	position: sticky;
-	top: 5px;
-    z-index: 999999;
+    display: block;
+	line-height: 24px; /* prevents X from getting pushed down by height of the swipe arrows */
+	position: absolute;
+	right: 0;
 }
 
 #popup #closeX:after {
@@ -143,14 +125,6 @@
     content: "\02715";
     font-size: 20px;
 	font-weight: bold;
-    text-shadow:  0px  2px  2px #000,
-                  0px -2px  2px #000,
-                  2px  0px  2px #000,
-                 -2px  0px  2px #000,
-                  2px  2px  2px #000,
-                  2px -2px  2px #000,
-                 -2px  2px  2px #000,
-                 -2px -2px  2px #000;
     transition: opacity 0.5s;
 }
 
@@ -172,6 +146,62 @@
     border-radius: 100% 0 0 100% / 50%;
     content: "\025B6";
     margin-left: 2px;
+}
+
+/* Flashes swipe indicators on screen briefly */
+#popup #swipe-indicators {
+    animation: flash-80 4s;
+    display: flex;
+    left: 50%;
+    justify-content: space-between;
+    opacity: 0;
+    position: absolute;
+    transform: translateX(-50%);
+    transition: opacity 0.75s;
+    visibility: hidden;
+    width: 120px;
+}
+
+/* Controls visibility of text "swipe" (it shows if either arrow is showing) */
+#popup #swipe-indicators.flash-swipe-left,
+#popup #swipe-indicators.flash-swipe-right {
+    visibility: visible;
+}
+
+/* Controls visibility of individual swipe arrows */
+#popup #swipe-indicators.flash-swipe-left #swipe-left,
+#popup #swipe-indicators.flash-swipe-right #swipe-right {
+    visibility: visible;
+}
+
+/* Sustains swipe indicators on screen until this class is removed */
+#popup #swipe-indicators.sustain-swipe-left,
+#popup #swipe-indicators.sustain-swipe-right {
+    opacity: 1;
+}
+
+#popup #swipe-left:after {
+    content: "\0293a";
+}
+
+#popup #swipe-right:after {
+    content: "\0293a";
+    transform: scaleX(-1);
+}
+
+#popup #top-controls {
+    height: 24px;
+	position: sticky;
+    text-shadow:  0px  2px  2px #000,
+                  0px -2px  2px #000,
+                  2px  0px  2px #000,
+                 -2px  0px  2px #000,
+                  2px  2px  2px #000,
+                  2px -2px  2px #000,
+                 -2px  2px  2px #000,
+                 -2px -2px  2px #000;
+	top: 0;
+    z-index: 999999;
 }
 
 /* A full-page div for preventing interaction with the main page while content is being displayed in #popup */
@@ -197,6 +227,35 @@
 }
 
 
+/* A table for listing project specs */
+#popup .specs {
+    font-size: 14px;
+	margin-bottom: 10px;
+}
+
+#popup .specs td {
+    vertical-align: top;
+}
+
+/* Replacement for colgroup */
+#popup .specs tr td:first-child {
+	font-weight: bold;
+	padding-right: 5px;
+}
+
+#popup .swipe-arrow {
+    display: inline-block;
+    line-height: 8px;
+    visibility: hidden;
+    width: fit-content;
+}
+
+#popup .swipe-arrow:after {
+    display: inline-block;
+    font-size: 40px;
+}
+
+
 @media screen and (min-width: 600px) {
     #popup {
         padding-left: 25px;
@@ -213,9 +272,9 @@
 }
 
 
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 600px) {
     #popup #closeX:after {
-        opacity: 0.35;
+        opacity: 0.5;
     }
 
     /* nav arrows don't appear until there's enough room for them in the gutters */
@@ -227,6 +286,13 @@
         display: inline-block;
     }
 
+    /* Hide swipe indicators once screen size is reach to show nav arrows instead */
+    #popup #swipe-indicators {
+        animation: none;
+    }
+}
+
+@media screen and (min-width: 1100px) {
     #popup .screenshot.solo {
         width: 90%;
     }
