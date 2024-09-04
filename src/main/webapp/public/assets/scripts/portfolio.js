@@ -131,13 +131,6 @@ window.addEventListener("DOMContentLoaded", e => {
 });
 
 
-function browserDetect() {
-    if (isChromeMobile()) {
-        console.debug("Mobile Chrome detected; adding portfolio CSS shim");
-        document.body.classList.add("chrome-mobile-shim");
-    }
-}
-
 function bindPopupCloseToEsc() {
     window.addEventListener("keyup", function (e) {
         if (popupIsOpen() && event.keyCode == 27) {
@@ -369,25 +362,6 @@ function jumpToNext() {
     }
 }
 
-// See https://stackoverflow.com/questions/2592092/executing-script-elements-inserted-with-innerhtml
-function setInnerHTML(container, html) {
-    container.innerHTML = html;
-
-    Array.from(container.querySelectorAll("script"))
-        .forEach(oldScriptElem => {
-            const newScriptElem = document.createElement("script");
-
-            Array.from(oldScriptElem.attributes).forEach(attr => {
-                newScriptElem.setAttribute(attr.name, attr.value)
-            });
-
-        const scriptText = document.createTextNode(oldScriptElem.innerHTML);
-        newScriptElem.appendChild(scriptText);
-
-        oldScriptElem.parentNode.replaceChild(newScriptElem, oldScriptElem);
-    });
-}
-
 // Change the background color of the body to match the given path, if that path matches a timeline element
 function setBodyBackgroundColor(path) {
     // Previous color not removed in closePopup() because it needs time to fade from opaque to transparent
@@ -442,55 +416,6 @@ function showingTimelineElemWithNext() {
     return elem && elem.nextElementSibling !== null;
 }
 
-function getMetaValue(name) {
-    const metaElem = document.querySelector(`meta[name="${name}"]`);
-    return metaElem ? metaElem.getAttribute("content") : null;
-}
-
-function makeRequestOptions(method) {
-    return makeRequestOptions(method, null);
-}
-
-function makeRequestOptions(method, body) {
-    const hasBody = typeof body !== 'undefined';
-    const csrfToken = getMetaValue("_csrf");
-    const hasCsrf = typeof csrfToken !== 'undefined';
-
-    return {
-        method: method,
-        headers: {
-            ...(hasBody ? {"Content-Type": "application/json"} : {}),
-            ...(hasCsrf ? {"X-CSRF-TOKEN": getMetaValue("_csrf")} : {})
-        },
-        ...(hasBody ? (hasBody ? {body: JSON.stringify(body)} : {body: body}) : {})
-    };
-}
-
-function getDataName(elem) {
-    return elem.dataset.name;
-}
-
-function setDataName(elem, name) {
-    elem.dataset.name = name;
-}
-
-function clearDataName(elem) {
-    setDataName(elem, "");
-}
-
-function removeClassesStartingWith(elem, clazzStub) {
-    let classToRemove;
-    do {
-        classToRemove = Array.from(elem.classList).find(clazz => clazz.startsWith(clazzStub));
-        elem.classList.remove(classToRemove);
-    }
-    while (classToRemove);
-}
-
-function hashPath() {
-    return window.location.hash;
-}
-
 function getPopup() {
     return document.getElementById("popup");
 }
@@ -506,43 +431,6 @@ function rotatePopup(deg) {
 // Returns true if hash path is not empty and not just "#"
 function isPopupState() {
     return hashPath().length > 1;
-}
-
-function reloadWithoutHash() {
-    window.location.replace(window.location.href.replace(window.location.hash, ""));
-}
-
-function setFrameSrc(frameElemId, src) {
-    document.getElementById(frameElemId).contentWindow.location.replace(src);
-}
-
-function isChromeMobile() {
-    return /Chrome\/[0-9\.]+ Mobile/i.test(navigator.userAgent);
-}
-
-function focusElement(elemId) {
-    window.setTimeout(() => {
-        const elem = document.getElementById(elemId);
-        if (elem.tagName.toLowerCase() !== "a" &&
-            elem.tagName.toLowerCase() !== "button" &&
-            elem.tagName.toLowerCase() !== "input" &&
-            elem.getAttribute("tabIndex") == null
-        ) {
-            // If the element wasn't already focusable, make it focusable
-            elem.setAttribute("tabIndex", 0);
-        }
-        elem.focus();
-    }, 0)
-}
-
-function toggleStyle(elemId, className, toggleOn) {
-    const elem = document.getElementById(elemId);
-    if (toggleOn && !elem.classList.contains(className)) {
-        elem.classList.add(className);
-    }
-    else if (!toggleOn && elem.classList.contains(className)) {
-        elem.classList.remove(className);
-    }
 }
 
 function togglePasswordVisibility(container) {
