@@ -9,6 +9,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+
+import jakarta.annotation.Nullable;
+import jakarta.inject.Inject;
+import java.net.URI;
+import java.util.Optional;
+
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -16,14 +22,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import jakarta.annotation.Nullable;
-import jakarta.inject.Inject;
-import java.net.URI;
-import java.util.Optional;
-
-import com.eric_eldard.portfolio.test.BaseMvcIntegrationTest;
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
+import com.eric_eldard.portfolio.test.BaseMvcIntegrationTest;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserRestControllerIT extends BaseMvcIntegrationTest

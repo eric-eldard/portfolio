@@ -3,6 +3,11 @@ package com.eric_eldard.portfolio.service.resource;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jakarta.annotation.Nullable;
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -10,10 +15,6 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
-
-import jakarta.annotation.Nullable;
-import java.io.IOException;
-import java.util.List;
 
 @Service
 public final class ResourceServiceImpl implements ResourceService

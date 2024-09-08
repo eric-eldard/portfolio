@@ -2,12 +2,13 @@ package com.eric_eldard.portfolio.service.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Date;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
 

@@ -2,8 +2,13 @@ package com.eric_eldard.portfolio.config;
 
 import static org.springframework.security.web.header.writers.CrossOriginResourcePolicyHeaderWriter.CrossOriginResourcePolicy.SAME_SITE;
 
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jakarta.servlet.DispatcherType;
+import java.util.Collection;
+
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.server.CookieSameSiteSupplier;
 import org.springframework.context.annotation.Bean;
@@ -24,9 +29,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import jakarta.servlet.DispatcherType;
-import java.util.Collection;
-
 import com.eric_eldard.portfolio.logging.filter.AddUserToMdcFilter;
 import com.eric_eldard.portfolio.model.AdditionalLocation;
 import com.eric_eldard.portfolio.properties.AdditionalLocations;
@@ -44,6 +46,7 @@ import com.eric_eldard.portfolio.util.Constants;
 @EnableMethodSecurity
 @EnableConfigurationProperties(AdditionalLocations.class)
 @PropertySource(value = "${portfolio.additional-properties.location}", ignoreResourceNotFound = true)
+@AllArgsConstructor
 public class GlobalConfig
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalConfig.class);
@@ -57,20 +60,6 @@ public class GlobalConfig
     private final PortfolioUserService portfolioUserService;
 
     private final SecurityContextService securityContextService;
-
-    public GlobalConfig(AdditionalLocations additionalLocations,
-                        AuthenticationService authenticationService,
-                        PasswordEncoder passwordEncoder,
-                        PortfolioUserService portfolioUserService,
-                        SecurityContextService securityContextService
-    )
-    {
-        this.additionalLocations = additionalLocations;
-        this.authenticationService = authenticationService;
-        this.passwordEncoder = passwordEncoder;
-        this.portfolioUserService = portfolioUserService;
-        this.securityContextService = securityContextService;
-    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)

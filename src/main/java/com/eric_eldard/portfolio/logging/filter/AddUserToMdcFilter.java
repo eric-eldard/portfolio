@@ -1,7 +1,7 @@
 package com.eric_eldard.portfolio.logging.filter;
 
+import lombok.AllArgsConstructor;
 import org.slf4j.MDC;
-import org.springframework.security.web.context.SecurityContextHolderFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.GenericFilter;
@@ -10,6 +10,8 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import java.io.IOException;
 
+import org.springframework.security.web.context.SecurityContextHolderFilter;
+
 import com.eric_eldard.portfolio.service.user.SecurityContextService;
 
 /**
@@ -17,14 +19,10 @@ import com.eric_eldard.portfolio.service.user.SecurityContextService;
  * should always be placed immediately after the {@link SecurityContextHolderFilter}, ensuring we know who the user is
  * by the time this filter is invoked.
  */
+@AllArgsConstructor
 public class AddUserToMdcFilter extends GenericFilter
 {
     private final SecurityContextService securityContextService;
-
-    public AddUserToMdcFilter(SecurityContextService securityContextService)
-    {
-        this.securityContextService = securityContextService;
-    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

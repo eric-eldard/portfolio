@@ -1,9 +1,9 @@
 package com.eric_eldard.portfolio.service.user;
 
-import org.springframework.security.core.Authentication;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
+import org.springframework.security.core.Authentication;
 
 /**
  * Utilities for retrieving info from the Spring Security Context

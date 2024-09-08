@@ -1,5 +1,9 @@
 package com.eric_eldard.portfolio.config;
 
+import lombok.AllArgsConstructor;
+
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -10,8 +14,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.concurrent.TimeUnit;
-
 import com.eric_eldard.portfolio.interceptor.VersionInterceptor;
 import com.eric_eldard.portfolio.model.AdditionalLocation;
 import com.eric_eldard.portfolio.properties.AdditionalLocations;
@@ -20,6 +22,7 @@ import com.eric_eldard.portfolio.util.Constants;
 import com.eric_eldard.portfolio.util.StringUtils;
 
 @Configuration
+@AllArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer
 {
     private final AdditionalLocations additionalLocations;
@@ -28,19 +31,8 @@ public class WebMvcConfig implements WebMvcConfigurer
 
     private final VersionInterceptor versionInterceptor;
 
+    @Value("${portfolio.assets-path}")
     private final String assetsFilePath;
-
-    public WebMvcConfig(AdditionalLocations additionalLocations,
-                        ResourceService resourceService,
-                        VersionInterceptor versionInterceptor,
-                        @Value("${portfolio.assets-path}") String assetsFilePath
-    )
-    {
-        this.additionalLocations = additionalLocations;
-        this.resourceService = resourceService;
-        this.versionInterceptor = versionInterceptor;
-        this.assetsFilePath = assetsFilePath;
-    }
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer)

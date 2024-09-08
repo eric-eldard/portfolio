@@ -1,12 +1,13 @@
 package com.eric_eldard.portfolio.service.video;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import video.api.client.ApiVideoClient;
 import video.api.client.api.ApiException;
 import video.api.client.api.models.Environment;
 import video.api.client.api.models.Video;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  * An {@link EmbeddableVideo} implementation for working with <a href="https://api.video/">api.video</a>

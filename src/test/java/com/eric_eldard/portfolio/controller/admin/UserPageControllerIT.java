@@ -4,11 +4,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.annotation.DirtiesContext;
 
 import jakarta.annotation.Nullable;
 import java.net.URI;
+
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 
 import com.eric_eldard.portfolio.test.BaseMvcIntegrationTest;
 

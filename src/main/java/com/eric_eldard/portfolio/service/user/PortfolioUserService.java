@@ -1,11 +1,11 @@
 package com.eric_eldard.portfolio.service.user;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import jakarta.annotation.Nonnull;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;

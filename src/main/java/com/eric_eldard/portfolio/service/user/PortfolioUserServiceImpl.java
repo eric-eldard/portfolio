@@ -1,17 +1,19 @@
 package com.eric_eldard.portfolio.service.user;
 
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Nonnull;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.eric_eldard.portfolio.model.user.LoginAttempt;
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
@@ -22,6 +24,7 @@ import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
 import com.eric_eldard.portfolio.util.Constants;
 
 @Service
+@AllArgsConstructor
 public class PortfolioUserServiceImpl implements PortfolioUserService
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(PortfolioUserServiceImpl.class);
@@ -31,18 +34,6 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     private final PortfolioUserRepository portfolioUserRepo;
 
     private final SecurityContextService securityContextService;
-
-
-    public PortfolioUserServiceImpl(PasswordEncoder passwordEncoder,
-                                    PortfolioUserRepository portfolioUserRepo,
-                                    SecurityContextService securityContextService
-    )
-    {
-        this.securityContextService = securityContextService;
-        this.passwordEncoder = passwordEncoder;
-        this.portfolioUserRepo = portfolioUserRepo;
-    }
-
 
     @Override
     public List<PortfolioUser> findAllFullyHydrated()

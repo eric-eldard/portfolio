@@ -1,10 +1,10 @@
 package com.eric_eldard.portfolio.service.resource;
 
-import org.springframework.core.io.Resource;
-
 import jakarta.annotation.Nullable;
 import java.io.IOException;
 import java.util.List;
+
+import org.springframework.core.io.Resource;
 
 /**
  * Utilities for working with file and classpath resources

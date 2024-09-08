@@ -5,14 +5,15 @@ import org.apache.tomcat.util.descriptor.web.WebXml;
 import org.apache.tomcat.util.descriptor.web.WebXmlParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.web.servlet.ServletContextInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.xml.sax.InputSource;
 
 import jakarta.servlet.ServletRegistration;
 import java.io.InputStream;
 import java.util.Map;
+
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * Reads pre-compiled JSPs locations out of the web.xml and provides their paths to the servlet.

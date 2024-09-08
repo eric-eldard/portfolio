@@ -1,12 +1,13 @@
 package com.eric_eldard.portfolio.properties;
 
 import lombok.Getter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
 import com.eric_eldard.portfolio.model.AdditionalLocation;
 import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;

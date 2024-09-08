@@ -1,5 +1,10 @@
 package com.eric_eldard.portfolio.controller.admin;
 
+import lombok.AllArgsConstructor;
+
+import jakarta.validation.Valid;
+import java.util.Date;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -10,23 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.validation.Valid;
-import java.util.Date;
-
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
 import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 
 @RestController
 @RequestMapping("/portfolio/users")
+@AllArgsConstructor
 public class UsersRestController
 {
     private final PortfolioUserService userService;
-
-    public UsersRestController(PortfolioUserService userService)
-    {
-        this.userService = userService;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

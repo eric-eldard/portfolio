@@ -5,8 +5,6 @@ import io.jsonwebtoken.Jws;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.AccountStatusException;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,6 +14,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
+
+import org.springframework.security.authentication.AccountStatusException;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.eric_eldard.portfolio.service.auth.AuthenticationService;
 import com.eric_eldard.portfolio.util.Constants;

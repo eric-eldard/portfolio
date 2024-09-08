@@ -1,11 +1,11 @@
 package com.eric_eldard.portfolio.service.user;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 @Service
 public class SecurityContextServiceImpl implements SecurityContextService
