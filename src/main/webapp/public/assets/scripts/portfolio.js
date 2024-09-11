@@ -76,8 +76,7 @@ const POPUP_SWIPE_LISTENER = e => {
 
                 // Show swipe indicators while swiping
                 toggleStyle("swipe-indicators", "pause", true); // if the indicator flash is still playing, pause it
-                toggleStyle("swipe-indicators", "sustain-swipe-left", canSwipeBack);
-                toggleStyle("swipe-indicators", "sustain-swipe-right", canSwipeForward);
+                toggleStyle("swipe-indicators", "sustain-swipe", true);
 
                 // Your finger is at about the 60% demarcation horizontally on a mobile screen when the popup has
                 // disappeared off screen, even at the slowest speeds. We'll interpret crossing this threshold as a
@@ -109,8 +108,7 @@ const POPUP_SWIPE_LISTENER = e => {
     }
     else {
         // Hide swipe indicators
-        toggleStyle("swipe-indicators", "sustain-swipe-right", false);
-        toggleStyle("swipe-indicators", "sustain-swipe-left", false);
+        toggleStyle("swipe-indicators", "sustain-swipe", false);
         toggleStyle("swipe-indicators", "pause", false);
 
         // Wait the duration of the popup's CSS left transition before returning it to where it started; without this
@@ -198,6 +196,7 @@ function showContentInPopup(content, path) {
 
     setInnerHTML(popupContent, content);
     determineNavigationVisibility(path);
+    setTimelineElemSwipeDots(path);
 
     // Tracking the path for the open popup solely for logging purposes when page is refreshed while popup is open
     setDataName(popup, hashPath);
@@ -224,10 +223,7 @@ function showContentInPopup(content, path) {
             // Give a little buffer for loading before calling the popup back to center screen
             rotatePopup(0);
             popup.style.left = "0";
-
-            // Flash appropriate swipe indicators when card loads
-            toggleStyle("swipe-indicators", "flash-swipe-left", showingTimelineElemWithNext());
-            toggleStyle("swipe-indicators", "flash-swipe-right", showingTimelineElemWithPrevious());
+            toggleStyle("swipe-indicators", "flash-swipe", true);
         }, 400);
     }, 100);
 }
@@ -266,10 +262,8 @@ function closePopup() {
 
     // Hide all swipe indicators
     toggleStyle("swipe-indicators", "pause", false);
-    toggleStyle("swipe-indicators", "flash-swipe-right", false);
-    toggleStyle("swipe-indicators", "flash-swipe-left", false);
-    toggleStyle("swipe-indicators", "sustain-swipe-right", false);
-    toggleStyle("swipe-indicators", "sustain-swipe-left", false);
+    toggleStyle("swipe-indicators", "flash-swipe", false);
+    toggleStyle("swipe-indicators", "sustain-swipe", false);
 
 
     clearDataName(popup);
@@ -401,9 +395,29 @@ function getTimelineElem(path) {
 function getCurrentTimelineElem() {
     const path = hashPath().substring(1);
     if (path && path !== "") {
-        return document.querySelectorAll(`[data-timeline-path=${path}]`)[0];
+        return getTimelineElem(path);
     }
     return null;
+}
+
+function setTimelineElemSwipeDots(path) {
+    const swipeDotsContainer = document.getElementById("swipe-indicators");
+    clearChildren(swipeDotsContainer);
+
+    const timelinePaths = Array.from(document.querySelectorAll("#main .content .timeline-events .timeline-event"))
+        .map(elem => elem.dataset.timelinePath);
+
+    // If the popup is showing for a timeline element, add swipe indicator dots
+    if (timelinePaths.includes(path)) {
+        timelinePaths.forEach(function (timelinePath) {
+            const dotDiv = document.createElement("div");
+            dotDiv.classList.add("swipe-dot");
+            if (timelinePath === path) {
+                dotDiv.classList.add("embiggen");
+            }
+            swipeDotsContainer.appendChild(dotDiv);
+        });
+    }
 }
 
 function showingTimelineElemWithPrevious() {

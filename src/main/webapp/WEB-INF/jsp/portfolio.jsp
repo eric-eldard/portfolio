@@ -24,11 +24,7 @@
         <div id="popup-background" onclick="closePopup()">
             <div id="popup" onclick="event.stopPropagation()">
                 <div id="top-controls">
-                    <div id="swipe-indicators">
-                        <div id="swipe-right" class="swipe-arrow"></div>
-                        <div id="swipe-text">swipe</div>
-                        <div id="swipe-left" class="swipe-arrow"></div>
-                    </div>
+                    <div id="swipe-indicators"></div>
                     <a href="javascript: closePopup();" id="closeX" title="Close"></a>
                 </div>
                 <a href="javascript: jumpToPrevious();" id="move-back" class="popup-nav" title="Move back"></a>

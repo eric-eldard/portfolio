@@ -122,6 +122,16 @@ function setInnerHTML(elem, html) {
     });
 }
 
+/**
+ * Remove all child nodes from the container element.
+ * @param {Object} elem - the container to empty out
+ */
+function clearChildren(container) {
+    while (container.firstChild) {
+        container.removeChild(container.lastChild);
+    }
+}
+
 
 /****************/
 /*  HTTP Utils  */

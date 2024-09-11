@@ -148,12 +148,14 @@
     margin-left: 2px;
 }
 
-/* Flashes swipe indicators on screen briefly */
 #popup #swipe-indicators {
+    align-items: center;
     animation: flash-80 4s;
     display: flex;
     left: 50%;
+    line-height: 1px;
     justify-content: space-between;
+    margin-top: 8px;
     opacity: 0;
     position: absolute;
     transform: translateX(-50%);
@@ -162,31 +164,23 @@
     width: 120px;
 }
 
-/* Controls visibility of text "swipe" (it shows if either arrow is showing) */
-#popup #swipe-indicators.flash-swipe-left,
-#popup #swipe-indicators.flash-swipe-right {
-    visibility: visible;
-}
-
-/* Controls visibility of individual swipe arrows */
-#popup #swipe-indicators.flash-swipe-left #swipe-left,
-#popup #swipe-indicators.flash-swipe-right #swipe-right {
+/* Flashes swipe indicators on screen temporarily */
+#popup #swipe-indicators.flash-swipe {
     visibility: visible;
 }
 
 /* Sustains swipe indicators on screen until this class is removed */
-#popup #swipe-indicators.sustain-swipe-left,
-#popup #swipe-indicators.sustain-swipe-right {
+#popup #swipe-indicators.sustain-swipe {
     opacity: 1;
 }
 
-#popup #swipe-left:after {
-    content: "\0293a";
+#popup #swipe-indicators .swipe-dot:after {
+    content: "\25CF";
 }
 
-#popup #swipe-right:after {
-    content: "\0293a";
-    transform: scaleX(-1);
+#popup #swipe-indicators .swipe-dot.embiggen:after {
+    font-size: 24px;
+    line-height: 5px;
 }
 
 #popup #top-controls {
@@ -241,18 +235,6 @@
 #popup .specs tr td:first-child {
 	font-weight: bold;
 	padding-right: 5px;
-}
-
-#popup .swipe-arrow {
-    display: inline-block;
-    line-height: 8px;
-    visibility: hidden;
-    width: fit-content;
-}
-
-#popup .swipe-arrow:after {
-    display: inline-block;
-    font-size: 40px;
 }
 
 
