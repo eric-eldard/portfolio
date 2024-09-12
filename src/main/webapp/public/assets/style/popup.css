@@ -114,21 +114,22 @@
 }
 
 #popup #closeX {
+    color: #fff;
     display: block;
+    font-size: 20px;
 	line-height: 24px; /* prevents X from getting pushed down by height of the swipe arrows */
+	opacity: 0.5;
 	position: absolute;
 	right: 0;
-}
-
-#popup #closeX:after {
-    color: #fff;
-    content: "\02715";
-    font-size: 20px;
-	font-weight: bold;
     transition: opacity 0.5s;
 }
 
-#popup #closeX:hover:after {
+#popup #closeX:after {
+    content: "\02715";
+}
+
+#popup #closeX:hover,
+#popup #closeX.sustain {
 	opacity: 1;
 }
 
@@ -150,28 +151,28 @@
 
 #popup #swipe-indicators {
     align-items: center;
-    animation: flash-80 4s;
+    animation: swipe-indicator-flash-opacity 4s;
     display: flex;
     left: 50%;
     line-height: 1px;
     justify-content: space-between;
-    margin-top: 8px;
+    margin-top: 6px;
     opacity: 0;
     position: absolute;
     transform: translateX(-50%);
-    transition: opacity 0.75s;
+    transition: opacity 1s;
     visibility: hidden;
     width: 120px;
 }
 
 /* Flashes swipe indicators on screen temporarily */
-#popup #swipe-indicators.flash-swipe {
+#popup #swipe-indicators.flash {
     visibility: visible;
 }
 
 /* Sustains swipe indicators on screen until this class is removed */
-#popup #swipe-indicators.sustain-swipe {
-    opacity: 1;
+#popup #swipe-indicators.sustain {
+    opacity: 0.8;
 }
 
 #popup #swipe-indicators .swipe-dot:after {
@@ -238,6 +239,21 @@
 }
 
 
+@keyframes swipe-indicator-flash-opacity {
+    0% {
+        opacity: 0.05;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0.05;
+    }
+}
+
+
 @media screen and (min-width: 600px) {
     #popup {
         padding-left: 25px;
@@ -255,10 +271,6 @@
 
 
 @media screen and (min-width: 600px) {
-    #popup #closeX:after {
-        opacity: 0.5;
-    }
-
     /* nav arrows don't appear until there's enough room for them in the gutters */
     #popup #move-back {
         display: block;

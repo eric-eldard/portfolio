@@ -1,10 +1,15 @@
 const SWIPE_SUBSCRIBE_FREQUENCY = 1000 / 120; // 120fps necessary for smooth (non-jittery) animation on iOS Safari
 const MAX_POPUP_ROTATION = 30;
 const HASH_PATH_KEY = "hashPath";
-const POPSTATE_LISTENER = (e) => closePopup(); // Close popup on a history pop-state event (back button pressed)
+
+const POPSTATE_LISTENER = e => closePopup(); // Close popup on a history pop-state event (back button pressed)
+
+const TOUCHSTART_LISTENER = e => toggleStyle("closeX", "sustain", true);
+const TOUCHEND_LISTENER = e => toggleStyle("closeX", "sustain", false);
+
+let lastSwipeEventTime = 0;
 
 // Listen for swipe events and move the popup accordingly if it's open
-let lastSwipeEventTime = 0;
 const POPUP_SWIPE_LISTENER = e => {
 
     // We're publishing swipe events at roughly screen refresh rate, which could be as a high as 120fps. Here we'll
@@ -76,7 +81,7 @@ const POPUP_SWIPE_LISTENER = e => {
 
                 // Show swipe indicators while swiping
                 toggleStyle("swipe-indicators", "pause", true); // if the indicator flash is still playing, pause it
-                toggleStyle("swipe-indicators", "sustain-swipe", true);
+                toggleStyle("swipe-indicators", "sustain", true);
 
                 // Your finger is at about the 60% demarcation horizontally on a mobile screen when the popup has
                 // disappeared off screen, even at the slowest speeds. We'll interpret crossing this threshold as a
@@ -108,7 +113,7 @@ const POPUP_SWIPE_LISTENER = e => {
     }
     else {
         // Hide swipe indicators
-        toggleStyle("swipe-indicators", "sustain-swipe", false);
+        toggleStyle("swipe-indicators", "sustain", false);
         toggleStyle("swipe-indicators", "pause", false);
 
         // Wait the duration of the popup's CSS left transition before returning it to where it started; without this
@@ -197,6 +202,7 @@ function showContentInPopup(content, path) {
     setInnerHTML(popupContent, content);
     determineNavigationVisibility(path);
     setTimelineElemSwipeDots(path);
+    toggleStyle("swipe-indicators", "flash", true);
 
     // Tracking the path for the open popup solely for logging purposes when page is refreshed while popup is open
     setDataName(popup, hashPath);
@@ -207,6 +213,9 @@ function showContentInPopup(content, path) {
     setBodyBackgroundColor(path);
 
     document.addEventListener("swipe", POPUP_SWIPE_LISTENER);
+    document.addEventListener("touchstart", TOUCHSTART_LISTENER);
+    document.addEventListener("touchend", TOUCHEND_LISTENER);
+    document.addEventListener("touchcancel", TOUCHEND_LISTENER);
 
     window.setTimeout(() => {
         popup.classList.add("open");
@@ -223,7 +232,6 @@ function showContentInPopup(content, path) {
             // Give a little buffer for loading before calling the popup back to center screen
             rotatePopup(0);
             popup.style.left = "0";
-            toggleStyle("swipe-indicators", "flash-swipe", true);
         }, 400);
     }, 100);
 }
@@ -237,6 +245,9 @@ function closePopup() {
 
     window.removeEventListener("popstate", POPSTATE_LISTENER);
     document.removeEventListener("swipe", POPUP_SWIPE_LISTENER);
+    document.removeEventListener("touchstart", TOUCHSTART_LISTENER);
+    document.removeEventListener("touchend", TOUCHEND_LISTENER);
+    document.removeEventListener("touchcancel", TOUCHEND_LISTENER);
 
     // If the popup's hash param is currently in browser history, we'll pop it off. It may not be, if the hash param url
     // was directly navigated to. I've attempted to push an event into history in this case, but Chrome and Safari don't
@@ -260,11 +271,11 @@ function closePopup() {
         popup.classList.remove("open");
     }
 
-    // Hide all swipe indicators
+    // Hide controls
     toggleStyle("swipe-indicators", "pause", false);
-    toggleStyle("swipe-indicators", "flash-swipe", false);
-    toggleStyle("swipe-indicators", "sustain-swipe", false);
-
+    toggleStyle("swipe-indicators", "flash", false);
+    toggleStyle("swipe-indicators", "sustain", false);
+    toggleStyle("closeX", "sustain", false)
 
     clearDataName(popup);
 

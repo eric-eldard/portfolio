@@ -5,7 +5,7 @@
     <jsp:include page="../widgets/link-out.jsp">
         <jsp:param name="text" value="JavaScript swipe-detection library"/>
         <jsp:param name="href" value="https://github.com/eric-eldard/swipe-events.js"/>
-    </jsp:include>
+    </jsp:include>,
     pre-compiled JSPs for faster load times, recursive asset preloading, third-party video integration, JWT auth tokens,
     and robust admin-only user management. I'm constantly adding and upgrading, and it's been a blast to work on!
 </p>

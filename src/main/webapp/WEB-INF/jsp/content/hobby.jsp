@@ -73,7 +73,7 @@
 
 <h2>Steganography</h2>
 <p>
-    My Java utility <b>steganos</b> provides tools for simple text-in-image
+    My Java utility <b>Steganos</b> provides tools for simple text-in-image
     <jsp:include page="../widgets/link-out.jsp">
         <jsp:param name="text" value="steganography"/>
         <jsp:param name="href" value="https://en.wikipedia.org/wiki/Steganography"/>
@@ -95,7 +95,7 @@
 <div id="steganos-example" class="screenshot solo">
     <a href="https://github.com/eric-eldard/steganos?tab=readme-ov-file#examples" target="_blank">
         <img src="https://github.com/eric-eldard/steganos/raw/master/examples.png?raw=true"
-             alt="Link out to example output of steganos on GitHub"
+             alt="Link out to example output of Steganos on GitHub"
         >
     </a>
 </div>
