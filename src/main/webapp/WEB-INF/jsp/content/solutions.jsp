@@ -22,12 +22,8 @@
     figure out how Brazen products could satisfy their needs.
 </p>
 <p>
-    This is a role I would play a good deal as Brazen became part of the Radancy product suite, and we designed how we
-    would integrate into the rest of the stack over the first 2 years.
-</p>
-<p>
-    As a provider of solutions, I believe in clean, attractive visuals. Putting in time upfront to ensure quality
-    alleviates confusion and saves time for your audience when they're trying to absorb a new concept.
+    This is a role I would play a good deal as Brazen became part of the Radancy product suite, and we designed how
+    Brazen's product would integrate into the rest of the stack over the first 2 years.
 </p>
 
 <h2>Brazen Partner Integration</h2>
@@ -38,7 +34,7 @@
     conversation.
 </p>
 <p class="disclaimer">
-    [Partner information anonymized]
+    [Partner info anonymized]
 </p>
 <jsp:include page="../widgets/embedded-doc-solo.jsp">
     <jsp:param name="id" value="partner-doc"/>
@@ -51,19 +47,20 @@
 
 <h2>developers.brazen.com</h2>
 <p>
+    The
     <jsp:include page="../widgets/link-out.jsp">
-        <jsp:param name="text" value="Brazen Developer Resources"/>
+        <jsp:param name="text" value="Brazen Developer Portal"/>
         <jsp:param name="href" value="https://developers.brazen.com/"/>
     </jsp:include>
     advertises all the ways customers and partners can integrate with Brazen. This portal was created and maintained by
     me and one of my long-time Brazen collaborators. It showcases some solutions I helped design and build from the
     ground-up, like our customer-facing RESTful API, our XML job feeds, and our embeddable chat plugin. I also staffed
     developers@brazen.com, assisting our customers' tech folks as they built their integrations. I love building tools
-    that facilitate other devs building cool stuff!
+    that other devs will use to build cool stuff!
 </p>
 <jsp:include page="../widgets/screenshot-solo.jsp" >
     <jsp:param name="path" value="brazen-dev-resources.png"/>
-    <jsp:param name="description" value="Brazen Developer Resources"/>
+    <jsp:param name="description" value="Brazen Developer Portal"/>
     <jsp:param name="href" value="https://developers.brazen.com/"/>
 </jsp:include>
 
@@ -73,26 +70,11 @@
 <p>
     When Brazen joined the Radancy family, I put this data flow diagram together to help our new teammates understand
     what kind of data we worked with and how it was enriched as it moved through our system&mdash;and ultimately which
-    points in the Brazen candidate journey would provide the highest value for integration. I produced both this YC
-    version and a multi-level GC version, which can be easier to digest for folks unfamiliar with your system.
+    points in the Brazen candidate journey would provide the highest value for integration.
 </p>
 <jsp:include page="../widgets/embedded-doc-solo.jsp">
     <jsp:param name="id" value="dfd-doc"/>
     <jsp:param name="path" value="Candidate-and-Job-Data-Flows.pdf"/>
     <jsp:param name="backupImg" value="Candidate-and-Job-Data-Flows.png"/>
     <jsp:param name="description" value="Candidate and Job Data Flow Diagram"/>
-</jsp:include>
-
-<hr>
-
-<h2>Brazen Event Capacity Flow</h2>
-<p>
-    I put this flowchart together for a customer who was looking to better understand the interplay of several advanced
-    features of our event sign-up flow. The use of screenshots here helps tie abstract concepts to our more familiar ui.
-</p>
-<jsp:include page="../widgets/embedded-doc-solo.jsp">
-    <jsp:param name="id" value="flowchart-doc"/>
-    <jsp:param name="path" value="Event-Capacity-Flow.pdf"/>
-    <jsp:param name="backupImg" value="Event-Capacity-Flow.png"/>
-    <jsp:param name="description" value="Event Capacity Flowchart"/>
 </jsp:include>

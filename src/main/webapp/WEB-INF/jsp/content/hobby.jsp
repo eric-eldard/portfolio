@@ -108,7 +108,7 @@
     aid together for her. It's just a simple html page. But as I wrote it, I got tired of constantly creating anchor
     tags to reference back to other parts of the aid. I ended up writing myself a little wiki-style linking library,
     allowing me to auto-link from tags like <span class="mono">[creature]</span> and
-    <span class="mono">[Untap|tapping]</span>.
+    <span class="mono">[Untap|tapping]</span>, as well as auto-generate a table of contents and quick-reference index.
 </p>
 <div id="mtg-links">
     <jsp:include page="../widgets/link-out.jsp">

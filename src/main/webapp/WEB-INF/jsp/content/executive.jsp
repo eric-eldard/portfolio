@@ -7,16 +7,11 @@
     extensible, and maintainable ways has taught me more about software engineering than I ever learned from just
     writing code myself. And while I wrote a lot less code as an exec, it was also the time I wrote my best stuff.
 </p>
-<p>
-    As an executive, I believe in processes that work with little-to-no thought and have built-in redundancies. A
-    well-designed process pays huge dividends when your team is able to stay focused on the work instead of managing
-    the process.
-</p>
 
 <h2>Department Initiatives</h2>
 <p>
-    I tracked the DORA metrics for Brazen Engineering, and here are some big initiatives I kicked off in order to
-    improve specific deliverability and uptime stats.
+    I tracked DORA metrics for Brazen Engineering, and here are some big initiatives I kicked off in order to improve
+    specific deliverability and uptime stats.
 </p>
 <jsp:include page="../widgets/embedded-docs-viewer.jsp">
     <jsp:param name="doc1Name" value="Modularity"/>
@@ -33,7 +28,7 @@
     there are situations for which failure is expected <i>some</i> of the time and constant alarms would be very noisy.
     However, there's a big difference between <i>10% failed logins</i> and <i>90% failed logins</i>; at some point, you
     cross the threshold into <i>we need to know</i> territory. After identifying Mean Time to Detect as our most lagging
-    process metric, I initiated the Operational Success Criteria program. This saw our engineering teams instrumenting
+    process metric, I created the Operational Success Criteria program. This saw our engineering teams instrumenting
     their most critical endpoints and pushing metrics into Google BigQuery. The teams then built Sigma dashboards on top
     of that data, allowing them to begin their standups with a health check of their products.
 </p>
@@ -54,7 +49,7 @@
     my team to share their knowledge in the same format, which brought in another dozen videos on diverse topics.
 </p>
 <p>
-    Here's an example from a 6-video series I did on being an IntelliJ power user.
+    Here's an example from a set of videos I did on being an IntelliJ power user.
 </p>
 <jsp:include page="../widgets/video-player.jsp">
     <jsp:param name="id" value="intellij-postfix-video"/>
@@ -65,15 +60,15 @@
 
 <h2>2022 Hackathon</h2>
 <p>
-    Brazen expanded rapidly in 2020 & 2021&mdash;suddenly our team was spread out across two continents. In 2022, we
-    brought the whole engineering department together for a hackathon. Engineers worked in groups of their choice and
-    selected their own projects. It was a great bonding activity and a lot of fun was had. My role was to consult on all
-    projects, helping devs generate their ideas and scope them down to something achievable in 48 hours, then stay
-    abreast of each team's progress, ensuring they would have something in a presentable state by the end. Heads from
-    all Brazen departments participated in project judging, and we were all extremely impressed by the quality and
-    creativity delivered by our engineers. In the end, our hackathon was seen by all as a huge success, both culturally
-    and for the work it produced. Though we had tempered expectations that the goal wasn't new feature development,
-    within six months 6 of 14 hackathon projects had gone into production.
+    Brazen expanded rapidly in 2020 & 2021&mdash;suddenly our team was spread all over two continents. In 2022, we
+    brought the whole engineering department together at Brazen HQ for a hackathon. Engineers worked in groups of their
+    choice and selected their own projects. It was a great bonding activity and a lot of fun was had. My role was to
+    consult on all projects, helping devs generate their ideas and scope them down to something achievable in 48 hours,
+    then stay abreast of each team's progress, ensuring they would have something in a presentable state by the end.
+    Heads from all Brazen departments participated in project judging, and we were all extremely impressed by the
+    quality and creativity delivered by our engineers. In the end, our hackathon was seen by all as a huge success, both
+    culturally and for the work it produced. Though we had tempered expectations that the goal wasn't new feature
+    development, within six months 6 of 14 hackathon projects had gone into production.
 </p>
 <p>
     I cut this video of the presentations, along with some B-roll, to share our
