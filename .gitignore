@@ -1,5 +1,7 @@
 /assets/
 **/typescript/out/
+**/node_modules/
+**/generated/
 
 target/
 !.mvn/wrapper/maven-wrapper.jar

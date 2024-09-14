@@ -1,0 +1,1 @@
+tsc && browserify out/bundler.js -o out/portfolio.bundle.js

@@ -144,9 +144,9 @@
 </jsp:include>
 
 <script>
-    cycleFontColors("fontColorsTitle", 255, 0, 0, 0, 0, 255);
-    cycleFontColors("back2back1", 0, 128, 255, 0, 192, 0);
-    cycleFontColors("back2back2", 0, 192, 0, 0, 128, 255);
-    cycleFontColors("back2back3", 0, 128, 255, 0, 192, 0);
-    cycleFontColors("back2back4", 0, 192, 0, 0, 128, 255);
+    Portfolio.cycleFontColors("fontColorsTitle", 255, 0, 0, 0, 0, 255);
+    Portfolio.cycleFontColors("back2back1", 0, 128, 255, 0, 192, 0);
+    Portfolio.cycleFontColors("back2back2", 0, 192, 0, 0, 128, 255);
+    Portfolio.cycleFontColors("back2back3", 0, 128, 255, 0, 192, 0);
+    Portfolio.cycleFontColors("back2back4", 0, 192, 0, 0, 128, 255);
 </script>

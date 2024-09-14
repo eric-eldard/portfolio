@@ -176,8 +176,15 @@ label {
 
 .password .visibility-toggle {
     display: block;
-    text-align: right;
-    width: 100%;
+    height: 0;
+    line-height: 0;
+    position: absolute;
+    right: 0;
+    top: 42px;
+}
+
+.chrome-mobile-shim .password .visibility-toggle {
+    top: 44px;
 }
 
 .chrome-mobile-shim .password .visibility-toggle img {

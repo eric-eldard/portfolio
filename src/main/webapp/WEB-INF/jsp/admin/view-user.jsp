@@ -34,8 +34,6 @@
                 width: 120px;
             }
         </style>
-
-        <script src="/public/assets/scripts/user-management.js"></script>
     </head>
     <body>
         <div class="top-container">
@@ -63,27 +61,27 @@
                     <td>
                         ${user.lockedOn}
                         <c:if test="${user.lockedOn != null}">
-                            <a href="javascript: unlockUser(${user.id}, '${user.username}')" class="emoji-silhouette" title="Unlock">&#128275;</a>
+                            <a href="javascript: UserManagement.unlockUser(${user.id}, '${user.username}')" class="emoji-silhouette" title="Unlock">&#128275;</a>
                         </c:if>
                     </td>
                 </tr>
                 </c:if>
                 <tr>
                     <td>Disabled</td>
-                    <td class="binary-field" onclick="setEnabled(${user.id}, ${!user.enabled})" title="${user.enabled ? 'Disable' : 'Enable'}">
+                    <td class="binary-field" onclick="UserManagement.setEnabled(${user.id}, ${!user.enabled})" title="${user.enabled ? 'Disable' : 'Enable'}">
                         ${!user.enabled ? "&cross;" : ""}
                     </td>
                 </tr>
                 <tr>
                     <td>Is Admin</td>
-                    <td class="binary-field" onclick="setIsAdmin(${user.id}, ${!user.admin})" title="${user.admin ? 'Demote' : 'Promote'}">
+                    <td class="binary-field" onclick="UserManagement.setIsAdmin(${user.id}, ${!user.admin})" title="${user.admin ? 'Demote' : 'Promote'}">
                         ${user.admin ? "&check;" : ""}
                     </td>
                 </tr>
                 <c:forEach items="<%=com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority.values()%>" var="authority">
                 <tr>
                     <td>${authority.pretty()}</td>
-                    <td class="binary-field" onclick="toggleAuth(${user.id}, '${authority}')" title="${user.hasAuthority(authority) ? 'Remove' : 'Grant'}">
+                    <td class="binary-field" onclick="UserManagement.toggleAuth(${user.id}, '${authority}')" title="${user.hasAuthority(authority) ? 'Remove' : 'Grant'}">
                         ${user.hasAuthority(authority) ? "&check;" : ""}
                     </td>
                 </tr>
@@ -91,8 +89,8 @@
                 <tr>
                     <td colspan="2">
                         <div class="button-cell">
-                            <button onclick="setPassword(${user.id}, '${user.username}')">Set Password</button>
-                            <button onclick="deleteUser(${user.id}, '${user.username}', (response => window.location = '/portfolio/users'));">Delete</button>
+                            <button onclick="UserManagement.setPassword(${user.id}, '${user.username}')">Set Password</button>
+                            <button onclick="UserManagement.deleteUser(${user.id}, '${user.username}', (response => window.location = '/portfolio/users'));">Delete</button>
                         </div>
                     </td>
                 </tr>

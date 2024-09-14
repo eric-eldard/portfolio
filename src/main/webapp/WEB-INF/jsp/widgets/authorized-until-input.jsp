@@ -19,11 +19,11 @@
         <fmt:formatDate pattern="yyyy-MM-dd" value="${user.authorizedUntil}" var="authorizedUntilFormatted"/>
         <input
                 type="date"
-                onchange="setAuthUntil(${user.id}, '${user.username}', this.value)"
+                onchange="UserManagement.setAuthUntil(${user.id}, '${user.username}', this.value)"
                 ${user.isAccountNonExpired() ? "" : "class='expired-account'"}
                 ${user.authorizedUntil == null ? "" : "value='".concat(authorizedUntilFormatted).concat("'")}
         />
-        <a href="javascript: setInfiniteAuth(${user.id}, '${user.username}')" class="infinity" title="Authorize forever">
+        <a href="javascript: UserManagement.setInfiniteAuth(${user.id}, '${user.username}')" class="infinity" title="Authorize forever">
             &infin;
         </a>
     </div>

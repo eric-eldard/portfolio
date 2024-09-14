@@ -21,14 +21,14 @@
 
         </div>
 
-        <div id="popup-background" onclick="closePopup()">
+        <div id="popup-background" onclick="Portfolio.closePopup()">
             <div id="popup" onclick="event.stopPropagation()">
                 <div id="top-controls">
                     <div id="swipe-indicators"></div>
-                    <a href="javascript: closePopup();" id="closeX" title="Close"></a>
+                    <a href="javascript: Portfolio.closePopup();" id="closeX" title="Close"></a>
                 </div>
-                <a href="javascript: jumpToPrevious();" id="move-back" class="popup-nav" title="Move back"></a>
-                <a href="javascript: jumpToNext();" id="move-forward" class="popup-nav" title="Move forward"></a>
+                <a href="javascript: Portfolio.jumpToPrevious();" id="move-back" class="popup-nav" title="Move back"></a>
+                <a href="javascript: Portfolio.jumpToNext();" id="move-forward" class="popup-nav" title="Move forward"></a>
                 <div id="popup-content"></div>
             </div>
         </div>
@@ -69,7 +69,7 @@
         </script>
 
         <script defer>
-            retrieveAndShowContentIfPopupState();
+            Portfolio.retrieveAndShowContentIfPopupState();
         </script>
     </body>
 </html>

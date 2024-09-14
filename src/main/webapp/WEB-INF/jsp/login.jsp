@@ -79,70 +79,71 @@
         </style>
     </head>
     <body>
-    <script>
-        function login() {
-            showErrorMessage("message-placeholder");
+        <script>
+            function login() {
+                showErrorMessage("message-placeholder");
 
-            const username = document.getElementById("login-username").value.trim();
-            const password = document.getElementById("login-password").value.trim();
+                const username = document.getElementById("login-username").value.trim();
+                const password = document.getElementById("login-password").value.trim();
 
-            if (username.length < 1) {
-                showErrorMessage("message-incomplete");
-                focusElement("login-username");
+                if (username.length < 1) {
+                    showErrorMessage("message-incomplete");
+                    focusElement("login-username");
+                }
+                else if (password.length < 1) {
+                    showErrorMessage("message-incomplete");
+                    focusElement("login-password");
+                }
+                else {
+                    const submit = document.getElementById("login-submit");
+                    submit.disabled = true;
+
+                    const body = {
+                        "username": username,
+                        "password": password
+                    };
+
+                    fetch("/login", makeRequestOptions("POST", body))
+                        .then(response => response.status)
+                        .then(status => {
+                            if (status == 200) {
+                                window.location.replace("/portfolio");
+                                return;
+                            }
+                            else if (status >= 400 && status < 500) {
+                                showErrorMessage("message-unrecognized");
+                            }
+                            else if (status == 502 || status == 503) {
+                                showErrorMessage("message-unavailable");
+                            }
+                            else {
+                                showErrorMessage("message-unknown");
+                            }
+
+                            focusElement("login-password");
+                            submit.disabled = false;
+                        });
+                }
             }
-            else if (password.length < 1) {
-                showErrorMessage("message-incomplete");
-                focusElement("login-password");
+
+            function submitOnEnter(event) {
+                if (event && event.keyCode == 13) {
+                    login();
+                }
             }
-            else {
-                const submit = document.getElementById("login-submit");
-                submit.disabled = true;
 
-                const body = {
-                    "username": username,
-                    "password": password
-                };
+            function showErrorMessage(elemId) {
+                document.querySelectorAll(".error").forEach(elem => elem.style.display = "none");
 
-                fetch("/login", makeRequestOptions("POST", body))
-                    .then(response => response.status)
-                    .then(status => {
-                        if (status == 200) {
-                            window.location.replace("/portfolio");
-                            return;
-                        }
-                        else if (status >= 400 && status < 500) {
-                            showErrorMessage("message-unrecognized");
-                        }
-                        else if (status == 502 || status == 503) {
-                            showErrorMessage("message-unavailable");
-                        }
-                        else {
-                            showErrorMessage("message-unknown");
-                        }
-
-                        focusElement("login-password");
-                        submit.disabled = false;
-                    });
+                if (typeof elemId !== "undefined") {
+                    document.getElementById(elemId).style.display = "block";
+                }
             }
-        }
 
-        function submitOnEnter(event) {
-            if (event && event.keyCode == 13) {
-                login();
-            }
-        }
+            window.addEventListener("DOMContentLoaded", focusElement("login-username"));
+        </script>
 
-        function showErrorMessage(elemId) {
-            document.querySelectorAll(".error").forEach(elem => elem.style.display = "none");
-
-            if (typeof elemId !== "undefined") {
-                document.getElementById(elemId).style.display = "block";
-            }
-        }
-
-        window.addEventListener("DOMContentLoaded", focusElement("login-username"));
-    </script>
-    <div id="main">
+        <div id="main">
             <div class="content">
                 <div class="login-form">
                     <div class="intro-heading">Login</div>

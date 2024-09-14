@@ -12,12 +12,13 @@
     <name>Eric Eldard Portfolio</name>
     <groupId>com.eric_eldard</groupId>
     <artifactId>portfolio</artifactId>
-    <version>0.12.5-prerelease</version>
+    <version>0.13-prerelease</version>
     <packaging>war</packaging>
 
     <properties>
         <java.version>17</java.version>
         <jstl.version>3.0.1</jstl.version>
+        <ts.basedir>${project.basedir}/src/main/javascript/typescript</ts.basedir>
     </properties>
 
     <dependencies>
@@ -209,12 +210,55 @@
             </plugin>
 
             <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <id>TypeScript Compile and Browserify Bundle</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${ts.basedir}</workingDirectory>
+                            <executable>
+                                ${project.basedir}/scripts/build-typescript.sh
+                            </executable>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.3.1</version>
                 <executions>
                     <execution>
-                        <id>copy-resource-one</id>
-                        <phase>generate-sources</phase>
+                        <id>Copy compiled JS to public assets</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.basedir}/src/main/webapp/public/assets/scripts/generated
+                            </outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${ts.basedir}/out</directory>
+                                    <includes>
+                                        <include>portfolio.bundle.js</include>
+                                        <include>utils.js</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>Copy deployment scripts to target</id>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>

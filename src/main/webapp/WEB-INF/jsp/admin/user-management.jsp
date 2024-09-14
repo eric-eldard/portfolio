@@ -55,11 +55,9 @@
             }
         </style>
 
-        <script src="/public/assets/scripts/user-management.js"></script>
-
         <script>
             function createUser() {
-                postNewUser({
+                UserManagement.postNewUser({
                     "username":        document.getElementById("newUserName").value,
                     "password":        document.getElementById("newUserPassword").value,
                     "authorizedUntil": document.getElementById("newUserAuthUntil").value,
@@ -135,13 +133,13 @@
                     <td>
                         ${user.lockedOn}
                         <c:if test="${user.lockedOn != null}">
-                            <a href="javascript: unlockUser(${user.id}, '${user.username}')" class="emoji-silhouette" title="Unlock">&#128275;</a>
+                            <a href="javascript: UserManagement.unlockUser(${user.id}, '${user.username}')" class="emoji-silhouette" title="Unlock">&#128275;</a>
                         </c:if>
                     </td>
-                    <td class="binary-field" onclick="setEnabled(${user.id}, ${!user.enabled})" title="${user.enabled ? 'Disable' : 'Enable'}">
+                    <td class="binary-field" onclick="UserManagement.setEnabled(${user.id}, ${!user.enabled})" title="${user.enabled ? 'Disable' : 'Enable'}">
                         ${!user.enabled ? "&cross;" : ""}
                     </td>
-                    <td class="binary-field" onclick="setIsAdmin(${user.id}, ${!user.admin})" title="${user.admin ? 'Demote' : 'Promote'}">
+                    <td class="binary-field" onclick="UserManagement.setIsAdmin(${user.id}, ${!user.admin})" title="${user.admin ? 'Demote' : 'Promote'}">
                         ${user.admin ? "&check;" : ""}
                     </td>
                     <c:choose>
@@ -158,8 +156,8 @@
                         </c:otherwise>
                     </c:choose>
                     <td>
-                        <button onclick="setPassword(${user.id}, '${user.username}')">Password</button>
-                        <button onclick="deleteUser(${user.id}, '${user.username}')">Delete</button>
+                        <button onclick="UserManagement.setPassword(${user.id}, '${user.username}')">Password</button>
+                        <button onclick="UserManagement.deleteUser(${user.id}, '${user.username}')">Delete</button>
                     </td>
                 </tr>
                 </c:forEach>

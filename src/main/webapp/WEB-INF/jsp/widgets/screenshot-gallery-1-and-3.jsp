@@ -32,7 +32,7 @@
     document.getElementById("${param.id}").children[0].addEventListener("mouseover", (event) => {
         const centerImage = document.getElementById("${param.id}").children[0].children[0];
         centerImage.src = "${centerImg}";
-     });
+    });
 
     <%--
         Always return center image to original when mouse exits the container
@@ -41,5 +41,5 @@
     document.getElementById("${param.id}").addEventListener("mouseleave", (event) => {
         const centerImage = document.getElementById("${param.id}").children[0].children[0];
         centerImage.src = "${centerImg}";
-     });
+    });
 </script>

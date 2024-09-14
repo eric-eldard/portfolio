@@ -76,7 +76,7 @@
 
 .content .timeline-event:nth-of-type(5),
 .content .timeline-event:nth-of-type(5).focused:after {
-	color: #dc0;
+	color: #ec0;
 }
 
 .content .timeline-event:nth-of-type(6),
@@ -139,7 +139,7 @@
     }
 
     .content .timeline-event:nth-of-type(5):hover:after {
-    	color: #dc0;
+    	color: #ec0;
     }
 
     .content .timeline-event:nth-of-type(6):hover:after {

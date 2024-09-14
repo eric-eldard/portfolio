@@ -134,6 +134,16 @@ function setInnerHTML(elem: HTMLElement, html: string): void {
     });
 }
 
+/**
+ * Remove all child nodes from the container element.
+ * @param {Object} elem - the container to empty out
+ */
+function clearChildren(container: HTMLElement): void {
+    while (container.lastChild) {
+        container.removeChild(container.lastChild);
+    }
+}
+
 
 /****************/
 /*  HTTP Utils  */
@@ -147,7 +157,7 @@ function setInnerHTML(elem: HTMLElement, html: string): void {
  * @param {!string} method - the HTTP method
  * @param {?Object} body   - an optional JSON payload
  */
-function makeRequestOptions(method: string, body?: string): RequestInit {
+function makeRequestOptions(method: string, body?: any): RequestInit {
     const hasBody: boolean = body != null;
     const csrfToken: string | null | undefined = getMetaValue("_csrf");
     const hasCsrf: boolean = csrfToken != null;
