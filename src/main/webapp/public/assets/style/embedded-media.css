@@ -31,6 +31,10 @@
     width: 100%;
 }
 
+.embedded-doc .iframe div:after {
+	content: "PDF Viewer";
+}
+
 .embedded-doc .screenshot a:after {
     content: "Open PDF";
 }
