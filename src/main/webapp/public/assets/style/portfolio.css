@@ -279,12 +279,14 @@ img.solo {
     }
 }
 
-@media screen and (min-width: 1100px) {
+@media screen and (min-width: 950px) {
     #main > * {
         box-sizing: unset; /* box-sizing needed on mobile view to include auto margins in 100% width */
         width: 900px;
     }
+}
 
+@media screen and (min-width: 1100px) {
     .content > div {
     	margin-left: 50px;
     	margin-right: 50px;
