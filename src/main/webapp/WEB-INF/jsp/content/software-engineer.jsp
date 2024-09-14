@@ -24,11 +24,11 @@
 
 <h2>Brazen Virtual Events</h2>
 <p>
-    Below is a small example of some of my Brazen work. In 2023, I was attached to a small tiger team, along with our
-    VP of Marketing and our Data Engineering Manager, to experiment with both how we could include generative AI into
-    our platform and how we could get AI tools into the hands of our team members. In a week (a day of coding and
-    nearly 4 of prompt engineering), I put together a sample ChatGPT integration which could generate virtual event
-    content for our customers, and also provide an open pass-through to ChatGPT for day-to-day use by our staff.
+    Below is a small example of some of my Brazen work. In 2023, I was attached to a tiger team, along with our VP of
+    Marketing and our Data Engineering Manager, to experiment with both how we could include generative AI into our
+    platform and how we could get AI tools into the hands of our team members. In a week (a day of coding and nearly 4
+    of prompt engineering), I put together a sample ChatGPT integration which could generate virtual event content for
+    our customers, and also provide an open pass-through to ChatGPT for day-to-day use by our staff.
 </p>
 <jsp:include page="../widgets/project-specs.jsp">
     <jsp:param name="frontend" value="Freemarker, Google Web Toolkit, Google Material Design, jQuery"/>

@@ -117,7 +117,7 @@
     color: #fff;
     display: block;
     font-size: 20px;
-	line-height: 24px; /* prevents X from getting pushed down by height of the swipe arrows */
+	line-height: 24px; /* prevents X from getting pushed down by height of the forward/back arrows */
 	opacity: 0.5;
 	position: absolute;
 	right: 0;
@@ -129,7 +129,7 @@
 }
 
 #popup #closeX:hover,
-#popup #closeX.sustain {
+#popup #closeX.on {
 	opacity: 1;
 }
 
@@ -149,41 +149,6 @@
     margin-left: 2px;
 }
 
-#popup #swipe-indicators {
-    align-items: center;
-    animation: swipe-indicator-flash-opacity 4s;
-    display: flex;
-    left: 50%;
-    line-height: 1px;
-    justify-content: space-between;
-    margin-top: 6px;
-    opacity: 0;
-    position: absolute;
-    transform: translateX(-50%);
-    transition: opacity 1s;
-    visibility: hidden;
-    width: 120px;
-}
-
-/* Flashes swipe indicators on screen temporarily */
-#popup #swipe-indicators.flash {
-    visibility: visible;
-}
-
-/* Sustains swipe indicators on screen until this class is removed */
-#popup #swipe-indicators.sustain {
-    opacity: 0.8;
-}
-
-#popup #swipe-indicators .swipe-dot:after {
-    content: "\25CF";
-}
-
-#popup #swipe-indicators .swipe-dot.embiggen:after {
-    font-size: 24px;
-    line-height: 5px;
-}
-
 #popup #top-controls {
     height: 24px;
 	position: sticky;
@@ -200,7 +165,7 @@
 }
 
 /* A full-page div for preventing interaction with the main page while content is being displayed in #popup */
-#popup-background {
+#popup-container {
 	/*
 	    popup background color removed in favor of blurring main content
 	    background: rgba(128, 128, 128, 0.5);
@@ -217,7 +182,7 @@
 	z-index: 1000;
 }
 
-#popup-background.open {
+#popup-container.open {
     display: block;
 }
 
@@ -239,21 +204,6 @@
 }
 
 
-@keyframes swipe-indicator-flash-opacity {
-    0% {
-        opacity: 0.05;
-    }
-
-    50% {
-        opacity: 0.8;
-    }
-
-    100% {
-        opacity: 0.05;
-    }
-}
-
-
 @media screen and (min-width: 600px) {
     #popup {
         padding-left: 25px;
@@ -267,10 +217,7 @@
     #popup h2, #popup h3 {
         text-align: left;
     }
-}
 
-
-@media screen and (min-width: 600px) {
     /* nav arrows don't appear until there's enough room for them in the gutters */
     #popup #move-back {
         display: block;
@@ -278,11 +225,6 @@
 
     #popup #move-forward {
         display: inline-block;
-    }
-
-    /* Hide swipe indicators once screen size is reach to show nav arrows instead */
-    #popup #swipe-indicators {
-        animation: none;
     }
 }
 

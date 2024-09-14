@@ -21,10 +21,9 @@
 
         </div>
 
-        <div id="popup-background" onclick="Portfolio.closePopup()">
+        <div id="popup-container" onclick="Portfolio.closePopup()">
             <div id="popup" onclick="event.stopPropagation()">
                 <div id="top-controls">
-                    <div id="swipe-indicators"></div>
                     <a href="javascript: Portfolio.closePopup();" id="closeX" title="Close"></a>
                 </div>
                 <a href="javascript: Portfolio.jumpToPrevious();" id="move-back" class="popup-nav" title="Move back"></a>
@@ -32,6 +31,7 @@
                 <div id="popup-content"></div>
             </div>
         </div>
+        <div id="swipe-indicators"></div>
 
         <div id="preload-images">
             <c:forEach items="${IMAGES}" var="image"><input type="hidden" value="${image}"/>

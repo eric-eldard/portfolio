@@ -8,8 +8,7 @@
         <jsp:param name="href" value="https://github.com/eric-eldard/swipe-events.js"/>
     </jsp:include>,
     pre-compiled JSPs and recursive asset preloading for faster load times, third-party video integration, JWT auth
-    tokens, and robust admin-only user management. I'm constantly adding and upgrading, and it's been a blast to work
-    on!
+    tokens, and robust user management. I'm constantly adding and upgrading, and it's been a blast to work on!
 </p>
 
 <jsp:include page="../widgets/see-it-on-gh.jsp">

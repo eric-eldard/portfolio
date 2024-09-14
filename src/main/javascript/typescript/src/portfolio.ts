@@ -7,7 +7,6 @@ export namespace Portfolio {
     // Will be available at runtime from swipe-events.js
     declare const SwipeEvents: SwipeEvents;
 
-
     const SWIPE_SUBSCRIBE_FREQUENCY: number = 1000 / 120; // 120fps necessary for smooth (non-jittery) animation on iOS Safari
     const MAX_POPUP_ROTATION: number = 35;
     const HASH_PATH_KEY: string = "hashPath";
@@ -17,8 +16,8 @@ export namespace Portfolio {
     // Close popup on a history pop-state event (back button pressed)
     const POPSTATE_LISTENER    = (e: PopStateEvent) => closePopup();
 
-    const TOUCHSTART_LISTENER  = (e: TouchEvent) => toggleStyle("closeX", "sustain", true);
-    const TOUCHEND_LISTENER    = (e: TouchEvent) => toggleStyle("closeX", "sustain", false);
+    const TOUCHSTART_LISTENER  = (e: TouchEvent) => toggleStyleForId("closeX", "on", true);
+    const TOUCHEND_LISTENER    = (e: TouchEvent) => toggleStyleForId("closeX", "on", false);
 
     // Listen for swipe events and move the popup accordingly if it's open
     const POPUP_SWIPE_LISTENER = (e: SwipeEvent) => {
@@ -33,17 +32,16 @@ export namespace Portfolio {
         }
 
         lastSwipeEventTime = e.detail.eventTime;
-        const popup   : HTMLElement = getPopup()!;
 
         if (ongoing) {
             const dir: string = e.detail.cardinal4dir;
 
             if (dir === "W" || dir === "E") {
-                const oldLeft : number      = parseInt(popup.style.left);
-                const width   : number      = popup.offsetWidth; // doesn't have an explicit CSS width
+                const oldLeft : number      = parseInt(getPopup().style.left);
+                const width   : number      = getPopup().offsetWidth; // doesn't have an explicit CSS width
 
                 // Stop scrolling while we're swiping
-                popup.style.overflowY = "hidden";
+                getPopup().style.overflowY = "hidden";
 
                 // Stop updating the popup's left value once it's off the screen in either direction
                 const shouldUpdate: boolean = dir === "W" ? (oldLeft > -width) : (oldLeft < width);
@@ -95,12 +93,11 @@ export namespace Portfolio {
                     }
 
                     // Set new position and rotation values for the popup
-                    popup.style.left = newLeft + "px";
+                    getPopup().style.left = newLeft + "px";
                     rotatePopup(rotation);
 
                     // Show swipe indicators while swiping
-                    toggleStyle("swipe-indicators", "pause", true); // if the indicator flash is still playing, pause it
-                    toggleStyle("swipe-indicators", "sustain", true);
+                    setUserIsSwiping(true);
 
                     // Your finger is at about the 60% demarcation horizontally on a mobile screen when the popup has
                     // disappeared off screen, even at the slowest speeds. We'll interpret crossing this threshold as a
@@ -133,17 +130,15 @@ export namespace Portfolio {
             }
         }
         else {
-            // Hide swipe indicators
-            toggleStyle("swipe-indicators", "sustain", false);
-            toggleStyle("swipe-indicators", "pause", false);
+            setUserIsSwiping(false);
 
             // Wait the duration of the popup's CSS left transition before returning it to where it started; without
             // this delay, the popup returns to its starting position as soon as you take your finger off the screen,
             //even if you flung it really hard.
             window.setTimeout(() => {
-                popup.style.left = "0";
                 rotatePopup(0);
-                popup.style.overflowY = "scroll";
+                getPopup().style.left = "0";
+                getPopup().style.overflowY = "scroll";
             }, 501);
         }
     };
@@ -212,6 +207,15 @@ export namespace Portfolio {
             .catch(error => console.error(error.message));
     }
 
+    export function showResume(): void {
+        if (window.innerWidth < 800) {
+            alert('TODO ERIC - updated resume');
+        }
+        else {
+            retrieveAndShowContent('resume');
+        }
+    }
+
     // Show the content pop-up and populate w/ content
     function showContentInPopup(content: string | undefined, path: string): void {
         if (!content) {
@@ -219,33 +223,40 @@ export namespace Portfolio {
         }
 
         const main         : HTMLElement = document.getElementById("main")!;
-        const background   : HTMLElement = document.getElementById("popup-background")!;
-        const popup        : HTMLElement = getPopup()!;
+        const container    : HTMLElement = document.getElementById("popup-container")!;
         const popupContent : HTMLElement = document.getElementById("popup-content")!;
         const hashPath     : string      = `#${path}`;
 
         setInnerHTML(popupContent, content);
         determineNavigationVisibility(path);
-        setTimelineElemSwipeDots(path);
-        toggleStyle("swipe-indicators", "flash", true);
+
+        // Build & flash the swipe indicators on screen when the popup is first opened
+        setTimelineElemSwipeDots(path, !popupIsOpen());
+        if (!popupIsOpen()) {
+            toggleStyleForId("swipe-indicators", "display", true);
+            setUserIsSwiping(true);
+        }
 
         // Tracking the path for the open popup solely for logging purposes when page is refreshed while popup is open
-        setDataName(popup, hashPath);
+        setDataName(getPopup(), hashPath);
 
         // Changing effects behind the popup
-        background.classList.add("open");
         main.classList.add("blur");
+        container.classList.add("open");
         setBodyBackgroundColor(path);
 
+        // Register touch listeners
         document.addEventListener("swipe", POPUP_SWIPE_LISTENER as EventListener);
         document.addEventListener("touchstart", TOUCHSTART_LISTENER);
         document.addEventListener("touchend", TOUCHEND_LISTENER);
         document.addEventListener("touchcancel", TOUCHEND_LISTENER);
 
-        window.setTimeout(() => {
-            popup.classList.add("open");
-            popup.style.overflowY = "scroll"; // we may have frozen this for swiping; let's make double sure it's unfrozen
-            popup.scrollTop = 0;
+        window.setTimeout(() => { // Give a little buffer for animations
+            if (!popupIsOpen()) {
+                setPopupIsOpen(true);
+            }
+            getPopup().style.overflowY = "scroll"; // we may have frozen this for swiping; let's make double sure it's unfrozen
+            getPopup().scrollTop = 0;
 
             // Add listener for (mobile) back button, and push an extra frame onto history, so the
             // back button can be used to close the popup without navigating away from the page
@@ -253,18 +264,18 @@ export namespace Portfolio {
             window.addEventListener("popstate", POPSTATE_LISTENER);
             console.debug(`Popup %c${hashPath}%c opened and added to history`, "color: blue", "color: unset");
 
-            window.setTimeout(() => {
-                // Give a little buffer for loading before calling the popup back to center screen
+            window.setTimeout(() => { // Give a little buffer for loading before calling the popup back to center screen
                 rotatePopup(0);
-                popup.style.left = "0";
+                getPopup().style.left = "0";
             }, 400);
         }, 100);
+
+        window.setTimeout(() => setUserIsSwiping(false), 1500);
     }
 
     export function closePopup(): void {
         const main         : HTMLElement = document.getElementById("main")!;
-        const background   : HTMLElement = document.getElementById("popup-background")!;
-        const popup        : HTMLElement = getPopup()!;
+        const container    : HTMLElement = document.getElementById("popup-container")!;
         const popupContent : HTMLElement = document.getElementById("popup-content")!;
         const wasPopState  : boolean     = isPopupState();
 
@@ -284,26 +295,25 @@ export namespace Portfolio {
         // We have to retrieve the current popup's name from the popup element, because at this point the hash param has
         // been removed from the address and the popstate event doesn't contain info about the popped-state (it points
         // to the new history head)
-        console.debug(`Popup %c${getDataName(popup)}%c removed from history`, "color: blue", "color: unset");
+        console.debug(`Popup %c${getDataName(getPopup())}%c removed from history`, "color: blue", "color: unset");
 
         document.body.classList.remove("opaque-bg-color");
         main.classList.remove("blur");
 
         // Perform fade-out animation if we're closing the popup entirely, but not if we're swiping between content
-        if (popup.classList.contains("swiping")) {
-            popup.classList.remove("swiping");
+        if (popupIsTransitioning()) {
+            console.debug("Popup is transitioning");
+            setPopupIsTransitioning(false);
         }
         else {
-            popup.classList.remove("open");
+            console.debug("Popup is closing");
+            toggleStyleForId("swipe-indicators", "display", false); // hide immediately to prevent fade-out animation
+            setPopupIsOpen(false);
         }
 
-        // Hide controls
-        toggleStyle("swipe-indicators", "pause", false);
-        toggleStyle("swipe-indicators", "flash", false);
-        toggleStyle("swipe-indicators", "sustain", false);
-        toggleStyle("closeX", "sustain", false)
+        toggleStyleForId("closeX", "on", false)
 
-        clearDataName(popup);
+        clearDataName(getPopup());
 
         Video.destroyAllPlayers();
 
@@ -311,7 +321,7 @@ export namespace Portfolio {
 
         // Finish CSS animations before completely hiding
         window.setTimeout(() => {
-            background.classList.remove("open");
+            container.classList.remove("open");
             setInnerHTML(popupContent, "");
 
             window.setTimeout(() =>
@@ -322,31 +332,20 @@ export namespace Portfolio {
         }, 300);
     }
 
-    export function showResume(): void {
-        if (window.innerWidth < 800) {
-            alert('TODO ERIC - updated resume');
-        }
-        else {
-            retrieveAndShowContent('resume');
-        }
-    }
-
     // Jump straight from one content popup to another. "comingFrom" specifies where the new popup should enter the
     // screen from and values are "left", "center" (or null), and "right"
     function jumpTo(path: string, comingFrom: string = "center"): void {
-        const popup: HTMLElement = getPopup()!;
-        popup.classList.add("swiping");
-
+        setPopupIsTransitioning(true);
         closePopup();
 
         window.setTimeout(() => {
             // Push the popup to it's new starting position
             if (comingFrom === "left") {
-                popup.style.left = -window.screen.availWidth + "px";
+                getPopup().style.left = -window.screen.availWidth + "px";
                 rotatePopup(-MAX_POPUP_ROTATION);
             }
             else if (comingFrom === "right") {
-                popup.style.left = window.screen.availWidth + "px";
+                getPopup().style.left = window.screen.availWidth + "px";
                 rotatePopup(MAX_POPUP_ROTATION);
             }
 
@@ -364,7 +363,7 @@ export namespace Portfolio {
         }
 
         // Fling the current popup off screen
-        getPopup()!.style.left = window.screen.availWidth + "px";
+        getPopup().style.left = window.screen.availWidth + "px";
         rotatePopup(MAX_POPUP_ROTATION);
 
         // If there's content before the current popup, show it
@@ -384,7 +383,7 @@ export namespace Portfolio {
         }
 
         // Fling the current popup off screen
-        getPopup()!.style.left = -window.screen.availWidth + "px";
+        getPopup().style.left = -window.screen.availWidth + "px";
         rotatePopup(-MAX_POPUP_ROTATION);
 
         // If there's content after the current popup, show it
@@ -439,9 +438,12 @@ export namespace Portfolio {
         return null;
     }
 
-    function setTimelineElemSwipeDots(path: string): void {
+    function setTimelineElemSwipeDots(path: string, recreate: boolean = false): void {
         const swipeDotsContainer = document.getElementById("swipe-indicators")!;
-        clearChildren(swipeDotsContainer);
+
+        if (path == null || recreate) {
+            clearChildren(swipeDotsContainer);
+        }
 
         const timelinePaths: string[] =
             Array.from(document.querySelectorAll("#main .content .timeline-events .timeline-event"))
@@ -450,14 +452,17 @@ export namespace Portfolio {
 
         // If the popup is showing for a timeline element, add swipe indicator dots
         if (timelinePaths.includes(path)) {
-            timelinePaths.forEach(function (timelinePath) {
-                const dotDiv: HTMLElement = document.createElement("div");
-                dotDiv.classList.add("swipe-dot");
-                if (timelinePath === path) {
-                    dotDiv.classList.add("embiggen");
-                }
-                swipeDotsContainer.appendChild(dotDiv);
-            });
+            if (recreate) {
+                timelinePaths.forEach(timelinePath => {
+                    const dotDiv: HTMLElement = document.createElement("div");
+                    dotDiv.classList.add("swipe-dot");
+                    swipeDotsContainer.appendChild(dotDiv);
+                });
+            }
+
+            for (let i = 0; i < swipeDotsContainer.children.length; i++) {
+                toggleStyle(swipeDotsContainer.children[i], "embiggen", timelinePaths[i] == path)
+            }
         }
     }
 
@@ -469,17 +474,33 @@ export namespace Portfolio {
         return getCurrentTimelineElem()?.nextElementSibling !== null;
     }
 
-    function getPopup(): HTMLElement | null {
+    function getPopup(): HTMLElement {
         return document.getElementById("popup")!;
     }
 
     function popupIsOpen(): boolean {
-        const popupElem = getPopup();
-        return popupElem != null && popupElem.classList.contains("open");
+        return getPopup().classList.contains("open");
+    }
+    
+    function setPopupIsOpen(isOpen: boolean): void {
+        toggleStyle(getPopup(), "open", isOpen);
     }
 
     function rotatePopup(deg: number): void {
-        getPopup()!.style.transform = `rotate(${deg}deg) translateY(-50%)`;
+        getPopup().style.transform = `rotate(${deg}deg) translateY(-50%)`;
+    }
+
+    function popupIsTransitioning(): boolean {
+        return getPopup().classList.contains("transitioning");
+    }
+
+    function setPopupIsTransitioning(transitioning: boolean): void {
+        toggleStyle(getPopup(), "transitioning", transitioning);
+    }
+
+    function setUserIsSwiping(swiping: boolean): void {
+        toggleStyleForId("swipe-indicators", "on", swiping);
+        toggleStyleForId("swipe-indicators", "off", !swiping);
     }
 
     // Returns true if hash path is not empty and not just "#"

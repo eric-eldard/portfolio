@@ -55,6 +55,50 @@ label {
     display: none;
 }
 
+#swipe-indicators {
+    align-items: center;
+    background-color: rgba(0, 0, 0, .8);
+    border: 1px solid #fff;
+    border-radius: 50px;
+    display: none;
+    left: 50%;
+    height: 18px;
+    justify-content: space-between;
+    opacity: 0;
+    padding: 2px 10px;
+    position: absolute;
+    top: 27px;
+    transform: translateX(-50%);
+    width: 55%;
+    z-index: 10000;
+}
+
+#swipe-indicators.display {
+    display: flex;
+}
+
+#swipe-indicators.on {
+    animation: swipe-indicator-opacity-on 1.5s;
+    animation-fill-mode: forwards;
+}
+
+#swipe-indicators.off {
+    animation: swipe-indicator-opacity-off 1.5s;
+}
+
+#swipe-indicators .swipe-dot {
+    aspect-ratio: 1 / 1;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 50%;
+    transition: width 1.5s;
+    width: 5px;
+}
+
+#swipe-indicators .swipe-dot.embiggen {
+    width: 13px;
+}
+
 
 .blur {
     filter: blur(3px);
@@ -183,23 +227,19 @@ label {
     top: 44px;
 }
 
-.chrome-mobile-shim .password .visibility-toggle img {
-    top: -20px;
-}
-
-.pause {
-  animation-play-state: paused !important;
-}
-
-.password .visibility-toggle .password-hide {
-    display: none;
-}
-
 .password .visibility-toggle img {
     position: relative;
     right: 4px;
     top: -19px;
     width: 22px;
+}
+
+.chrome-mobile-shim .password .visibility-toggle img {
+    top: -20px;
+}
+
+.password .visibility-toggle .password-hide {
+    display: none;
 }
 
 .screenshot a {
@@ -236,9 +276,38 @@ img.solo {
 }
 
 
+/*
+    Swipe indicator key frames can't be combined (then sometimes played in reverse) because the animations need to be
+    reset after each run (by removing them) and that can't happen if the animation is now running in the other direction
+*/
+@keyframes swipe-indicator-opacity-on {
+    0% {
+        opacity: 0.05;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes swipe-indicator-opacity-off {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.05;
+    }
+}
+
+
 @media screen and (min-width: 600px) {
     img.solo {
         width: 90%;
+    }
+
+    #swipe-indicators {
+        display: none !important; /* Hide swipe indicators once screen size is reached to show nav arrows instead */
     }
 
     .link-out {

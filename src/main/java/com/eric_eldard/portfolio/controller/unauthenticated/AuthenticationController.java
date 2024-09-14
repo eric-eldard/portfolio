@@ -13,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eric_eldard.portfolio.model.auth.Credentials;
@@ -28,8 +27,7 @@ public class AuthenticationController
 
     private final AuthenticationService authenticationService;
 
-    @PostMapping
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public void login(@RequestBody @Valid Credentials credentials,
                       HttpServletRequest request,
                       HttpServletResponse response

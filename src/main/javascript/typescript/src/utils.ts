@@ -37,23 +37,30 @@ function clearDataName(elem: HTMLElement): void {
 /**
  * Ensures the element matching the given ID has/doesn't have the given class. If the desired outcome is true before
  * invocation, no action is taken.
- * @param {string}  elemId    - the ID of the element
+ * @param {Object}  elem      - the element to toggle the class on
  * @param {string}  className - the name of the class
  * @param {boolean} toggleOn  - <code>true</code> if this element should contain the given class after this operation;
  *                              else false, if the class should be removed
  */
-function toggleStyle(elemId: string, className: string, toggleOn: boolean): void {
-    const elem: HTMLElement | null = document.getElementById(elemId);
-
-    if (elem == null) {
-        throw new Error(`Cannot toggle style for element because none match id [${elemId}]`);
-    }
-    else if (toggleOn && !elem.classList.contains(className)) {
+function toggleStyle(elem: Element, className: string, toggleOn: boolean): void {
+    if (toggleOn && !elem.classList.contains(className)) {
         elem.classList.add(className);
     }
     else if (!toggleOn && elem.classList.contains(className)) {
         elem.classList.remove(className);
     }
+}
+
+/**
+ * See {@link toggleStyle}
+ * @param {string} elemId - the element to look up before delegating to {@linkcode toggleStyle}
+ */
+function toggleStyleForId(elemId: string, className: string, toggleOn: boolean): void {
+    const elem: HTMLElement | null = document.getElementById(elemId);
+    if (elem == null) {
+        throw new Error(`Cannot toggle style for element because none match id [${elemId}]`);
+    }
+    toggleStyle(elem, className, toggleOn);
 }
 
 /**
