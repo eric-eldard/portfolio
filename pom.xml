@@ -12,12 +12,11 @@
     <name>Eric Eldard Portfolio</name>
     <groupId>com.eric_eldard</groupId>
     <artifactId>portfolio</artifactId>
-    <version>0.13.4-prerelease</version>
+    <version>0.14-prerelease</version>
     <packaging>war</packaging>
 
     <properties>
-        <java.version>17</java.version>
-        <jstl.version>3.0.1</jstl.version>
+        <java.version>21</java.version>
         <ts.basedir>${project.basedir}/src/main/javascript/typescript</ts.basedir>
     </properties>
 
@@ -71,7 +70,7 @@
         <dependency>
             <groupId>jakarta.servlet.jsp.jstl</groupId>
             <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <version>${jstl.version}</version>
+            <version>3.0.2</version>
             <exclusions>
                 <exclusion>
                     <!-- providing newer version -->
@@ -84,7 +83,7 @@
         <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>jakarta.servlet.jsp.jstl</artifactId>
-            <version>${jstl.version}</version>
+            <version>3.0.1</version>
         </dependency>
 
         <dependency>
@@ -97,7 +96,7 @@
         <dependency>
             <groupId>video.api</groupId>
             <artifactId>java-api-client</artifactId>
-            <version>1.3.3</version>
+            <version>1.4.1</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -142,7 +141,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.15.0</version>
+            <version>3.17.0</version>
         </dependency>
 
         <dependency>
@@ -166,7 +165,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.3.3</version>
             </plugin>
 
             <plugin>
@@ -174,17 +173,17 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>17</source>
-                    <target>17</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
 
             <!-- Precompile JSPs (they'll be output to WEB-INF/classes/org/apache/jsp) -->
             <!-- https://jetty.org/docs/jetty/12/programming-guide/maven-jetty/jetty-jspc-maven-plugin.html -->
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-jspc-maven-plugin</artifactId>
-                <version>11.0.22</version>
+                <groupId>org.eclipse.jetty.ee10</groupId>
+                <artifactId>jetty-ee10-jspc-maven-plugin</artifactId>
+                <version>12.0.13</version>
                 <executions>
                     <execution>
                         <id>jspc</id>
@@ -193,8 +192,8 @@
                         </goals>
                         <configuration>
                             <mergeFragment>true</mergeFragment>
-                            <sourceVersion>17</sourceVersion>
-                            <targetVersion>17</targetVersion>
+                            <sourceVersion>${java.version}</sourceVersion>
+                            <targetVersion>${java.version}</targetVersion>
                         </configuration>
                     </execution>
                 </executions>
@@ -319,12 +318,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.5.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.5.0</version>
             </plugin>
 
         </plugins>
