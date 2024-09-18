@@ -1,11 +1,14 @@
 // Stand-ins for types that will be available at runtime from swipe-events.js
 
 declare type SwipeEventDetail = {
+    event:           TouchEvent;
     eventTime:       number;
     duration:        number;
+    initial:         boolean;
     ongoing:         boolean;
-    cardinal4dir:    string;
-    cardinal8dir:    string;
+    cardinal4:       string;
+    cardinal8:       string;
+    theta:           number;
     originX:         number;
     originY:         number;
     currentX:        number;

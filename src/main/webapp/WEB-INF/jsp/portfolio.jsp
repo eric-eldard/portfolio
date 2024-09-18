@@ -69,7 +69,7 @@
         </script>
 
         <script defer>
-            Portfolio.retrieveAndShowContentIfPopupState();
+            Portfolio.openPopupIfPopupState();
         </script>
     </body>
 </html>

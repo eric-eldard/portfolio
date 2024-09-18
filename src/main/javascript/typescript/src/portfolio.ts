@@ -11,16 +11,22 @@ export namespace Portfolio {
     const MAX_POPUP_ROTATION: number = 35;
     const HASH_PATH_KEY: string = "hashPath";
 
-    let lastSwipeEventTime: number = new Date().getMilliseconds();
+    let lastSwipeEventTime: number;
+    let lastSwipeStartTime: number;
+    let lastSwipeEndTime: number;
+
+    let historyPoppedProgrammatically: boolean = false;
+    let jumpingBetweenPopups: boolean = false;
 
     // Close popup on a history pop-state event (back button pressed)
-    const POPSTATE_LISTENER    = (e: PopStateEvent) => closePopup();
-
-    const TOUCHSTART_LISTENER  = (e: TouchEvent) => toggleStyleForId("closeX", "on", true);
-    const TOUCHEND_LISTENER    = (e: TouchEvent) => toggleStyleForId("closeX", "on", false);
+    const POPSTATE_LISTENER = (e: PopStateEvent) => closePopup();
 
     // Listen for swipe events and move the popup accordingly if it's open
     const POPUP_SWIPE_LISTENER = (e: SwipeEvent) => {
+        if (e.detail.initial) {
+            lastSwipeStartTime = Date.now();
+            toggleStyleForId("closeX", "on", true); // highlight close X when swiping/scrolling
+        }
 
         // We're publishing swipe events at roughly screen refresh rate, which could be as a high as 120fps. Here we'll
         // check if we've waited the desired interval since the last time we updated the popup's position. If not, we'll
@@ -34,7 +40,7 @@ export namespace Portfolio {
         lastSwipeEventTime = e.detail.eventTime;
 
         if (ongoing) {
-            const dir: string = e.detail.cardinal4dir;
+            const dir: string = e.detail.cardinal4;
 
             if (dir === "W" || dir === "E") {
                 const oldLeft : number      = parseInt(getPopup().style.left);
@@ -83,7 +89,6 @@ export namespace Portfolio {
                         newLeft = Math.min(newLeft, 10);
                     }
 
-
                     let rotation: number;
                     if (dir === "W") {
                         rotation = Math.max(newLeft / 5, -MAX_POPUP_ROTATION);
@@ -130,16 +135,19 @@ export namespace Portfolio {
             }
         }
         else {
+            lastSwipeEndTime = Date.now();
             setUserIsSwiping(false);
+            toggleStyleForId("closeX", "on", false);
 
-            // Wait the duration of the popup's CSS left transition before returning it to where it started; without
-            // this delay, the popup returns to its starting position as soon as you take your finger off the screen,
-            //even if you flung it really hard.
-            window.setTimeout(() => {
-                rotatePopup(0);
-                getPopup().style.left = "0";
-                getPopup().style.overflowY = "scroll";
-            }, 501);
+            // If jumping between different popup content, we'll be teleporting the popup to the other side of the
+            // screen and don't want to prematurely recall it to origin. Jump logic will take care of getting the popup
+            // back to origin when the time is right.
+            if (!jumpingBetweenPopups) {
+                // Wait the duration of the popup's CSS left transition before returning it to where it started; without
+                // this delay, the popup instantly returns to its starting position as soon as you take your finger off
+                // the screen, even if you flung it really hard.
+                window.setTimeout(() => returnPopupToOrigin(), 500);
+            }
         }
     };
 
@@ -159,8 +167,8 @@ export namespace Portfolio {
     }
 
     // Reinstate content if a popup name is found in the url's hash or in session storage
-    export function retrieveAndShowContentIfPopupState(): void {
-        if (isPopupState()) {                                     // If page loads with a popup hash param, then...
+    export function openPopupIfPopupState(): void {
+        if (locationIsHashPath()) {                               // If page loads with a popup hash param, then...
             sessionStorage.setItem(HASH_PATH_KEY, hashPath());    // store the requested popup name
             console.debug(`Found path %c${sessionStorage.getItem(HASH_PATH_KEY)}%c in url; storing and reloading...`,
                 "color: blue", "color: unset");
@@ -171,19 +179,48 @@ export namespace Portfolio {
             sessionStorage.removeItem(HASH_PATH_KEY);             // remove stored name so it doesn't trigger later
             console.debug(`Found path %c${storedPath}%c in session storage; navigating to this content...`,
                 "color: blue", "color: unset");
-            retrieveAndShowContent(storedPath.substring(1));      // trim "#" and navigate to corresponding content
+            openPopup(storedPath.substring(1));                   // trim "#" and navigate to corresponding content
         }
     }
 
-    // Retrieve content and display it in the popup
-    export function retrieveAndShowContent(path: string): void {
+    export function openPopup(path: string): void {
+        retrieveContent(path, content => {
+            clearChildren(getSwipeIndicators());
 
-        // If a timeline event kicked this method off, highlight that event
-        const elem: HTMLElement | null = getTimelineElem(path);
-        if (elem) {
-            elem.classList.add("focused");
+            if (getTimelinePaths().includes(path)) {
+                setupMobileNav(path);
+
+                // Fake a swipe to show the swipe indicators when popup is first opened
+                lastSwipeStartTime = Date.now();
+                lastSwipeEndTime = lastSwipeStartTime + 1; // needs to be after start
+            }
+
+            window.addEventListener("popstate", POPSTATE_LISTENER); // listener for (mobile) back button
+            document.addEventListener("swipe", POPUP_SWIPE_LISTENER as EventListener);
+
+            showContentInPopup(path, content);
+
+            window.setTimeout(() => {
+                toggleStyleForId("swipe-indicators", "display", true);
+                setUserIsSwiping(true);
+            }, 500); // wait till popup is fully open to flash swipe indicators
+        });
+    }
+
+    export function showResume(): void {
+        if (window.innerWidth < 800) {
+            alert('TODO ERIC - download for updated resume');
         }
+        else {
+            openPopup('resume');
+        }
+    }
 
+    function retrieveContent(
+        path: string,
+        successCallback: ((content: string) => void),
+        failureCallback: ((error: Error) => void) = (error => console.error(error.message)),
+    ): void {
         // Remove trailing slash if present, then always add it back (supports slash and no-slash paths)
         const basePath: string = window.location.pathname.replace(/\/+$/, "") + "/content/";
 
@@ -203,39 +240,31 @@ export namespace Portfolio {
                 }
                 return response.text();
             })
-            .then(text => showContentInPopup(text, path))
-            .catch(error => console.error(error.message));
+            .then(content => {
+                if (!content) {
+                    throw new Error(`Got null content back for path [${path}]`);
+                }
+                successCallback(content);
+            })
+            .catch(error => failureCallback(error));
     }
 
-    export function showResume(): void {
-        if (window.innerWidth < 800) {
-            alert('TODO ERIC - updated resume');
-        }
-        else {
-            retrieveAndShowContent('resume');
-        }
-    }
+    // Show the content popup in a freshly opened or transitioned popup
+    function showContentInPopup(path: string, content: string): void {
+        const main         : HTMLElement        = document.getElementById("main")!;
+        const container    : HTMLElement        = document.getElementById("popup-container")!;
+        const popupContent : HTMLElement        = document.getElementById("popup-content")!;
+        const timelineElem : HTMLElement | null = getTimelineElem(path);
+        const hashPath     : string             = `#${path}`;
 
-    // Show the content pop-up and populate w/ content
-    function showContentInPopup(content: string | undefined, path: string): void {
-        if (!content) {
-            throw new Error(`Got null content back for path [${path}]`);
+        // If a timeline event kicked this method off, highlight that event
+        if (timelineElem) {
+            timelineElem.classList.add("focused");
         }
-
-        const main         : HTMLElement = document.getElementById("main")!;
-        const container    : HTMLElement = document.getElementById("popup-container")!;
-        const popupContent : HTMLElement = document.getElementById("popup-content")!;
-        const hashPath     : string      = `#${path}`;
 
         setInnerHTML(popupContent, content);
-        determineNavigationVisibility(path);
-
-        // Build & flash the swipe indicators on screen when the popup is first opened
-        setTimelineElemSwipeDots(path, !popupIsOpen());
-        if (!popupIsOpen()) {
-            toggleStyleForId("swipe-indicators", "display", true);
-            setUserIsSwiping(true);
-        }
+        determineDesktopNavVisibility(path);
+        setMobileNavPath(path);
 
         // Tracking the path for the open popup solely for logging purposes when page is refreshed while popup is open
         setDataName(getPopup(), hashPath);
@@ -245,50 +274,57 @@ export namespace Portfolio {
         container.classList.add("open");
         setBodyBackgroundColor(path);
 
-        // Register touch listeners
-        document.addEventListener("swipe", POPUP_SWIPE_LISTENER as EventListener);
-        document.addEventListener("touchstart", TOUCHSTART_LISTENER);
-        document.addEventListener("touchend", TOUCHEND_LISTENER);
-        document.addEventListener("touchcancel", TOUCHEND_LISTENER);
-
-        window.setTimeout(() => { // Give a little buffer for animations
+        window.setTimeout(() => {
             if (!popupIsOpen()) {
                 setPopupIsOpen(true);
             }
-            getPopup().style.overflowY = "scroll"; // we may have frozen this for swiping; let's make double sure it's unfrozen
-            getPopup().scrollTop = 0;
 
-            // Add listener for (mobile) back button, and push an extra frame onto history, so the
-            // back button can be used to close the popup without navigating away from the page
+            // Push an extra frame onto history, so the back button can be
+            // used to close the popup without navigating away from the page
             history.pushState({ popupStatus : "open"}, "", hashPath);
-            window.addEventListener("popstate", POPSTATE_LISTENER);
             console.debug(`Popup %c${hashPath}%c opened and added to history`, "color: blue", "color: unset");
 
-            window.setTimeout(() => { // Give a little buffer for loading before calling the popup back to center screen
-                rotatePopup(0);
-                getPopup().style.left = "0";
-            }, 400);
-        }, 100);
+            window.setTimeout(() => {
+                getPopup().scrollTop = 0;
+                returnPopupToOrigin();
+                jumpingBetweenPopups = false;
+                historyPoppedProgrammatically = false;
+            }, 400); // Buffer time for loading before calling the popup back to center screen
+        }, 100); // Buffer time for animations
 
-        window.setTimeout(() => setUserIsSwiping(false), 1500);
+        setUserIsSwiping(false);
     }
 
+    // Fully close the popup and return to the timeline
     export function closePopup(): void {
-        const main         : HTMLElement = document.getElementById("main")!;
-        const container    : HTMLElement = document.getElementById("popup-container")!;
-        const popupContent : HTMLElement = document.getElementById("popup-content")!;
-        const wasPopState  : boolean     = isPopupState();
+        // History is popped programmatically when transitioning between popup cards; it triggers the popstate listener,
+        // which calls this close method, but we'll ignore it when we know it came from a transition vs the back button.
+        if (historyPoppedProgrammatically) {
+            historyPoppedProgrammatically = false;
+            return;
+        }
 
         window.removeEventListener("popstate", POPSTATE_LISTENER);
         document.removeEventListener("swipe", POPUP_SWIPE_LISTENER as EventListener);
-        document.removeEventListener("touchstart", TOUCHSTART_LISTENER);
-        document.removeEventListener("touchend", TOUCHEND_LISTENER);
-        document.removeEventListener("touchcancel", TOUCHEND_LISTENER);
+
+        toggleStyleForId("swipe-indicators", "display", false); // hide immediately to prevent fade-out animation
+        setPopupIsOpen(false);
+
+        transitionPopup();
+    }
+
+    // A partial close, for jumping from one popup card to another (mostly animated stuff)
+    function transitionPopup(): void {
+        const main                  : HTMLElement = document.getElementById("main")!;
+        const container             : HTMLElement = document.getElementById("popup-container")!;
+        const popupContent          : HTMLElement = document.getElementById("popup-content")!;
+        const locationWasHashParam  : boolean     = locationIsHashPath();
 
         // If the popup's hash param is currently in browser history, we'll pop it off. It may not be, if the hash param
         // url was directly navigated to. I've attempted to push an event into history in this case, but Chrome & Safari
         // don't recognize it (though Firefox does), so a history.back() op would cause the user to leave the site.
-        if (isPopupState()) {
+        if (locationIsHashPath()) {
+            historyPoppedProgrammatically = true;
             history.back();
         }
 
@@ -300,26 +336,15 @@ export namespace Portfolio {
         document.body.classList.remove("opaque-bg-color");
         main.classList.remove("blur");
 
-        // Perform fade-out animation if we're closing the popup entirely, but not if we're swiping between content
-        if (popupIsTransitioning()) {
-            console.debug("Popup is transitioning");
-            setPopupIsTransitioning(false);
-        }
-        else {
-            console.debug("Popup is closing");
-            toggleStyleForId("swipe-indicators", "display", false); // hide immediately to prevent fade-out animation
-            setPopupIsOpen(false);
-        }
-
         toggleStyleForId("closeX", "on", false)
 
         clearDataName(getPopup());
 
         Video.destroyAllPlayers();
 
-        console.debug(`Popup closed${wasPopState ? "" : " with back button"}`);
+        console.debug(`Popup closed${locationWasHashParam ? "" : " with back button"}`);
 
-        // Finish CSS animations before completely hiding
+        // Finish CSS animations before hiding
         window.setTimeout(() => {
             container.classList.remove("open");
             setInnerHTML(popupContent, "");
@@ -328,18 +353,23 @@ export namespace Portfolio {
                 Array.from(document.querySelectorAll(".timeline .timeline-events .timeline-event"))
                     .forEach(elem => elem.classList.remove("focused"))
             , 700);
-
         }, 300);
+    }
+
+    function returnPopupToOrigin() {
+        rotatePopup(0);
+        getPopup().style.left = "0";
+        getPopup().style.overflowY = "scroll";
     }
 
     // Jump straight from one content popup to another. "comingFrom" specifies where the new popup should enter the
     // screen from and values are "left", "center" (or null), and "right"
     function jumpTo(path: string, comingFrom: string = "center"): void {
-        setPopupIsTransitioning(true);
-        closePopup();
+        jumpingBetweenPopups = true;
+        transitionPopup();
 
         window.setTimeout(() => {
-            // Push the popup to it's new starting position
+            // Teleport the popup to its new starting position
             if (comingFrom === "left") {
                 getPopup().style.left = -window.screen.availWidth + "px";
                 rotatePopup(-MAX_POPUP_ROTATION);
@@ -350,8 +380,8 @@ export namespace Portfolio {
             }
 
             // Show the new content
-            retrieveAndShowContent(path);
-        }, 501);
+            retrieveContent(path, content => showContentInPopup(path, content));
+        }, 500); // wait for prior swipe animation to complete
     }
 
     // Jump to the content popup that comes sequentially before the open one (if present)
@@ -396,7 +426,7 @@ export namespace Portfolio {
 
     // Change the background color of the body to match the given path, if that path matches a timeline element
     function setBodyBackgroundColor(path: string): void {
-        // Previous color not removed in closePopup() because it needs time to fade from opaque to transparent
+        // Previous color not removed in transitionPopup() because it needs time to fade from opaque to transparent
         removeClassesStartingWith(document.body, "timeline-color-");
 
         const elem: HTMLElement | null = getTimelineElem(path);
@@ -411,7 +441,7 @@ export namespace Portfolio {
     // Desktop only
     // Only show the back and forward arrows if the content is for a timeline event. If it is, only show back if there's
     // previous content on the timeline and only show forward if there's more content.
-    function determineNavigationVisibility(path: string): void {
+    function determineDesktopNavVisibility(path: string): void {
         const elem: HTMLElement | null = getTimelineElem(path);
         if (elem) {
             document.getElementById("move-back")!.style.visibility = elem.previousElementSibling ? "visible" : "hidden";
@@ -421,6 +451,40 @@ export namespace Portfolio {
             document.getElementById("move-back")!.style.visibility = "hidden";
             document.getElementById("move-forward")!.style.visibility = "hidden";
         }
+    }
+
+    // If the popup is showing for any timeline element, add swipe indicator dots
+    function setupMobileNav(path: string, recreate: boolean = false): void {
+        getTimelinePaths().forEach(timelinePath => {
+            const dotDiv: HTMLElement = document.createElement("div");
+            dotDiv.classList.add("swipe-dot");
+            getSwipeIndicators().appendChild(dotDiv);
+        });
+    }
+
+    // If the popup is showing for a timeline element, highlight the corresponding swipe indicator dot
+    function setMobileNavPath(path: string): void {
+        const timelinePaths: string[] = getTimelinePaths();
+
+        if (timelinePaths.includes(path)) {
+            for (let i = 0; i < getSwipeIndicators().children.length; i++) {
+                toggleStyle(getSwipeIndicators().children[i], "embiggen", timelinePaths[i] == path)
+            }
+        }
+    }
+
+    function getTimelinePaths(): string[] {
+        return Array.from(document.querySelectorAll("#main .content .timeline-events .timeline-event"))
+            .map(elem => elem as HTMLElement)
+            .map(htmlElem => htmlElem.dataset.timelinePath || '');
+    }
+
+    function showingTimelineElemWithPrevious(): boolean {
+        return getCurrentTimelineElem()?.previousElementSibling !== null;
+    }
+
+    function showingTimelineElemWithNext(): boolean {
+        return getCurrentTimelineElem()?.nextElementSibling !== null;
     }
 
     function getTimelineElem(path: string): HTMLElement | null {
@@ -436,42 +500,6 @@ export namespace Portfolio {
             return getTimelineElem(path);
         }
         return null;
-    }
-
-    function setTimelineElemSwipeDots(path: string, recreate: boolean = false): void {
-        const swipeDotsContainer = document.getElementById("swipe-indicators")!;
-
-        if (path == null || recreate) {
-            clearChildren(swipeDotsContainer);
-        }
-
-        const timelinePaths: string[] =
-            Array.from(document.querySelectorAll("#main .content .timeline-events .timeline-event"))
-                .map(elem => elem as HTMLElement)
-                .map(htmlElem => htmlElem.dataset.timelinePath || '');
-
-        // If the popup is showing for a timeline element, add swipe indicator dots
-        if (timelinePaths.includes(path)) {
-            if (recreate) {
-                timelinePaths.forEach(timelinePath => {
-                    const dotDiv: HTMLElement = document.createElement("div");
-                    dotDiv.classList.add("swipe-dot");
-                    swipeDotsContainer.appendChild(dotDiv);
-                });
-            }
-
-            for (let i = 0; i < swipeDotsContainer.children.length; i++) {
-                toggleStyle(swipeDotsContainer.children[i], "embiggen", timelinePaths[i] == path)
-            }
-        }
-    }
-
-    function showingTimelineElemWithPrevious(): boolean {
-        return getCurrentTimelineElem()?.previousElementSibling !== null;
-    }
-
-    function showingTimelineElemWithNext(): boolean {
-        return getCurrentTimelineElem()?.nextElementSibling !== null;
     }
 
     function getPopup(): HTMLElement {
@@ -490,22 +518,31 @@ export namespace Portfolio {
         getPopup().style.transform = `rotate(${deg}deg) translateY(-50%)`;
     }
 
-    function popupIsTransitioning(): boolean {
-        return getPopup().classList.contains("transitioning");
+    function getSwipeIndicators(): HTMLElement {
+        return document.getElementById("swipe-indicators")!;
     }
 
-    function setPopupIsTransitioning(transitioning: boolean): void {
-        toggleStyle(getPopup(), "transitioning", transitioning);
+    function userIsSwiping(): boolean {
+        return getSwipeIndicators().classList.contains("on");
     }
 
     function setUserIsSwiping(swiping: boolean): void {
-        toggleStyleForId("swipe-indicators", "on", swiping);
-        toggleStyleForId("swipe-indicators", "off", !swiping);
-    }
-
-    // Returns true if hash path is not empty and not just "#"
-    function isPopupState(): boolean {
-        return hashPath().length > 1;
+        if (swiping) {
+            if (!userIsSwiping()) { // don't reset animation if already playing
+                toggleStyleForId("swipe-indicators", "on", true);
+                toggleStyleForId("swipe-indicators", "off", false);
+            }
+        }
+        else {
+            const lastSwipeEndAtCallTime = lastSwipeEndTime;
+            window.setTimeout(() => {
+                // if another swipe-start or swipe-end has occurred, ignore this one
+                if (lastSwipeEndAtCallTime == lastSwipeEndTime && lastSwipeEndTime > lastSwipeStartTime) {
+                    toggleStyleForId("swipe-indicators", "on", false);
+                    toggleStyleForId("swipe-indicators", "off", true);
+                }
+            }, 3000);
+        }
     }
 
     export function togglePasswordVisibility(container: HTMLElement): void {

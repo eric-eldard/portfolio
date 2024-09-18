@@ -193,6 +193,13 @@ function hashPath(): string {
 }
 
 /**
+ * @returns {boolean} true if hash path is not empty and not just "#"
+ */
+function locationIsHashPath(): boolean {
+    return hashPath().length > 1;
+}
+
+/**
  * Reloads the current window, sans the portion beginning with <code>#</code>
  */
 function reloadWithoutHash(): void {

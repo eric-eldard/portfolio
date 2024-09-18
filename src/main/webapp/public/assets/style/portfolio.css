@@ -57,9 +57,9 @@ label {
 
 #swipe-indicators {
     align-items: center;
-    background-color: rgba(0, 0, 0, .8);
-    border: 1px solid #fff;
+    background-color: rgba(160, 160, 160, .9);
     border-radius: 50px;
+    bottom: 85px;
     display: none;
     left: 50%;
     height: 18px;
@@ -67,9 +67,8 @@ label {
     opacity: 0;
     padding: 2px 10px;
     position: absolute;
-    top: 27px;
     transform: translateX(-50%);
-    width: 55%;
+    width: 50%;
     z-index: 10000;
 }
 
@@ -89,9 +88,8 @@ label {
 #swipe-indicators .swipe-dot {
     aspect-ratio: 1 / 1;
     background-color: #fff;
-    border: 1px solid #000;
     border-radius: 50%;
-    transition: width 1.5s;
+    transition: width 1s;
     width: 5px;
 }
 
