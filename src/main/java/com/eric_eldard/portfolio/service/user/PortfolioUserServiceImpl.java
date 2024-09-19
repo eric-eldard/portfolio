@@ -1,5 +1,7 @@
 package com.eric_eldard.portfolio.service.user;
 
+import static com.eric_eldard.portfolio.util.Constants.$;
+
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -71,7 +73,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
         String username = dto.getUsername().trim();
         if (portfolioUserRepo.existsByUsername(username))
         {
-            throw new IllegalArgumentException("A user with the username [" + username + "] already exists");
+            throw new IllegalArgumentException($."A user with the username [\{username}] already exists");
         }
 
         String hashedPassword = passwordEncoder.encode(dto.getPassword().trim());
@@ -94,7 +96,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     {
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException("Cannot delete user with id [" + id + "]; user not found"));
+                new IllegalArgumentException($."Cannot delete user with id [\{id}]; user not found"));
 
         portfolioUserRepo.delete(user);
         LOGGER.info("User [{}] deleted by [{}]", user.getUsername(), getRequesterUsername());
@@ -105,7 +107,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     {
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException("Cannot unlock user with id [" + id + "]; user not found"));
+                new IllegalArgumentException($."Cannot unlock user with id [\{id}]]; user not found"));
 
         user.setLockedOn(null);
         user.setFailedPasswordAttempts(0);
@@ -121,7 +123,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
 
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException("Cannot set password for user with id [" + id + "]; user not found"));
+                new IllegalArgumentException($."Cannot set password for user with id [\{id}]; user not found"));
 
         user.setPassword(passwordEncoder.encode(password.trim()));
         user.setFailedPasswordAttempts(0);
@@ -138,7 +140,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     {
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException("Cannot set access date for user with id [" + id + "]; user not found"));
+                new IllegalArgumentException($."Cannot set access date for user with id [\{id}]; user not found"));
 
         user.setAuthorizedUntil(date);
         user = portfolioUserRepo.save(user);
@@ -155,7 +157,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     {
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException("Cannot set infinite access for user id [" + id + "]; user not found"));
+                new IllegalArgumentException($."Cannot set infinite access for user id [\{id}]; user not found"));
 
         user.setAuthorizedUntil(null);
         user = portfolioUserRepo.save(user);
@@ -171,7 +173,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     {
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException("Cannot enable/disable user with id [" + id + "]; user not found"));
+                new IllegalArgumentException($."Cannot enable/disable user with id [\{id}]; user not found"));
 
         user.setEnabled(enabled);
         user = portfolioUserRepo.save(user);
@@ -188,7 +190,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     {
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException("Cannot promote/demote user with id [" + id + "]; user not found"));
+                new IllegalArgumentException($."Cannot promote/demote user with id [\{id}]; user not found"));
 
         user.setAdmin(isAdmin);
         user = portfolioUserRepo.save(user);
@@ -205,7 +207,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     {
         PortfolioUser user = findById(id)
             .orElseThrow(() -> new IllegalArgumentException(
-                "Cannot grant/remove authority [" + authority + "] for user with id [" + id + "]; user not found"));
+                $."Cannot grant/remove authority [\{authority}] for user with id [\{id}]; user not found"));
 
         if (user.hasAuthority(authority))
         {
@@ -232,8 +234,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     public UserDetails loadUserByUsername(@Nonnull String username) throws UsernameNotFoundException
     {
         PortfolioUser user = portfolioUserRepo.findWithAuthoritiesByUsername(username)
-            .orElseThrow(() ->
-                new UsernameNotFoundException("User with username [" + username + "] not found"));
+            .orElseThrow(() -> new UsernameNotFoundException($."User with username [\{username}] not found"));
         return user;
     }
 
@@ -243,7 +244,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
         PortfolioUser user = portfolioUserRepo.findFullyHydratedByUsername(username)
             .orElseThrow(() ->
                 new IllegalStateException(
-                    "Cannot find user [" + username + "] after they successfully logged in...highly unusual"));
+                    $."Cannot find user [\{username}] after they successfully logged in...highly unusual"));
 
         user.getLoginAttempts().add(LoginAttempt.makeSuccessfulAttempt(user));
         user.setFailedPasswordAttempts(0);

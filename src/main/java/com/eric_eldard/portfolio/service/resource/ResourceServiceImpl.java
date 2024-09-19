@@ -1,5 +1,7 @@
 package com.eric_eldard.portfolio.service.resource;
 
+import static com.eric_eldard.portfolio.util.Constants.$;
+
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +59,7 @@ public final class ResourceServiceImpl implements ResourceService
         }
         else
         {
-            throw new IllegalArgumentException("Cannot determine resource protocol: [" + path + "]");
+            throw new IllegalArgumentException($."Cannot determine resource protocol: [\{path}]");
         }
         return resource;
     }

@@ -1,5 +1,7 @@
 package com.eric_eldard.portfolio.service.auth;
 
+import static com.eric_eldard.portfolio.util.Constants.*;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 
@@ -32,7 +34,6 @@ import com.eric_eldard.portfolio.security.util.JwtUtil;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import com.eric_eldard.portfolio.service.user.SecurityContextService;
 import com.eric_eldard.portfolio.service.web.CookieService;
-import com.eric_eldard.portfolio.util.Constants;
 
 /**
  * A facade for specific auth-related functionalities in
@@ -138,15 +139,15 @@ public class AuthenticationServiceImpl implements AuthenticationService
         String username = user.getUsername();
         if (user.isAccountLocked())
         {
-            throw new LockedException("The account for user [" + username + "] is locked for too many failed attempts.");
+            throw new LockedException($."The account for user [\{username}] is locked for too many failed attempts.");
         }
         else if (!user.isEnabled())
         {
-            throw new DisabledException("The account for user [" + username + "] is permanently disabled.");
+            throw new DisabledException($."The account for user [\{username}] is permanently disabled.");
         }
         else if (!user.isAccountNonExpired())
         {
-            throw new AccountExpiredException("The account for user [" + username + "] has expired.");
+            throw new AccountExpiredException($."The account for user [\{username}] has expired.");
         }
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
@@ -163,14 +164,14 @@ public class AuthenticationServiceImpl implements AuthenticationService
     @Override
     public void setAuthTokenCookie(String token, HttpServletResponse response)
     {
-        Cookie tokenCookie = cookieService.makePersistentCookie(Constants.JWT_COOKIE_NAME, token, jwtTtlSeconds);
+        Cookie tokenCookie = cookieService.makePersistentCookie(JWT_COOKIE_NAME, token, jwtTtlSeconds);
         response.addCookie(tokenCookie);
     }
 
     @Override
     public void logUserOut(HttpServletResponse response)
     {
-        response.addCookie(cookieService.makeExpiredCookie(Constants.JWT_COOKIE_NAME));
-        response.addCookie(cookieService.makeExpiredCookie(Constants.SESSION_COOKIE_NAME));
+        response.addCookie(cookieService.makeExpiredCookie(JWT_COOKIE_NAME));
+        response.addCookie(cookieService.makeExpiredCookie(SESSION_COOKIE_NAME));
     }
 }
