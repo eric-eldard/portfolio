@@ -203,7 +203,7 @@ export namespace Portfolio {
             window.setTimeout(() => {
                 toggleStyleForId("swipe-indicators", "display", true);
                 setUserIsSwiping(true);
-            }, 500); // wait till popup is fully open to flash swipe indicators
+            }, 300); // wait till popup is fully open to flash swipe indicators
         });
     }
 
@@ -284,13 +284,13 @@ export namespace Portfolio {
             history.pushState({ popupStatus : "open"}, "", hashPath);
             console.debug(`Popup %c${hashPath}%c opened and added to history`, "color: blue", "color: unset");
 
-            window.setTimeout(() => {
-                getPopup().scrollTop = 0;
-                returnPopupToOrigin();
-                jumpingBetweenPopups = false;
-                historyPoppedProgrammatically = false;
-            }, 400); // Buffer time for loading before calling the popup back to center screen
-        }, 100); // Buffer time for animations
+            // Now that new content is loaded and set in the popup, recall it to the center of the screen
+            getPopup().scrollTop = 0;
+            returnPopupToOrigin();
+
+            jumpingBetweenPopups = false;
+            historyPoppedProgrammatically = false;
+        }, 100); // Buffer time for background animations
 
         setUserIsSwiping(false);
     }
@@ -541,7 +541,7 @@ export namespace Portfolio {
                     toggleStyleForId("swipe-indicators", "on", false);
                     toggleStyleForId("swipe-indicators", "off", true);
                 }
-            }, 3000);
+            }, 2500);
         }
     }
 

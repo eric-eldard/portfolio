@@ -32,7 +32,7 @@ json=`aws secretsmanager get-secret-value --secret-id apiVideo --query SecretStr
 export API_VIDEO_KEY=`echo $json | jq -r ".apiKey"`
 
 printf "Starting ${YELLOW}${ARTIFACT}${RESET}...\n"
-nohup java -jar ${ARTIFACT} > logs/output.log 2>&1 &
+nohup java --enable-preview -jar ${ARTIFACT} > logs/output.log 2>&1 &
 
 printf "\n${BOLD_GREEN}Portfolio app has started.${RESET}\n"
 printf "It may take up to ${WHITE}30 seconds for Spring${RESET} to serve requests\n\n\n"

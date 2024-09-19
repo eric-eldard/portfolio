@@ -27,7 +27,7 @@
     to roll out new modules until I left the company.
 </p>
 <p class="disclaimer">
-    [Modules with proprietary info have been removed]
+    [Modules with proprietary info removed]
 </p>
 <jsp:include page="../widgets/embedded-iframe.jsp">
     <jsp:param name="id" value="mtc"/>
