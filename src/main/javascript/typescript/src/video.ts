@@ -4,11 +4,12 @@ import { PlayerSdk } from "@api.video/player-sdk";
  * Functions for orchestrating iframes containing api.video videos
  */
 export namespace Video {
-    const registeredPlayers = new Map<PlayerSdk, string>();
     const colorDestroyed: string = "\x1b[31m";
     const colorNew:       string = "\x1b[32m";
     const colorPaused:    string = "\x1b[33m";
     const colorPlaying:   string = "\x1b[35m";
+
+    const registeredPlayers = new Map<PlayerSdk, string>();
 
     export function pausePlayer(player: PlayerSdk): void {
         player.getPlaying(isPlaying => {
@@ -28,19 +29,16 @@ export namespace Video {
         });
     }
 
-    export function initPlayer(wrapperId: string): void {
-        const playerId: string = `${wrapperId}-player`;
-        const playerElem = document.querySelector(`#${wrapperId} > iframe:first-of-type`);
+    export function initPlayer(wrapperId: string, videoId: string, token: string): void {
+        const player = new PlayerSdk(`#${wrapperId}`, {
+            id: videoId,
+            token: token
+        });
 
-        if (playerElem == null) {
-            throw new Error(`Cannot find video player wrapper ID [${wrapperId}]`);
-        }
-
-        playerElem.id = playerId;
-
-        const player = new PlayerSdk(`#${playerId}`, { id: playerId });
         player.addEventListener("play", () => pauseOtherPlayers(player));
 
+        const playerId: string = `#${wrapperId}-player`;
+        document.querySelector(`#${wrapperId} > iframe`)!.id = playerId;
         registeredPlayers.set(player, playerId);
 
         console.debug(`Video player initialized: ${colorNew}${playerId}`);
@@ -59,7 +57,7 @@ export namespace Video {
         const playerIds: Array<string> = [];
         for (let [player, playerId] of registeredPlayers) {
             await player.getPlaying() ?
-                playerIds.push(`${colorPlaying}${playerId} (Playing)`) :
+                playerIds.push(`${colorPlaying}${playerId} (playing)`) :
                 playerIds.push(`${colorPaused}${playerId}`);
         }
         console.info(`Registered video players:\n\t${playerIds.join("\n\t")}`);

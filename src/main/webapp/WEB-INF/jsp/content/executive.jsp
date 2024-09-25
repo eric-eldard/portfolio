@@ -52,8 +52,10 @@
     Here's an example from a set of videos I did on being an IntelliJ power user.
 </p>
 <jsp:include page="../widgets/video-player.jsp">
-    <jsp:param name="id" value="intellij-postfix-video"/>
-    <jsp:param name="iframe" value="${intellijPostfix}"/>
+    <jsp:param name="wrapperId" value="intellij-postfix-video"/>
+    <jsp:param name="videoId"   value="${INTELLIJ_POSTFIX_VIDEO_ID}"/>
+    <jsp:param name="token"     value="${INTELLIJ_POSTFIX_VIDEO_TOKEN}"/>
+    <jsp:param name="error"     value="${INTELLIJ_POSTFIX_VIDEO_ERROR}"/>
 </jsp:include>
 
 <hr>
@@ -75,6 +77,8 @@
     engineers' hard work and enthusiasm with the whole company.
 </p>
 <jsp:include page="../widgets/video-player.jsp">
-    <jsp:param name="id" value="hackathon-video"/>
-    <jsp:param name="iframe" value="${hackathon}"/>
+    <jsp:param name="wrapperId" value="hackathon-video"/>
+    <jsp:param name="videoId"   value="${HACKATHON_VIDEO_ID}"/>
+    <jsp:param name="token"     value="${HACKATHON_VIDEO_TOKEN}"/>
+    <jsp:param name="error"     value="${HACKATHON_VIDEO_ERROR}"/>
 </jsp:include>

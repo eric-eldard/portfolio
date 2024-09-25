@@ -42,8 +42,10 @@
 </jsp:include>
 
 <jsp:include page="../widgets/video-player.jsp">
-    <jsp:param name="id" value="brazenite-gpt-video"/>
-    <jsp:param name="iframe" value="${brazeniteGpt}"/>
+    <jsp:param name="wrapperId" value="brazenite-gpt-video"/>
+    <jsp:param name="videoId"   value="${BRAZENITE_GPT_VIDEO_ID}"/>
+    <jsp:param name="token"     value="${BRAZENITE_GPT_VIDEO_TOKEN}"/>
+    <jsp:param name="error"     value="${BRAZENITE_GPT_VIDEO_ERROR}"/>
 </jsp:include>
 
 <hr>
@@ -70,8 +72,10 @@
 </jsp:include>
 
 <jsp:include page="../widgets/video-player.jsp">
-    <jsp:param name="id" value="tree-of-usages-video"/>
-    <jsp:param name="iframe" value="${treeOfUsages}"/>
+    <jsp:param name="wrapperId" value="tree-of-usages-video"/>
+    <jsp:param name="videoId"   value="${TREE_OF_USAGES_VIDEO_ID}"/>
+    <jsp:param name="token"     value="${TREE_OF_USAGES_VIDEO_TOKEN}"/>
+    <jsp:param name="error"     value="${TREE_OF_USAGES_VIDEO_ERROR}"/>
 </jsp:include>
 
 <hr>

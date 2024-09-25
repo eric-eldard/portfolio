@@ -63,28 +63,16 @@ public class PortfolioController
     @GetMapping("/content/executive")
     public String getExecutiveContent(Model model) throws ApiException
     {
-        model.addAttribute(
-            "intellijPostfix",
-            retrieveVideoIframe(EmbeddableVideo.INTELLIJ_POSTFIX)
-        );
-        model.addAttribute(
-            "hackathon",
-            retrieveVideoIframe(EmbeddableVideo.HACKATHON)
-        );
+        addVideoAttributes(model, EmbeddableVideo.INTELLIJ_POSTFIX);
+        addVideoAttributes(model, EmbeddableVideo.HACKATHON);
         return "content/executive";
     }
 
     @GetMapping("/content/software-engineer")
     public String getSoftwareEngineerContent(Model model) throws ApiException
     {
-        model.addAttribute(
-            "brazeniteGpt",
-            retrieveVideoIframe(EmbeddableVideo.BRAZENITE_GPT)
-        );
-        model.addAttribute(
-            "treeOfUsages",
-            retrieveVideoIframe(EmbeddableVideo.TREE_OF_USAGES)
-        );
+        addVideoAttributes(model, EmbeddableVideo.BRAZENITE_GPT);
+        addVideoAttributes(model, EmbeddableVideo.TREE_OF_USAGES);
         return "content/software-engineer";
     }
 
@@ -98,26 +86,20 @@ public class PortfolioController
     }
 
     /**
-     * Get a pre-baked iframe for the given video from the video vendor
+     * Adds the video's id, and a token for viewing it, to the model
      */
-    private String retrieveVideoIframe(EmbeddableVideo embeddableVideo)
+    private void addVideoAttributes(Model model, EmbeddableVideo video)
     {
-        String iframe;
+        model.addAttribute(video + "_VIDEO_ID", video.getId());
         try
         {
-            iframe = videoService.getVideoIFrame(embeddableVideo);
+            model.addAttribute(video + "_VIDEO_TOKEN", videoService.getAccessToken(video));
         }
         catch (ApiException ex)
         {
-            LOGGER.error(
-                "Unable to retrieve video [{}] for reason [{}]",
-                embeddableVideo, ex.getMessage()
-            );
-            iframe = """
-                <div class="mono">An error prevented the retrieval of this video</div>
-                """;
+            LOGGER.error("Unable to retrieve video [{}] for reason [{}]", video, ex.getMessage());
+            model.addAttribute(video + "_VIDEO_ERROR", "An error prevented the retrieval of this video");
         }
-        return iframe;
     }
 
     /**

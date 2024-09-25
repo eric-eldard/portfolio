@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApiVideoService implements EmbeddableVideoService
 {
-    private final ApiVideoClient apiVideoClient;
+    private final String apiVideoKey;
+    private final Environment apiVideoEnv;
 
     public ApiVideoService(@Value("${apiVideo.key}") String apiVideoKey,
                            @Value("${apiVideo.env:PRODUCTION}") Environment apiVideoEnv
@@ -27,18 +28,30 @@ public class ApiVideoService implements EmbeddableVideoService
         {
             throw new IllegalStateException("Cannot start api.video service without a value for property apiVideo.key");
         }
-        apiVideoClient = new ApiVideoClient(apiVideoKey, apiVideoEnv);
+        this.apiVideoKey = apiVideoKey;
+        this.apiVideoEnv = apiVideoEnv;
     }
 
     @Override
-    public String getVideoIFrame(EmbeddableVideo embeddableVideo) throws ApiException
+    public String getAccessToken(EmbeddableVideo embeddableVideo) throws ApiException
     {
         String videoId = embeddableVideo.getId();
-        Video video = apiVideoClient.videos().get(videoId);
-        if (video == null || video.getAssets() == null)
+        Video video = makeClient().videos().get(videoId);
+        if (video == null || video.getAssets() == null || video.getAssets().getPlayer() == null)
         {
-            throw new ApiException($."null \{video == null ? "video" : "assets"} retrieved for video \{videoId}");
+            throw new ApiException($."null \{video == null ? "video" : "player"} retrieved for video \{videoId}");
         }
-        return video.getAssets().getIframe();
+        String uri = video.getAssets().getPlayer().toString();
+        return uri.substring(uri.indexOf("token=") + "token=".length());
+    }
+
+    /**
+     * Though the underlying {@link okhttp3.OkHttpClient} is thread safe and actually recommends reusing instances,
+     * for some reason api.video recommends creating an instance of ApiVideoClient <i>per thread</i>
+     * @see <a href="https://github.com/apivideo/api.video-java-client/blob/main/README.md#recommendation">api.video Java API client</a>
+     */
+    private ApiVideoClient makeClient()
+    {
+        return new ApiVideoClient(apiVideoKey, apiVideoEnv);
     }
 }

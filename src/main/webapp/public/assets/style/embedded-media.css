@@ -57,6 +57,16 @@
     border-radius: 10px;
 }
 
+.embedded-video iframe {
+    border: 0;
+}
+
+.embedded-video-error {
+    font-style: italic;
+    padding: 10px 0;
+    text-align: center;
+}
+
 /* Multi-PDF viewer */
 .multi-doc {
     display: flex;

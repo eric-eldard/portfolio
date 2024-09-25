@@ -4,5 +4,5 @@ import video.api.client.api.ApiException;
 
 public interface EmbeddableVideoService
 {
-    String getVideoIFrame(EmbeddableVideo embeddableVideo)  throws ApiException;
+    String getAccessToken(EmbeddableVideo embeddableVideo) throws ApiException;
 }
