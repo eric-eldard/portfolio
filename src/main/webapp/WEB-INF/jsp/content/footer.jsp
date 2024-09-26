@@ -8,7 +8,7 @@
     <a href="https://github.com/eric-eldard" target="_blank" class="github" title="Check out my GitHub">
         <img src="/public/assets/images/third-party/github.png" alt="GitHub">
     </a>
-    <a href="https://www.linkedin.com/in/ericeldard/" target="_blank" title="Visit me on LinkedIn" class="linkedin">
+    <a href="https://www.linkedin.com/in/eric-eldard" target="_blank" title="Visit me on LinkedIn" class="linkedin">
         <img src="/public/assets/images/third-party/linkedin.png" alt="LinkedIn">
     </a>
     <a href="/" id="footer-home-link" title="Got to home page">

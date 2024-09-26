@@ -19,7 +19,7 @@
                         <b>Sign in to see my work!</b>
                     </a>
 
-                    <a href="https://www.linkedin.com/in/ericeldard/" target="_blank" class="link-card connect-li">
+                    <a href="https://www.linkedin.com/in/eric-eldard" target="_blank" class="link-card connect-li">
                         Don't have a  password?
                         <br>
                         <b>
