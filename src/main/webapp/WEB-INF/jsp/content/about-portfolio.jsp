@@ -2,7 +2,7 @@
 <p>
     This portfolio is an app I built myself. It showcases some of my tried-and-true technologies, like <b>AWS</b> and
     <b>Spring Core/Data/Security</b>, as well as some new ones for me, like <b>Spring Boot</b> and <b>TypeScript</b>.
-    It features a mobile-friendly UI created from scratch, my own
+    It features a mobile-responsive UI created from scratch, my own
     <jsp:include page="../widgets/link-out.jsp">
         <jsp:param name="text" value="JavaScript swipe-detection library"/>
         <jsp:param name="href" value="https://github.com/eric-eldard/swipe-events.js"/>
