@@ -37,9 +37,9 @@
     [Partner info anonymized]
 </p>
 <jsp:include page="../widgets/embedded-doc-solo.jsp">
-    <jsp:param name="id" value="partner-doc"/>
-    <jsp:param name="path" value="Partner-Integration.pdf"/>
-    <jsp:param name="backupImg" value="Partner-Integration.png"/>
+    <jsp:param name="id"          value="partner-doc"/>
+    <jsp:param name="path"        value="Partner-Integration.pdf"/>
+    <jsp:param name="backupImg"   value="Partner-Integration.png"/>
     <jsp:param name="description" value="Partner Integration Sequence Diagram"/>
 </jsp:include>
 
@@ -58,10 +58,11 @@
     developers@brazen.com, assisting our customers' tech folks as they built their integrations. I love building tools
     that other devs will use to build cool stuff!
 </p>
-<jsp:include page="../widgets/screenshot-solo.jsp" >
-    <jsp:param name="path" value="brazen-dev-resources.png"/>
+<jsp:include page="../widgets/screenshot-solo.jsp">
+    <jsp:param name="path"        value="brazen-dev-resources.png"/>
     <jsp:param name="description" value="Brazen Developer Portal"/>
-    <jsp:param name="href" value="https://developers.brazen.com/"/>
+    <jsp:param name="href"        value="https://developers.brazen.com/"/>
+    <jsp:param name="classes"     value="new-tab"/>
 </jsp:include>
 
 <hr>
@@ -73,8 +74,8 @@
     points in the Brazen candidate journey would provide the highest value for integration.
 </p>
 <jsp:include page="../widgets/embedded-doc-solo.jsp">
-    <jsp:param name="id" value="dfd-doc"/>
-    <jsp:param name="path" value="Candidate-and-Job-Data-Flows.pdf"/>
-    <jsp:param name="backupImg" value="Candidate-and-Job-Data-Flows.png"/>
+    <jsp:param name="id"          value="dfd-doc"/>
+    <jsp:param name="path"        value="Candidate-and-Job-Data-Flows.pdf"/>
+    <jsp:param name="backupImg"   value="Candidate-and-Job-Data-Flows.png"/>
     <jsp:param name="description" value="Candidate and Job Data Flow Diagram"/>
 </jsp:include>

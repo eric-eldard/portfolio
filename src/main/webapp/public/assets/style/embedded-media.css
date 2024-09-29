@@ -48,6 +48,7 @@
     width: fit-content;
 }
 
+.new-tab.screenshot a:after,
 .embedded-iframe .screenshot a:after {
     content: "Open in new tab";
 }

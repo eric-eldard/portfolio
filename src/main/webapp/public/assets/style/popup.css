@@ -46,13 +46,10 @@
 	text-align: center;
 }
 
-#popup h2 {
+#popup h2,
+#popup h3 {
 	margin-top: 36px;
 	text-align: center;
-}
-
-#popup h3 {
-    text-align: center;
 }
 
 #popup hr {

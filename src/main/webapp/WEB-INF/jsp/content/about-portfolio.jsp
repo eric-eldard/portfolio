@@ -26,23 +26,23 @@
 </jsp:include>
 
 <h3>Cloud Architecture Diagram</h3>
-<jsp:include page="../widgets/screenshot-solo.jsp" >
-    <jsp:param name="path" value="portfolio-hosting-infra.png"/>
+<jsp:include page="../widgets/screenshot-solo.jsp">
+    <jsp:param name="path"        value="portfolio-hosting-infra.png"/>
     <jsp:param name="description" value="Portfolio Hosting Infrastructure diagram"/>
 </jsp:include>
 
 <h3>Mobile-Responsive Design</h3>
 <jsp:include page="../widgets/video-player.jsp">
     <jsp:param name="wrapperId" value="responsive-design-video"/>
-    <jsp:param name="classes"   value="aspect-1680x1080"/>
+    <jsp:param name="classes"   value="aspect-1680x1080 white-border"/>
     <jsp:param name="videoId"   value="${RESPONSIVE_DESIGN_VIDEO_ID}"/>
     <jsp:param name="token"     value="${RESPONSIVE_DESIGN_VIDEO_TOKEN}"/>
     <jsp:param name="error"     value="${RESPONSIVE_DESIGN_VIDEO_ERROR}"/>
 </jsp:include>
 
 <h3>Admin-only User Management</h3>
-<jsp:include page="../widgets/screenshot-solo.jsp" >
-    <jsp:param name="path" value="portfolio-user-management.png"/>
+<jsp:include page="../widgets/screenshot-solo.jsp">
+    <jsp:param name="path"        value="portfolio-user-management.png"/>
     <jsp:param name="description" value="Admin-only user management features"/>
-    <jsp:param name="classes" value="white-border"/>
+    <jsp:param name="classes"     value="white-border"/>
 </jsp:include>

@@ -91,7 +91,7 @@
     can see exactly when my changes were released to production.
 </p>
 
-<jsp:include page="../widgets/screenshot-solo.jsp" >
-    <jsp:param name="path" value="plugin-db-improvements.png"/>
+<jsp:include page="../widgets/screenshot-solo.jsp">
+    <jsp:param name="path"        value="plugin-db-improvements.png"/>
     <jsp:param name="description" value="Plugin performance improvement graphs"/>
 </jsp:include>

@@ -32,8 +32,8 @@
     their most critical endpoints and pushing metrics into Google BigQuery. The teams then built Sigma dashboards on top
     of that data, allowing them to begin their standups with a health check of their products.
 </p>
-<jsp:include page="../widgets/screenshot-solo.jsp" >
-    <jsp:param name="path" value="Operational-Success-Flow.png"/>
+<jsp:include page="../widgets/screenshot-solo.jsp">
+    <jsp:param name="path"        value="Operational-Success-Flow.png"/>
     <jsp:param name="description" value="Flowchart for Operational Success Criteria initiative"/>
 </jsp:include>
 
