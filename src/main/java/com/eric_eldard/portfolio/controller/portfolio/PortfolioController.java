@@ -61,7 +61,7 @@ public class PortfolioController
     }
 
     @GetMapping("/content/executive")
-    public String getExecutiveContent(Model model) throws ApiException
+    public String getExecutiveContent(Model model)
     {
         addVideoAttributes(model, EmbeddableVideo.INTELLIJ_POSTFIX);
         addVideoAttributes(model, EmbeddableVideo.HACKATHON);
@@ -69,11 +69,18 @@ public class PortfolioController
     }
 
     @GetMapping("/content/software-engineer")
-    public String getSoftwareEngineerContent(Model model) throws ApiException
+    public String getSoftwareEngineerContent(Model model)
     {
         addVideoAttributes(model, EmbeddableVideo.BRAZENITE_GPT);
         addVideoAttributes(model, EmbeddableVideo.TREE_OF_USAGES);
         return "content/software-engineer";
+    }
+
+    @GetMapping("/content/about-portfolio")
+    public String getAboutPortfolioContent(Model model)
+    {
+        addVideoAttributes(model, EmbeddableVideo.RESPONSIVE_DESIGN);
+        return "content/about-portfolio";
     }
 
     /**

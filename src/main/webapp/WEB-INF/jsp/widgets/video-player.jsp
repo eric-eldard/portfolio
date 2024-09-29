@@ -10,6 +10,6 @@
     <c:otherwise>
         <div class="embedded-video-error">
             ${param.error}
-        </div>div>
+        </div>
     </c:otherwise>
 </c:choose>

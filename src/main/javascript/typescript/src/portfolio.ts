@@ -11,6 +11,10 @@ export namespace Portfolio {
     const MAX_POPUP_ROTATION: number = 35;
     const HASH_PATH_KEY: string = "hashPath";
 
+    // Detects when videos have scrolled off screen in order to pause them
+    let videoPlayerObserver: IntersectionObserver = createVideoPlayerObserver();
+    document.addEventListener("videoPlayerAdded", trackVideoPlayer as EventListener);
+
     let lastSwipeEventTime: number;
     let lastSwipeStartTime: number;
     let lastSwipeEndTime: number;
@@ -340,6 +344,7 @@ export namespace Portfolio {
 
         clearDataName(getPopup());
 
+        videoPlayerObserver.disconnect();
         Video.destroyAllPlayers();
 
         console.debug(`Popup closed${locationWasHashParam ? "" : " with back button"}`);
@@ -543,6 +548,38 @@ export namespace Portfolio {
                 }
             }, 2500);
         }
+    }
+
+    function createVideoPlayerObserver(): IntersectionObserver {
+        const observerOptions = {
+            root: getPopup(),
+            rootMargin: "0px",
+            threshold: 0,
+        };
+
+        const pauseOffscreenPlayers = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry: IntersectionObserverEntry) => {
+                const playerId = entry.target.id;
+                const playerOffscreen: boolean = !entry.isIntersecting;
+                console.debug(
+                    `videoPlayerObserver: %c${playerId}%c is ${playerOffscreen ? "offscreen" : "onscreen"}`,
+                    "font-style: italic", "font-style: unset"
+                );
+                if (playerOffscreen) {
+                    Video.pausePlayer(playerId);
+                }
+            });
+        };
+
+        return new IntersectionObserver(pauseOffscreenPlayers, observerOptions);
+    }
+
+    function trackVideoPlayer(playerAddedEvent: Video.PlayerAddedEvent) {
+        const iframe: HTMLIFrameElement = playerAddedEvent.detail;
+        window.setTimeout(() => {
+            videoPlayerObserver.observe(iframe);
+            console.debug(`videoPlayerObserver is tracking %c${iframe.id}`, "font-style: italic");
+        }, 500); // delay tracking long enough for element to render; avoids initial false-positive "offscreen" message
     }
 
     export function togglePasswordVisibility(container: HTMLElement): void {
