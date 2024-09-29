@@ -1,7 +1,7 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <c:choose>
     <c:when test="${empty param.error}">
-        <div id="${param.wrapperId}" class="embedded-video">
+        <div id="${param.wrapperId}" class="embedded-video ${param.classes}">
             <script>
                 Video.initPlayer("${param.wrapperId}", "${param.videoId}", "${param.token}");
             </script>

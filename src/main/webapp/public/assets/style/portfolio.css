@@ -98,6 +98,10 @@ label {
 }
 
 
+.aspect-1680x1080 {
+    aspect-ratio: 1680 / 1080;
+}
+
 .blur {
     filter: blur(3px);
 }
