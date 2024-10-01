@@ -27,10 +27,10 @@
         <td>${param.persistence}</td>
     </tr>
     </c:if>
-    <c:if test="${param.database ne null}">
+    <c:if test="${param.storage ne null}">
         <tr>
-            <td>Database:</td>
-            <td>${param.database}</td>
+            <td>Storage:</td>
+            <td>${param.storage}</td>
         </tr>
     </c:if>
     <c:if test="${param.caching ne null}">
@@ -47,14 +47,20 @@
     </c:if>
     <c:if test="${param.build ne null}">
     <tr>
-        <td>Build Automation:</td>
+        <td>Build<span class="mobile-hidden">&nbsp;Automation</span>:</td>
         <td>${param.build}</td>
     </tr>
     </c:if>
-    <c:if test="${param.env ne null}">
+    <c:if test="${param.deployment ne null}">
     <tr>
-        <td>Environment:</td>
-        <td>${param.env}</td>
+        <td>Deployment:</td>
+        <td>${param.deployment}</td>
     </tr>
+    </c:if>
+    <c:if test="${param.usages ne null}">
+        <tr>
+            <td>Usages:</td>
+            <td>${param.usages}</td>
+        </tr>
     </c:if>
 </table>

@@ -65,6 +65,10 @@
 	text-align: justify;
 }
 
+#popup tt {
+    font-size: 13px;
+}
+
 #popup .github, #popup .github:hover {
     color: white;
 }

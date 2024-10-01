@@ -9,8 +9,8 @@
     <jsp:param name="frontend" value="JSP 2 w/ Scriplets, CSS2, JavaScript"/>
     <jsp:param name="backend" value="Java 6 Servlet"/>
     <jsp:param name="persistence" value="JDBC"/>
-    <jsp:param name="database" value="Oracle Database 10g XE"/>
-    <jsp:param name="env" value="Oracle WebLogic 11g"/>
+    <jsp:param name="storage" value="Oracle Database 10g XE"/>
+    <jsp:param name="deployment" value="Oracle WebLogic 11g"/>
 </jsp:include>
 
 <jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
@@ -34,10 +34,10 @@
     <jsp:param name="frontend" value="JSP 2 w/ JSTL, CSS2, JavaScript"/>
     <jsp:param name="backend" value="Java 6, Spring 3, Struts 1 w/ Tiles, EJB 2"/>
     <jsp:param name="persistence" value="Hibernate"/>
-    <jsp:param name="database" value="Oracle Database 10g XE"/>
+    <jsp:param name="storage" value="Oracle Database 10g XE"/>
     <jsp:param name="versioning" value="Subversion"/>
     <jsp:param name="build" value="Ant"/>
-    <jsp:param name="env" value="Oracle WebLogic 11g"/>
+    <jsp:param name="deployment" value="Oracle WebLogic 11g"/>
 </jsp:include>
 
 <jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
