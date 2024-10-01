@@ -25,9 +25,9 @@
 <h3>Operational Success Criteria</h3>
 <p>
     Brazen Engineering always had good alarms for things that absolutely couldn't fail, like a server going down. But
-    there are situations for which failure is expected <i>some</i> of the time and constant alarms would be very noisy.
-    However, there's a big difference between <i>10% failed logins</i> and <i>90% failed logins</i>; at some point, you
-    cross the threshold into <i>we need to know</i> territory. After identifying Mean Time to Detect as our most lagging
+    there are situations for which failure is expected <i>some</i> of the time, and frequent alarms would be very noisy.
+    However, there's a big difference between <i>10% failed logins</i> and <i>90% failed logins</i>; at some point, the
+    threshold is crossed into <i>we need to know</i> territory. After identifying Mean Time to Detect as our most lagging
     process metric, I created the Operational Success Criteria program. This saw our engineering teams instrumenting
     their most critical endpoints and pushing metrics into Google BigQuery. The teams then built Sigma dashboards on top
     of that data, allowing them to begin their standups with a health check of their products.
