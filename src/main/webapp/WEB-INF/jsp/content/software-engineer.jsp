@@ -9,10 +9,10 @@
     features. The Brazen software would host millions of users across tens-of-thousands of events.
 </p>
 <p>
-    I started out in a junior Java developer role with Brazen, became lead for our lone Scrum team, and by the time
+    I started out in a junior Java developer role with Brazen, became the lead for our lone Scrum team, and by the time
     Brazen was at its largest, I was Vice President of Engineering over three agile teams. In 2023, all of our hard work
     paid off when Brazen was acquired into the Radancy Talent Cloud. In 2024, I took over all of Brazen Engineering,
-    adding QA, DevOps, and InfoSec to my teams.
+    adding QA, DevOps, InfoSec, and Tier 2 Support to my teams.
 </p>
 <p>
     Brazen Engineering was a place to learn and try new things, and engineers grew very quickly there. I often estimated
