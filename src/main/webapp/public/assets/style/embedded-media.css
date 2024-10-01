@@ -18,10 +18,6 @@
     width: 100%;
 }
 
-.embedded-doc .iframe:after {
-    display: none; /* don't show "iframe" label over pdf doc viewer */
-}
-
 .embedded-doc .iframe div,
 .embedded-doc .iframe div iframe,
 .embedded-iframe .iframe div,
@@ -31,14 +27,6 @@
     width: 100%;
 }
 
-.embedded-doc .iframe div:after {
-	content: "PDF Viewer";
-}
-
-.embedded-doc .screenshot a:after {
-    content: "Open PDF";
-}
-
 .embedded-iframe {
     width: fit-content;
 }
@@ -46,11 +34,6 @@
 .embedded-iframe .iframe {
     display: none;
     width: fit-content;
-}
-
-.new-tab.screenshot a:after,
-.embedded-iframe .screenshot a:after {
-    content: "Open in new tab";
 }
 
 .embedded-video {
