@@ -211,6 +211,7 @@ label {
 
 .mono {
     font-family: Consolas, monospace;
+    font-size: smaller;
 }
 
 .password {

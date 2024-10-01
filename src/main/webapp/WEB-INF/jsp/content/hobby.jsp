@@ -44,10 +44,14 @@
     }
 
     #steganos-usages {
-        left: -22px;
+        left: -23px;
         margin-bottom: -16px;
         position: relative;
         top: -14px;
+    }
+
+    .chrome-mobile-shim #steganos-usages {
+        left: -28px;
     }
 
     @media screen and (min-width: 800px) {
@@ -99,8 +103,8 @@
     <jsp:param name="build" value="Maven"/>
     <jsp:param name="usages" value="
         <ul id='steganos-usages'>
-            <li>run <tt>steganos-cmd-line</tt> jar from a terminal</li>
-            <li>add <tt>steganos-core</tt> jar as a dependency</li>
+            <li>run <span class='mono'>steganos-cmd-line</span> jar from a terminal</li>
+            <li>add <span class='mono'>steganos-core</span> jar as a dependency</li>
         </ul>
     "/>
 </jsp:include>
