@@ -44,7 +44,12 @@ export namespace Video {
             token: token
         });
 
-        player.addEventListener("play", () => pauseOtherPlayers(playerId));
+        player.addEventListener("play", () => {
+            wrapper.classList.add("playing");
+            pauseOtherPlayers(playerId);
+        });
+
+        player.addEventListener("pause", () => wrapper.classList.remove("playing"));
 
         const iframe: HTMLIFrameElement = wrapper.querySelector("iframe:first-of-type")!;
         iframe.id = playerId;

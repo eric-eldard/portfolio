@@ -15,7 +15,7 @@
     }
 
     #mtg .screenshot {
-        /* No backup screenshot; we'll just hide the frame when it doesn't fit */
+        /* No backup screenshot; we'll just hide the frame when the content doesn't fit */
         display: none !important;
     }
 
