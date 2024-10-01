@@ -43,6 +43,13 @@
         object-position: 0 1%;
     }
 
+    #steganos-usages {
+        left: -22px;
+        margin-bottom: -16px;
+        position: relative;
+        top: -14px;
+    }
+
     @media screen and (min-width: 800px) {
         #cycling-font-colors {
             border-radius: 10px;
@@ -90,7 +97,12 @@
     <jsp:param name="language" value="Java 11"/>
     <jsp:param name="versioning" value="GitHub"/>
     <jsp:param name="build" value="Maven"/>
-    <jsp:param name="env" value="Command line or incorporate Core jar as a dependency"/>
+    <jsp:param name="usages" value="
+        <ul id='steganos-usages'>
+            <li>run <tt>steganos-cmd-line</tt> jar from a terminal</li>
+            <li>add <tt>steganos-core</tt> jar as a dependency</li>
+        </ul>
+    "/>
 </jsp:include>
 <div id="steganos-example" class="screenshot solo">
     <a href="https://github.com/eric-eldard/steganos?tab=readme-ov-file#examples" target="_blank">

@@ -19,10 +19,10 @@
     <jsp:param name="frontend" value="JSP 3 w/ JSTL, CSS3, TypeScript"/>
     <jsp:param name="backend" value="Java 21, Spring Boot 3, Spring Web, Spring Security"/>
     <jsp:param name="persistence" value="Spring Data JPA"/>
-    <jsp:param name="database" value="MySQL 8 in Amazon RDS"/>
+    <jsp:param name="storage" value="MySQL 8 in Amazon RDS"/>
     <jsp:param name="versioning" value="GitHub"/>
     <jsp:param name="build" value="Maven"/>
-    <jsp:param name="env" value="Amazon EC2"/>
+    <jsp:param name="deployment" value="Amazon EC2"/>
 </jsp:include>
 
 <h3>Cloud Architecture Diagram</h3>

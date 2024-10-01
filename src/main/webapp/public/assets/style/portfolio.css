@@ -205,6 +205,10 @@ label {
     opacity: 1;
 }
 
+.mobile-hidden {
+    display: none;
+}
+
 .mono {
     font-family: Consolas, monospace;
 }
@@ -325,6 +329,10 @@ img.solo {
         top: var(--top_displacement, -8px);
         transform: rotate(-45deg);
         transition: opacity 0.75s ease-out;
+    }
+
+    .mobile-hidden {
+        display: unset;
     }
 
     .sm-heading {

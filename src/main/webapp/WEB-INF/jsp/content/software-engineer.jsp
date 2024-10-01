@@ -35,10 +35,10 @@
     <jsp:param name="backend" value="Java 17, Spring 5, Spring Web, Spring Security, Akka, Jersey"/>
     <jsp:param name="persistence" value="Spring Data JPA"/>
     <jsp:param name="caching" value="Hazelcast"/>
-    <jsp:param name="database" value="MySQL 8 in Amazon RDS"/>
-    <jsp:param name="versioning" value="Git via Bitbucket"/>
-    <jsp:param name="build" value="Maven on Jenkins"/>
-    <jsp:param name="env" value="Tomcat and Jetty on Amazon EC2"/>
+    <jsp:param name="storage" value="MySQL 8 in Amazon RDS, Amazon S3, Cassandra (defunct)"/>
+    <jsp:param name="versioning" value="Bitbucket (Git)"/>
+    <jsp:param name="build" value="Maven, Jenkins"/>
+    <jsp:param name="deployment" value="Tomcat and Jetty on Amazon EC2"/>
 </jsp:include>
 
 <jsp:include page="../widgets/video-player.jsp">
@@ -68,7 +68,7 @@
     <jsp:param name="language" value="Java 17, IntelliJ PSI SDK"/>
     <jsp:param name="versioning" value="GitHub"/>
     <jsp:param name="build" value="Gradle"/>
-    <jsp:param name="env" value="IntelliJ"/>
+    <jsp:param name="deployment" value="IntelliJ plugin"/>
 </jsp:include>
 
 <jsp:include page="../widgets/video-player.jsp">
