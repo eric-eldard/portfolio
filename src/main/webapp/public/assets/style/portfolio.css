@@ -66,6 +66,7 @@ label {
     justify-content: space-between;
     opacity: 0;
     padding: 2px 10px;
+    pointer-events: none;
     position: absolute;
     transform: translateX(-50%);
     width: 50%;
