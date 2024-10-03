@@ -56,7 +56,7 @@
 <h2>Scheduling Software <span class="sm-heading">(Excel w/ VBA & XML)</span></h2>
 <p>
     I was able to save dozens of person-hours each week by automating Excel paperwork with Visual Basic for
-    Applications. This got my management team out of the office and onto the floor, helping customers and training
+    Applications. This got my management team out of the office and onto the floor, helping customers and coaching
     staff. Here's an example in which I found out our box office software was publishing our showtimes in an XML feed
     to a hidden folder on each of our back office computers, just in case one of them happened to be running electronic
     signage software. I was able to consume this feed and create all kinds of schedule variants (movie-start schedules
