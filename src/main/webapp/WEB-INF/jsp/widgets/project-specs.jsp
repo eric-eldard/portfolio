@@ -57,10 +57,4 @@
         <td>${param.deployment}</td>
     </tr>
     </c:if>
-    <c:if test="${param.usages ne null}">
-        <tr>
-            <td>Usages:</td>
-            <td>${param.usages}</td>
-        </tr>
-    </c:if>
 </table>
