@@ -1,0 +1,31 @@
+.java-code {
+    background-color: #3c3d3e;
+    color: #a8b7c5;
+    font-family: Consolas, monospace;
+    font-size: 10px;
+    overflow-x: hidden;
+    padding: 8px;
+    white-space: pre;
+}
+
+.java-code .annotation {
+    color: #bab52a;
+}
+
+.java-code .keyword {
+    color: #cc7832;
+}
+
+.java-code .member {
+    color: #9775a9;
+}
+
+.java-code .string {
+    color: #6a865a;
+}
+
+@media screen and (min-width: 800px) {
+    .java-code {
+        font-size: smaller;
+    }
+}

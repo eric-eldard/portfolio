@@ -61,6 +61,7 @@
 }
 
 #popup p {
+    line-height: 125%;
 	margin-top: 0px;
 	text-align: justify;
 }
@@ -74,6 +75,13 @@
     height: 19px;
     margin-bottom: -4px;
     margin-left: 2px;
+}
+
+#popup .java-code {
+    cursor: text;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
 }
 
 #popup .popup-nav {

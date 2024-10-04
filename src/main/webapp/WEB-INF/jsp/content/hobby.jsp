@@ -4,6 +4,10 @@
         width: 640px !important;
     }
 
+    #harpocrates-example {
+        max-width: 850px;
+    }
+
     #mtg {
         border-radius: 10px;
         width: 90%;
@@ -41,13 +45,6 @@
         height: 183px;
         object-fit: cover;
         object-position: 0 1%;
-    }
-
-    #steganos-usages {
-        left: -23px;
-        margin-bottom: -16px;
-        position: relative;
-        top: -14px;
     }
 
     .chrome-mobile-shim #steganos-usages {
@@ -101,12 +98,6 @@
     <jsp:param name="language" value="Java 11"/>
     <jsp:param name="versioning" value="GitHub"/>
     <jsp:param name="build" value="Maven"/>
-    <jsp:param name="usages" value="
-        <ul id='steganos-usages'>
-            <li>run <span class='mono'>steganos-cmd-line</span> jar from a terminal</li>
-            <li>add <span class='mono'>steganos-core</span> jar as a dependency</li>
-        </ul>
-    "/>
 </jsp:include>
 <div id="steganos-example" class="screenshot solo">
     <a href="https://github.com/eric-eldard/steganos?tab=readme-ov-file#examples" target="_blank">
@@ -114,6 +105,59 @@
              alt="Link out to example output of Steganos on GitHub"
         >
     </a>
+</div>
+
+<hr>
+
+<h2>Data Classifier & Obfuscator</h2>
+<p>
+    Brazen's data graph was complex enough that it was difficult to build plausible test data for non-production
+    environments. We often used production dumps, with all personally identifiable info obfuscated. The problem with
+    this was that the obfuscation rules lived in a Ruby script, separate from our code. Devs had to remember to update
+    that script to match their Java/MySQL changes, and DevOps had to be informed to deploy the latest Ruby script during
+    Java app deployments. If you forgot one of these steps, you could end up with PII in your database dumps, bound for
+    your test environments.
+</p>
+<p>
+    After my Brazen days, I wrote <b>Harpocrates</b>, a library and app combo that solve these problems. With the
+    <b>Harpocrates Annotation</b> and <b>Persistence</b> libraries, you can annotate your entity fields directly to
+    classify the type of sensitive data they represent, and these classifications will be copied to your database
+    columns when your app starts up. At any time, pipe your classified database dumps through the <b>Harpocrates
+    Obfuscator</b> app to make smart replacements in your dump for all kinds of sensitive data, include names, email
+    address, phone numbers, and much more!
+</p>
+<p>
+    As an added bonus, your data classifications live with both your code and your data&mdash;useful if another
+    application reads your data!
+</p>
+
+<jsp:include page="../widgets/see-it-on-gh.jsp">
+    <jsp:param name="repo" value="harpocrates"/>
+</jsp:include>
+
+<jsp:include page="../widgets/project-specs.jsp">
+    <jsp:param name="language" value="Java 21, Spring 6"/>
+    <jsp:param name="versioning" value="GitHub"/>
+    <jsp:param name="build" value="Maven"/>
+</jsp:include>
+
+<div id="harpocrates-example" class="java-code"><span class="annotation">@Entity</span>
+<span class="keyword">public class</span> User
+{
+    <span class="annotation">@Column</span>(name = <span class="string">"firstName"</span>)
+    <span class="annotation">@DataClassification</span>(DataType.<span class="member">GIVEN_NAME</span>)
+    <span class="keyword">private</span> String <span class="member">givenName</span><span class="keyword">;</span>
+
+    <span class="annotation">@Column</span>(name = <span class="string">"lastName"</span>)
+    <span class="annotation">@DataClassification</span>(DataType.<span class="member">SURNAME</span>)
+    <span class="keyword">private</span> String <span class="member">surname</span><span class="keyword">;</span>
+
+    <span class="annotation">@DataClassification</span>(type = DataType.<span class="member">EMAIL_ADDRESS</span>, pattern = <span class="string">"{SURNAME}.{GIVEN_NAME}@my-company.com"</span>)
+    <span class="keyword">private</span> String <span class="member">email</span><span class="keyword">;</span>
+
+    <span class="annotation">@DataClassification</span>(type = DataType.<span class="member">PHONE_NUMBER</span>, action = Action.<span class="member">REMOVE</span>)
+    <span class="keyword">private</span> String <span class="member">phoneNumber</span><span class="keyword">;</span>
+}
 </div>
 
 <hr>

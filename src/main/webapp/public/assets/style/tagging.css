@@ -1,5 +1,6 @@
 .embedded-video:after,
 .iframe div:after,
+.java-code:after,
 .screenshot a:after {
     background-color: #666;
     border-bottom-left-radius: 12px;
@@ -36,6 +37,10 @@
 
 .iframe div:after {
 	content: "iframe";
+}
+
+.java-code:after {
+    content: "Sample code";
 }
 
 .screenshot a:after {
