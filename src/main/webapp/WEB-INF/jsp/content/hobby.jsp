@@ -141,23 +141,23 @@
     <jsp:param name="build" value="Maven"/>
 </jsp:include>
 
-<div id="harpocrates-example" class="java-code"><span class="annotation">@Entity</span>
-<span class="keyword">public class</span> User
-{
-    <span class="annotation">@Column</span>(name = <span class="string">"firstName"</span>)
-    <span class="annotation">@DataClassification</span>(DataType.<span class="member">GIVEN_NAME</span>)
-    <span class="keyword">private</span> String <span class="member">givenName</span><span class="keyword">;</span>
+<div id="harpocrates-example" class="java-code"><span class="annotation unhighlight">@Entity</span>
+<span class="unhighlight"><span class="keyword">public class</span> User</span>
+<span class="unhighlight">{</span>
+    <span class="unhighlight"><span class="annotation">@Column</span>(name = <span class="string">"firstName"</span>)</span>
+    <span class="highlight"><span class="annotation">@DataClassification</span>(DataType.<span class="member">GIVEN_NAME</span>)</span>
+    <span class="unhighlight"><span class="keyword">private</span> String <span class="member">givenName</span><span class="keyword">;</span></span>
 
-    <span class="annotation">@Column</span>(name = <span class="string">"lastName"</span>)
-    <span class="annotation">@DataClassification</span>(DataType.<span class="member">SURNAME</span>)
-    <span class="keyword">private</span> String <span class="member">surname</span><span class="keyword">;</span>
+    <span class="unhighlight"><span class="annotation">@Column</span>(name = <span class="string">"lastName"</span>)</span>
+    <span class="highlight"><span class="annotation">@DataClassification</span>(DataType.<span class="member">SURNAME</span>)</span>
+    <span class="unhighlight"><span class="keyword">private</span> String <span class="member">surname</span><span class="keyword">;</span></span>
 
-    <span class="annotation">@DataClassification</span>(type = DataType.<span class="member">EMAIL_ADDRESS</span>, pattern = <span class="string">"{SURNAME}.{GIVEN_NAME}@my-company.com"</span>)
-    <span class="keyword">private</span> String <span class="member">email</span><span class="keyword">;</span>
+    <span class="highlight"><span class="annotation">@DataClassification</span>(type = DataType.<span class="member">EMAIL_ADDRESS</span>, pattern = <span class="string">"{SURNAME}.{GIVEN_NAME}@my-company.com"</span>)</span>
+    <span class="unhighlight"><span class="keyword">private</span> String <span class="member">email</span><span class="keyword">;</span></span>
 
-    <span class="annotation">@DataClassification</span>(type = DataType.<span class="member">PHONE_NUMBER</span>, action = Action.<span class="member">REMOVE</span>)
-    <span class="keyword">private</span> String <span class="member">phoneNumber</span><span class="keyword">;</span>
-}
+    <span class="highlight"><span class="annotation">@DataClassification</span>(type = DataType.<span class="member">PHONE_NUMBER</span>, action = Action.<span class="member">REMOVE</span>)</span>
+    <span class="unhighlight"><span class="keyword">private</span> String <span class="member">phoneNumber</span><span class="keyword">;</span></span>
+<span class="unhighlight">}</span>
 </div>
 
 <hr>

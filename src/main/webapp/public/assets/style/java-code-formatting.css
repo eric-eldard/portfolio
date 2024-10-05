@@ -23,6 +23,14 @@
     color: #6a865a;
 }
 
+.java-code .highlight {
+    filter: saturate(1.5);
+}
+
+.java-code .unhighlight {
+    filter: saturate(0.5);
+}
+
 @media screen and (min-width: 800px) {
     .java-code {
         font-size: smaller;
