@@ -171,6 +171,10 @@
     z-index: 999999;
 }
 
+#popup.hide-controls #top-controls {
+    display: none;
+}
+
 /* A full-page div for preventing interaction with the main page while content is being displayed in #popup */
 #popup-container {
 	/*

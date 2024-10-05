@@ -319,6 +319,8 @@ export namespace Portfolio {
         setPopupIsOpen(false);
 
         transitionPopup();
+
+        window.setTimeout(() => setHideControls(false), 500); // delay to prevent controls from appearing during close
     }
 
     // A partial close, for jumping from one popup card to another (mostly animated stuff)
@@ -522,6 +524,10 @@ export namespace Portfolio {
     
     function setPopupIsOpen(isOpen: boolean): void {
         toggleStyle(getPopup(), "open", isOpen);
+    }
+
+    export function setHideControls(hideControls: boolean): void {
+        toggleStyle(getPopup(), "hide-controls", hideControls);
     }
 
     function rotatePopup(deg: number): void {
