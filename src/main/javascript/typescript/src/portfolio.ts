@@ -213,10 +213,13 @@ export namespace Portfolio {
 
     export function showResume(): void {
         if (window.innerWidth < 800) {
-            alert('TODO ERIC - download for updated resume');
+            const download: boolean = confirm("Download my resume?");
+            if (download) {
+                window.open("/portfolio/assets/documents/Eric-Eldard-Resume.pdf");
+            }
         }
         else {
-            openPopup('resume');
+            openPopup("resume");
         }
     }
 
