@@ -44,7 +44,7 @@
     <jsp:param name="id" value="oat-screenshots"/>
     <jsp:param name="centerImage" value="oat1.png"/>
     <jsp:param name="galleryImg1" value="oat0.png"/>
-    <jsp:param name="galleryImg2" value="oat6.png"/>
+    <jsp:param name="galleryImg2" value="oat3.png"/>
     <jsp:param name="galleryImg3" value="oat4.png"/>
     <jsp:param name="description" value="Online Assessment Tool"/>
 </jsp:include>
