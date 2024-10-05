@@ -1,10 +1,7 @@
 <style>
     #resume-doc {
-        bottom: 25px;
-        left: 25px;
+        inset: 0;
         position: absolute;
-        right: 25px;
-        top: 40px;
         width: auto;
     }
 
@@ -14,6 +11,10 @@
         height: 100%;
     }
 </style>
+
+<script>
+    Portfolio.setHideControls(true);
+</script>
 
 <%-- No backup image because resume gets alternate treatment on mobile, instead of opening the popup --%>
 <jsp:include page="../widgets/embedded-doc-solo.jsp">
