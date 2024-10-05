@@ -8,10 +8,10 @@ export namespace Video {
         detail: HTMLIFrameElement;
     }
 
-    const colorDestroyed: string = "\x1b[31m";
-    const colorNew:       string = "\x1b[32m";
-    const colorPaused:    string = "\x1b[33m";
-    const colorPlaying:   string = "\x1b[35m";
+    const colorDestroyed: string = "color: light-dark(#c00, #f00)";
+    const colorNew:       string = "color: light-dark(#090, #4e4)";
+    const colorPaused:    string = "color: light-dark(#b60, #e70)";
+    const colorPlaying:   string = "color: light-dark(#b0b, #f0f)";
 
     const registeredPlayers = new Map<string, PlayerSdk>();
 
@@ -19,14 +19,14 @@ export namespace Video {
         const player: PlayerSdk = forId(playerId);
         player.getPlaying(isPlaying => {
             if (isPlaying) {
-                console.debug(`Pausing video player ${colorPaused}${playerId}`);
+                console.debug(`Pausing video player %c${playerId}`, `${colorPaused}`);
                 player.pause();
             }
         });
     }
 
     export function pauseOtherPlayers(activePlayerId: string): void {
-        console.debug(`Active video player is now ${colorPlaying}${activePlayerId}`);
+        console.debug(`Active video player is now %c${activePlayerId}`, `${colorPlaying}`);
         const activePlayer: PlayerSdk = forId(activePlayerId);
         registeredPlayers.forEach((player: PlayerSdk, playerId: string) => {
             if (player !== activePlayer) {
@@ -56,7 +56,7 @@ export namespace Video {
 
         registeredPlayers.set(playerId, player);
 
-        console.debug(`Video player initialized: ${colorNew}${playerId}`);
+        console.debug(`Video player initialized: %c${playerId}`, `${colorNew}`);
 
         document.dispatchEvent(new CustomEvent<HTMLIFrameElement>("videoPlayerAdded", {detail: iframe}));
     }
@@ -65,19 +65,26 @@ export namespace Video {
         registeredPlayers.forEach((player: PlayerSdk, playerId: string) => {
             player.pause();
             player.destroy();
-            console.debug(`Video player destroyed: ${colorDestroyed}${playerId}`);
+            console.debug(`Video player destroyed: %c${playerId}`, `${colorDestroyed}`);
         });
         registeredPlayers.clear();
     }
 
     export async function logRegisteredPlayers(): Promise<void> {
         const playerIds: Array<string> = [];
+        const colors: Array<string> = [];
         for (let [playerId, player] of registeredPlayers) {
-            await player.getPlaying() ?
-                playerIds.push(`${colorPlaying}${playerId} (playing)`) :
-                playerIds.push(`${colorPaused}${playerId}`);
+            const playing: boolean = await player.getPlaying();
+            if (playing) {
+                playerIds.push(`%c${playerId} (playing)`);
+                colors.push(`${colorPlaying}`);
+            }
+            else {
+                playerIds.push(`%c${playerId}`);
+                colors.push(`${colorPaused}`);
+            }
         }
-        console.info(`Registered video players:\n\t${playerIds.join("\n\t")}`);
+        console.info(`Registered video players:\n\t${playerIds.join("\n\t")}`, ...colors);
     }
 
     function forId(playerId: string): PlayerSdk {
