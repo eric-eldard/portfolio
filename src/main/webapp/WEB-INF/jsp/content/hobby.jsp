@@ -127,7 +127,7 @@
     address, phone numbers, and much more!
 </p>
 <p>
-    As an added bonus, your data classifications live with both your code and your data&mdash;useful if another
+    As an added bonus, your data classifications live with both your code <i>and</i> your data&mdash;useful if another
     application reads your data!
 </p>
 

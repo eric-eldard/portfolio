@@ -81,7 +81,9 @@
     cursor: text;
     margin-left: auto;
     margin-right: auto;
+    overflow-x: hidden; /* allowing horizontal scrolling conflicts with left<->right swipe behavior */
     position: relative;
+    text-overflow: ellipsis;
 }
 
 #popup .popup-nav {
