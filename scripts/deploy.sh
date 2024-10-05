@@ -36,8 +36,14 @@ fi
 if ! id -u "$USER" >/dev/null 2>&1
 then
   printf "Creating user ${MAGENTA}${USER}${RESET}...\n"
+  if [[ -d /home/${USER} ]]
+  then
+    printf "Existing home directory found for ${MAGENTA}${USER}${RESET}; removing...\n"
+    sudo rm -rf /home/${USER}
+  fi
   sudo useradd $USER
-  printf "\n"
+  sudo sh -c "echo -e '\ncd /opt/portfolio' >> /home/${USER}/.bashrc"
+  printf "\nRun ${YELLOW}aws configure${RESET} as user ${MAGENTA}${USER}${RESET} to add this user's Secrets Manager key\n\n"
 fi
 
 printf "Changing ownership of ${CYAN}${ROOT}${RESET} to user ${MAGENTA}${USER}${RESET}...\n"
