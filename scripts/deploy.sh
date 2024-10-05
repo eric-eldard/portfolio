@@ -43,7 +43,7 @@ then
   fi
   sudo useradd $USER
   sudo sh -c "echo -e '\ncd /opt/portfolio' >> /home/${USER}/.bashrc"
-  printf "\nRun ${YELLOW}aws configure${RESET} as user ${MAGENTA}${USER}${RESET} to add this user's Secrets Manager key\n\n"
+  printf "\nRun ${YELLOW}aws configure${RESET} as ${MAGENTA}${USER}${RESET} to add this user's ${BOLD_WHITE}Secrets Manager${RESET} key\n\n"
 fi
 
 printf "Changing ownership of ${CYAN}${ROOT}${RESET} to user ${MAGENTA}${USER}${RESET}...\n"
