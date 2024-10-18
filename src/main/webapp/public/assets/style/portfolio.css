@@ -274,6 +274,11 @@ img.solo {
     width: 99%;
 }
 
+.square-border {
+    border-radius: 0;
+}
+
+
 .title {
 	cursor: pointer;
 	display: inline-block;

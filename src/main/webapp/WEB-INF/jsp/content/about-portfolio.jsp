@@ -34,7 +34,7 @@
 <h3>Mobile-Responsive Design</h3>
 <jsp:include page="../widgets/video-player.jsp">
     <jsp:param name="wrapperId" value="responsive-design-video"/>
-    <jsp:param name="classes"   value="aspect-1680x1080 white-border"/>
+    <jsp:param name="classes"   value="aspect-1680x1080 square-border white-border"/>
     <jsp:param name="videoId"   value="${RESPONSIVE_DESIGN_VIDEO_ID}"/>
     <jsp:param name="token"     value="${RESPONSIVE_DESIGN_VIDEO_TOKEN}"/>
     <jsp:param name="error"     value="${RESPONSIVE_DESIGN_VIDEO_ERROR}"/>
