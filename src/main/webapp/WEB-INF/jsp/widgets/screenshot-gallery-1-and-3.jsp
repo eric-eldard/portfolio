@@ -3,18 +3,26 @@
     Hovering on the gutter images causes them to be shown in the central slot.
 --%>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
-<c:set var="basedir" value="${param.basedir eq null ? '/portfolio/assets/images/screenshots' : param.basedir}"/>
+<c:set var="basedir"   value="${param.basedir eq null ? '/portfolio/assets/images/screenshots' : param.basedir}"/>
 <c:set var="centerImg" value="${basedir}/${param.centerImage}"/>
-<c:set var="img1" value="${basedir}/${param.galleryImg1}"/>
-<c:set var="img2" value="${basedir}/${param.galleryImg2}"/>
-<c:set var="img3" value="${basedir}/${param.galleryImg3}"/>
-<c:set var="altText" value="${param.description} screenshot (click to open)"/>
+<c:set var="img1"      value="${basedir}/${param.galleryImg1}"/>
+<c:set var="img2"      value="${basedir}/${param.galleryImg2}"/>
+<c:set var="img3"      value="${basedir}/${param.galleryImg3}"/>
+<c:set var="altText"   value="${param.description} screenshot (click to open)"/>
 
 <div class="screenshot grid1and3 ${param.classes}" id="${param.id}">
-    <a href="javascript:void(0)" class="focused"><img src="${centerImg}" alt="${altText}"></a>
-    <a href="javascript:void(0)" class="top"><img src="${img1}" alt="${altText}"></a>
-    <a href="javascript:void(0)" class="middle"><img src="${img2}" alt="${altText}"></a>
-    <a href="javascript:void(0)" class="bottom"><img src="${img3}" alt="${altText}"></a>
+    <a href="javascript:void(0)" class="focused" title="Open in new tab">
+        <img src="${centerImg}" alt="${altText}">
+    </a>
+    <a href="javascript:void(0)" class="top" title="Click to view">
+        <img src="${img1}" alt="${altText}">
+    </a>
+    <a href="javascript:void(0)" class="middle" title="Click to view">
+        <img src="${img2}" alt="${altText}">
+    </a>
+    <a href="javascript:void(0)" class="bottom" title="Click to view">
+        <img src="${img3}" alt="${altText}">
+    </a>
 </div>
 
 <script>
@@ -44,6 +52,9 @@
                 window.setTimeout(() => {
                     focusedImage.className = child.className;
                     child.className = "focused";
+
+                    focusedImage.title = child.title;
+                    child.title = "Open in new tab";
                 }, 400);
             }
         });

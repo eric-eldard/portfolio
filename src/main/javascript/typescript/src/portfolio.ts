@@ -31,6 +31,7 @@ export namespace Portfolio {
         if (e.detail.initial) {
             lastSwipeStartTime = Date.now();
             toggleStyleForId("closeX", "on", true); // highlight close X when swiping/scrolling
+            return; // initial events don't contain movement data, by definition; short-circuit remaining swipe logic
         }
 
         // We're publishing swipe events at roughly screen refresh rate, which could be as a high as 120fps. Here we'll
@@ -47,7 +48,10 @@ export namespace Portfolio {
         if (ongoing) {
             const dir: string = e.detail.cardinal4;
 
-            if (dir === "W" || dir === "E") {
+            if (dir === "N" || dir === "S") {   // User is scrolling
+                setUserIsSwiping(false, true);  // Hide swipe indicators so they're not in the way
+            }
+            else {                              // User is swiping
                 const oldLeft : number      = parseInt(getPopup().style.left);
                 const width   : number      = getPopup().offsetWidth; // doesn't have an explicit CSS width
 
@@ -542,22 +546,30 @@ export namespace Portfolio {
         return getSwipeIndicators().classList.contains("on");
     }
 
-    function setUserIsSwiping(swiping: boolean): void {
+    function setUserIsSwiping(swiping: boolean, force: boolean = false): void {
         if (swiping) {
-            if (!userIsSwiping()) { // don't reset animation if already playing
+            if (!userIsSwiping() || force) { // don't reset animation if it's already playing, unless forced
                 toggleStyleForId("swipe-indicators", "on", true);
                 toggleStyleForId("swipe-indicators", "off", false);
             }
         }
         else {
-            const lastSwipeEndAtCallTime = lastSwipeEndTime;
-            window.setTimeout(() => {
-                // if another swipe-start or swipe-end has occurred, ignore this one
-                if (lastSwipeEndAtCallTime == lastSwipeEndTime && lastSwipeEndTime > lastSwipeStartTime) {
-                    toggleStyleForId("swipe-indicators", "on", false);
-                    toggleStyleForId("swipe-indicators", "off", true);
-                }
-            }, 2500);
+            if (force) {
+                // hide indicators immediately
+                toggleStyleForId("swipe-indicators", "on", false);
+                toggleStyleForId("swipe-indicators", "off", true);
+            }
+            else {
+                // hide indicators after timeout
+                const lastSwipeEndAtCallTime = lastSwipeEndTime;
+                window.setTimeout(() => {
+                    // if another swipe-start or swipe-end has occurred, ignore this one
+                    if (lastSwipeEndAtCallTime == lastSwipeEndTime && lastSwipeEndTime > lastSwipeStartTime) {
+                        toggleStyleForId("swipe-indicators", "on", false);
+                        toggleStyleForId("swipe-indicators", "off", true);
+                    }
+                }, 3000);
+            }
         }
     }
 
