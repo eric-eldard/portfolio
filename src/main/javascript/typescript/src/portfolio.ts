@@ -218,7 +218,7 @@ export namespace Portfolio {
 
     export function showResume(): void {
         if (window.innerWidth < 800) {
-            const download: boolean = confirm("Download my resume?");
+            const download: boolean = confirm("Download my PDF resume?");
             if (download) {
                 window.open("/portfolio/assets/documents/Eric-Eldard-Resume.pdf");
             }
