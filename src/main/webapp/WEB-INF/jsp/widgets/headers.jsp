@@ -17,4 +17,4 @@
 
         <script src="/public/assets/scripts/generated/portfolio.bundle.js"></script>
         <script src="/public/assets/scripts/generated/utils.js"></script>
-        <script src="/public/assets/scripts/first-party/swipe-events.js"></script>
+        <script src="/public/assets/scripts/first-party/swipe-events.min.js"></script>
