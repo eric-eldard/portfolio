@@ -30,13 +30,19 @@
 }
 
 .screenshot.grid1and3 *:before {
+    backface-visibility: hidden;
     bottom: 0px;
     content: "";
     left: 0px;
     position: absolute;
     right: 0px;
     top: 0px;
+    transform: rotateY(180deg);
     transform-style: preserve-3d;
+}
+
+.screenshot.grid1and3 *:after {
+    backface-visibility: hidden; /* hides back of "Screenshot" tag; property doesn't inherit from parent in Safari  */
 }
 
 .screenshot.grid1and3 .focused {
