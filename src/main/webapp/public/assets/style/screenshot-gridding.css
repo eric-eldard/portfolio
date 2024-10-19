@@ -17,25 +17,45 @@
 .screenshot.grid1and3 {
     grid-template-columns: 75% 25%;
     grid-template-rows: repeat(3, 1fr);
+    perspective: 2000px;
 }
 
-.screenshot.grid1and3 :nth-child(1) {
+.screenshot.grid1and3 * {
+    animation-duration: 1.2s;
+    animation-name: spinY;
+    animation-play-state: paused;
+    backface-visibility: hidden;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.screenshot.grid1and3 *:before {
+    bottom: 0px;
+    content: "";
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    transform-style: preserve-3d;
+}
+
+.screenshot.grid1and3 .focused {
   grid-column-start: 1;
   grid-row-start: 1;
   grid-row-end: span 3;
 }
 
-.screenshot.grid1and3 :nth-child(2) {
+.screenshot.grid1and3 .top {
   grid-column-start: 2;
   grid-row-start: 1;
 }
 
-.screenshot.grid1and3 :nth-child(3) {
+.screenshot.grid1and3 .middle {
   grid-column-start: 2;
   grid-row-start: 2;
 }
 
-.screenshot.grid1and3 :nth-child(4) {
+.screenshot.grid1and3 .bottom {
   grid-column-start: 2;
   grid-row-start: 3;
 }

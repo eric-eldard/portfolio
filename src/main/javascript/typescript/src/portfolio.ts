@@ -610,6 +610,11 @@ export namespace Portfolio {
         }
     }
 
+    export function resetAnimation(element: HTMLElement): void {
+        element.style.animation = "none";
+        window.setTimeout(() => element.style.animation = "", 10);
+    }
+
     export function cycleFontColors(
             containerId: string,
             rBegin: number, gBegin: number, bBegin: number,

@@ -15,6 +15,7 @@
 
 <jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
     <jsp:param name="id" value="nile-shopping-screenshots"/>
+    <jsp:param name="classes" value="red-backface"/>
     <jsp:param name="centerImage" value="nile2.png"/>
     <jsp:param name="galleryImg1" value="nile0.png"/>
     <jsp:param name="galleryImg2" value="nile3.png"/>
@@ -42,6 +43,7 @@
 
 <jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
     <jsp:param name="id" value="oat-screenshots"/>
+    <jsp:param name="classes" value="red-backface"/>
     <jsp:param name="centerImage" value="oat1.png"/>
     <jsp:param name="galleryImg1" value="oat0.png"/>
     <jsp:param name="galleryImg2" value="oat3.png"/>
@@ -58,6 +60,7 @@
 </p>
 <jsp:include page="../widgets/screenshot-gallery-1-and-3.jsp">
     <jsp:param name="id" value="flashcard-screenshots"/>
+    <jsp:param name="classes" value="red-backface"/>
     <jsp:param name="centerImage" value="flashcard0.png"/>
     <jsp:param name="galleryImg1" value="flashcard2.png"/>
     <jsp:param name="galleryImg2" value="flashcard3.png"/>
