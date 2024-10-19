@@ -10,36 +10,45 @@
 <c:set var="img3" value="${basedir}/${param.galleryImg3}"/>
 <c:set var="altText" value="${param.description} screenshot (click to open)"/>
 
-<div class="screenshot grid1and3" id="${param.id}">
-    <a href="${centerImg}" target="_blank"><img src="${centerImg}" alt="${altText}"></a>
-    <a href="${img1}" target="_blank"><img src="${img1}" alt="${altText}"></a>
-    <a href="${img2}" target="_blank"><img src="${img2}" alt="${altText}"></a>
-    <a href="${img3}" target="_blank"><img src="${img3}" alt="${altText}"></a>
+<div class="screenshot grid1and3 ${param.classes}" id="${param.id}">
+    <a href="javascript:void(0)" class="focused"><img src="${centerImg}" alt="${altText}"></a>
+    <a href="javascript:void(0)" class="top"><img src="${img1}" alt="${altText}"></a>
+    <a href="javascript:void(0)" class="middle"><img src="${img2}" alt="${altText}"></a>
+    <a href="javascript:void(0)" class="bottom"><img src="${img3}" alt="${altText}"></a>
 </div>
 
 <script>
-    <%-- When each gallery image is moused-over, show it in the center slot --%>
-    for (let i = 1; i < document.getElementById("${param.id}").childElementCount; i++) {
-         let child = document.getElementById("${param.id}").children[i];
-         child.addEventListener("mouseover", (event) => {
-             const centerImage = document.getElementById("${param.id}").children[0].children[0];
-             const thisImage = child.children[0];
-             centerImage.src = thisImage.src;
-         });
-     }
+    <%-- Add click behaviors to all gallery images --%>
+    for (let i = 0; i < document.getElementById("${param.id}").childElementCount; i++) {
+        const child = document.getElementById("${param.id}").children[i];
 
-    <%-- When center image is moused-over, return to original --%>
-    document.getElementById("${param.id}").children[0].addEventListener("mouseover", (event) => {
-        const centerImage = document.getElementById("${param.id}").children[0].children[0];
-        centerImage.src = "${centerImg}";
-    });
+        child.addEventListener("click", (event) => {
+            const focusedImage = document.querySelector("#${param.id} > .focused");
 
-    <%--
-        Always return center image to original when mouse exits the container
-        (prevents flickering when mouse moves over grid gaps, vs mouseout on each gallery image)
-    --%>
-    document.getElementById("${param.id}").addEventListener("mouseleave", (event) => {
-        const centerImage = document.getElementById("${param.id}").children[0].children[0];
-        centerImage.src = "${centerImg}";
-    });
+            <%-- When a prior animation is still running, ignore this click --%>
+            if (focusedImage.style.animationPlayState === "running") {
+                return;
+            }
+            <%-- When the focused image is clicked, open it in a new window --%>
+            else if (focusedImage === child) {
+                window.open(child.children[0].src, "_blank");
+            }
+            <%-- When any non-focused element is clicked, swap it with the focused element --%>
+            else {
+                <%-- Start the rotation animation for both images --%>
+                focusedImage.style.animationPlayState = "running";
+                child.style.animationPlayState = "running";
+
+                <%-- The backface of each image shows between 25% and 75% of the way through the animation;
+                     swap the focused and clicked images in this window --%>
+                window.setTimeout(() => {
+                    focusedImage.className = child.className;
+                    child.className = "focused";
+                }, 400);
+            }
+        });
+
+        <%-- Reset the css animation after it's played --%>
+        child.addEventListener("animationend", (event) => Portfolio.resetAnimation(child));
+    }
 </script>
