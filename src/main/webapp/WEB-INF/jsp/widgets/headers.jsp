@@ -2,7 +2,7 @@
         <meta charset="UTF-8">
         <meta name="author" content="Eric Eldard">
         <meta name="description" content="Eric Eldard's Digital Portfolio">
-        <meta name="keywords" content="Eric Eldard, portfolio, engineer, web designer, programmer, developer">
+        <meta name="keywords" content="Eric Eldard, portfolio, engineer, programmer, developer, full-stack developer, web developer">
         <meta name="version" content="${portfolio_app_version}">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 

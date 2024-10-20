@@ -21,6 +21,9 @@ fi
 printf "Moving ${YELLOW}${ARTIFACT}${RESET} to ${CYAN}${ROOT}/${RESET}...\n"
 sudo mv ~/${ARTIFACT} $ROOT
 
+printf "Moving ${YELLOW}maintenance.html${RESET} to ${CYAN}${ROOT}/${RESET}...\n"
+sudo mv ~/maintenance.html $ROOT
+
 printf "Moving ${YELLOW}run.sh${RESET} to ${CYAN}${ROOT}/${RESET}...\n"
 sudo mv ~/run.sh $ROOT
 
