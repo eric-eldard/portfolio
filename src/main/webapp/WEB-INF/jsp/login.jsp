@@ -2,6 +2,8 @@
 <html lang="en">
     <head>
         <jsp:include page="widgets/headers.jsp"/>
+        <meta name="robots" content="noindex">
+
         <style>
             .content {
                 max-width: 500px;

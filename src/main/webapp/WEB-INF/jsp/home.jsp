@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <jsp:include page="widgets/headers.jsp"/>
+        <meta name="robots" content="nofollow">
         <link rel="stylesheet" type="text/css" href="/public/assets/style/home.css">
     </head>
     <body>

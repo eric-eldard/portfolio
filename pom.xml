@@ -12,7 +12,7 @@
     <name>Eric Eldard Portfolio</name>
     <groupId>com.eric_eldard</groupId>
     <artifactId>portfolio</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <packaging>war</packaging>
 
     <properties>
@@ -257,6 +257,25 @@
                     </execution>
 
                     <execution>
+                        <id>Copy maintenance page to target</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>maintenance-page</directory>
+                                    <includes>
+                                        <include>maintenance.html</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
                         <id>Copy deployment scripts to target</id>
                         <phase>process-resources</phase>
                         <goals>
@@ -294,6 +313,7 @@
                 <configuration>
                     <basedir>${project.build.directory}</basedir>
                     <includes>
+                        <include>maintenance.html</include>
                         <include>scripts/deploy.sh</include>
                         <include>scripts/run.sh</include>
                         <include>classes/application.properties</include>

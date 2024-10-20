@@ -4,6 +4,7 @@
 <html lang="en">
     <head>
         <jsp:include page="widgets/headers.jsp"/>
+        <meta name="robots" content="noindex">
 
         <style>
             a {
@@ -28,6 +29,7 @@
                 font-size: 60px;
                 margin-bottom: 25px;
                 margin-left: -4px;
+                transition: font-size 1s;
             }
 
             @media screen and (min-width: 600px) {
