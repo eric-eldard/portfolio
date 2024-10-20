@@ -1,8 +1,12 @@
+### Portfolio - no VCS ###
 /assets/
+
+### Portfolio - generated ###
 **/typescript/out/
 **/node_modules/
 **/generated/
 
+### Maven - generated ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
