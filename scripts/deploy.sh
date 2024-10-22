@@ -5,7 +5,6 @@ ARTIFACT="${ARTIFACT_FINAL_NAME}.war" # This can be set by maven during a build 
 YELLOW="\e[0;93m"
 MAGENTA="\e[0;95m"
 CYAN="\e[0;96m"
-WHITE="\e[0;97m"
 BOLD_GREEN="\e[1;92m"
 BOLD_WHITE="\e[1;97m"
 RESET="\e[0m"
