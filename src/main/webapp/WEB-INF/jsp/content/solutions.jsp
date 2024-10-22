@@ -29,12 +29,8 @@
 <h2>Brazen Partner Integration</h2>
 <p>
     In 2022, Brazen worked with a major job board to use Brazen Virtual Events as the interview component of their
-    hiring funnel. After consulting with their product and tech folks on the need, I put together this interactive
-    sequence diagram, illustrating the fastest path to achieving this integration. This really helped to advance our
-    conversation.
-</p>
-<p class="disclaimer">
-    [Partner info anonymized]
+    hiring funnel. After consulting with their stakeholders, I put together this interactive sequence diagram,
+    illustrating the fastest path to achieving this integration. This really helped to advance our conversation.
 </p>
 <jsp:include page="../widgets/embedded-doc-solo.jsp">
     <jsp:param name="id"          value="partner-doc"/>
@@ -42,6 +38,9 @@
     <jsp:param name="backupImg"   value="Partner-Integration.png"/>
     <jsp:param name="description" value="Partner Integration Sequence Diagram"/>
 </jsp:include>
+<p class="disclaimer">
+    [Partner info anonymized]
+</p>
 
 <hr>
 
@@ -53,10 +52,9 @@
         <jsp:param name="href" value="https://developers.brazen.com/"/>
     </jsp:include>
     advertises all the ways customers and partners can integrate with Brazen. This portal was created and maintained by
-    me and one of my long-time Brazen collaborators. It showcases some solutions I helped design and build from the
+    me and one of my long-time Brazen collaborators. It showcases many solutions I helped design and build from the
     ground-up, like our customer-facing RESTful API, our XML job feeds, and our embeddable chat plugin. I also staffed
-    developers@brazen.com, assisting our customers' tech folks as they built their integrations. I love building tools
-    that other devs will use to build cool stuff!
+    developers@brazen.com, assisting our customers' tech folks as they built their integrations.
 </p>
 <jsp:include page="../widgets/screenshot-solo.jsp">
     <jsp:param name="path"        value="brazen-dev-resources.png"/>

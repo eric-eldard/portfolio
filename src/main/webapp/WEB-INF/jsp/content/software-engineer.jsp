@@ -9,26 +9,23 @@
     features. The Brazen software would host millions of users across tens-of-thousands of events.
 </p>
 <p>
-    I started out in a junior Java developer role with Brazen, became the lead for our lone Scrum team, and by the time
+    I started out in a junior Java developer role with Brazen, became the lead for our only Scrum team, and by the time
     Brazen was at its largest, I was Vice President of Engineering over three agile teams. In 2023, all of our hard work
-    paid off when Brazen was acquired into the Radancy Talent Cloud. In 2024, I took over all of Brazen Engineering,
-    adding QA, DevOps, InfoSec, and Tier 2 Support to my teams.
+    paid off when Brazen was acquired into the Radancy Talent Cloud. Alongside Brazen's Chief Technology Officer, I had
+    participated in several rounds of technical diligence. The confidence we fostered in the robustness of our stack was
+    cited as a key factor in Brazen's acquisition. In 2024, I took over all of Brazen Engineering, adding QA, DevOps,
+    InfoSec, and Tier 2 Support to my teams.
 </p>
 <p>
-    Brazen Engineering was a place to learn and try new things, and engineers grew very quickly there. I often estimated
-    that a year in Brazen's fast-paced, people-focused environment was worth a year-and-a-half or more anywhere else.
-    Though I'd been a hobby programmer for as long as I could remember, Brazen is where I became the software engineer
-    I am today. As an engineer, I believe in writing code that is secure, testable, readable, extensible, and
-    efficient&mdash;in that order.
+    I believe in creating software which is secure, testable, readable, extensible, and efficient&mdash;in that order.
 </p>
 
 <h2>Brazen Virtual Events</h2>
 <p>
-    Below is a small example of some of my Brazen work. In 2023, I was attached to a tiger team, along with our VP of
-    Marketing and our Data Engineering Manager, to experiment with both how we could include generative AI into our
-    platform and how we could get AI tools into the hands of our team members. Over a couple of days, I put together a
-    sample ChatGPT integration which could generate virtual event content for our customers, and also provide an open
-    pass-through to ChatGPT for day-to-day use by our staff.
+    Below is a small sample of my Brazen work. In 2023, I was attached to a tiger team, along with our VP of Marketing
+    and our Data Engineering Manager, to experiment with how we could include generative AI into our platform. Over a
+    couple of days, I put together this proof-of-concept ChatGPT integration which could generate virtual event content
+    for our customers.
 </p>
 <jsp:include page="../widgets/project-specs.jsp">
     <jsp:param name="frontend" value="Freemarker, Google Web Toolkit, Google Material Design, jQuery"/>
@@ -54,10 +51,9 @@
 <p>
     As the VP of Engineering for a company with a monolith app, I was always looking for ways to help engineers
     better understand the impact of their changes. <b>Tree of Usages</b> is an IntelliJ plugin which helps engineers
-    recursively trace possible call trees to see other areas of an application which their changes may ripple out to.
-    Forked from a PhpStorm plugin designed to do the same, it was rewritten to work for walking Java code. My version
-    adds quality of life features, like a navigable history and duplicate-branch detection. I worked on this primarily
-    as a hobby project, but encouraged all my engineers to use it after I released it to GitHub.
+    recursively trace possible call trees to see other areas their changes may ripple out to. Forked from a PhpStorm
+    plugin designed to do the same, it was rewritten to work for walking Java code. My version adds quality of life
+    features, like a navigable history and duplicate-branch detection.
 </p>
 
 <jsp:include page="../widgets/see-it-on-gh.jsp">
@@ -82,11 +78,9 @@
 
 <h2>Plugin Performance Improvements</h2>
 <p>
-    I have a passion for performance, and in 2023, I noticed a growing portion of Brazen's traffic was coming from our
-    embeddable chat plugin. While this was great news, this was also the feature that "kept me up at night." With no
-    notice, our customers could add it to new pages or start marketing new jobs with it&mdash;for our largest customers,
-    this could potentially result in millions of new plugin loads, overnight. While its call times were decent, it
-    needed to be better. I took on the improvements myself, adding some creative backend caching and reworking the
+    <b>I have a passion for performance.</b> In 2023, I noticed the fastest-growing portion of Brazen's traffic was
+    coming from our embeddable chat plugin. The call times were decent, but to continue indefinite growth, they'd need
+    to be better. I took on the improvements myself, optimizing queries, adding backend caching, and reworking the
     client to request only the resources it would need in each plugin scenario. In the New Relic APM graphs below, you
     can see exactly when my changes were released to production.
 </p>
