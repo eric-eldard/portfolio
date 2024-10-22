@@ -24,7 +24,7 @@
 }
 
 .java-code .highlight {
-    filter: saturate(1.5);
+    filter: saturate(1.75);
 }
 
 .java-code .unhighlight {
