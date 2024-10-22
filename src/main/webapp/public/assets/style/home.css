@@ -48,10 +48,7 @@ a {
 
 .link-card:hover {
     box-shadow: 2px 2px 4px #444;
-    margin-bottom: 1px;
-    margin-left: -1px;
-    margin-right: 1px;
-    margin-top: -1px;
+    margin: -1px 1px 1px -1px;
 }
 
 .link-container {
