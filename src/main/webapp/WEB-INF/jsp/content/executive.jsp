@@ -4,8 +4,8 @@
     over to testers&mdash;and ultimately, to our customers. I consulted on major designs, took frequent code reviews,
     and encouraged best-practices. With a diverse team of engineers ranging from Principals to Year-One juniors, I took
     on a lot of different training and quality assurance initiatives. Guiding engineers to write code in secure,
-    extensible, and maintainable ways has taught me more about software engineering than I ever learned from just
-    writing code myself. And while I wrote a lot less code as an exec, it was also the time I wrote my best stuff.
+    extensible, and maintainable ways has taught me more about software engineering than I ever learned from writing
+    code myself.
 </p>
 
 <h2>Department Initiatives</h2>
@@ -24,13 +24,15 @@
 
 <h3>Operational Success Criteria</h3>
 <p>
-    Brazen Engineering always had good alarms for things that absolutely couldn't fail, like a server going down. But
-    there are situations for which failure is expected <i>some</i> of the time, and frequent alarms would be very noisy.
-    However, there's a big difference between <i>10% failed logins</i> and <i>90% failed logins</i>; at some point, the
-    threshold is crossed into <i>we need to know</i> territory. After identifying Mean Time to Detect as our most
-    lagging process metric, I created the Operational Success Criteria program. This saw our engineering teams
-    instrumenting their most critical endpoints and pushing metrics into Google BigQuery. The teams then built Sigma
-    dashboards on top of that data, allowing them to begin their standups with a health check of their products.
+    While Brazen Engineering always had good alarms for things that absolutely couldn't fail, there are situations in
+    which failure is expected <i>some</i> of the time. However, there's always a point in which the threshold is crossed
+    into <i>we need to know</i> territory.
+</p>
+<p>
+    After identifying Mean Time to Detect as our most lagging process metric, I created the Operational Success Criteria
+    program. This saw our engineering teams instrumenting their most critical endpoints and pushing metrics into Google
+    BigQuery. The teams then built Sigma dashboards on top of that data, allowing them to begin their standups with a
+    health check of their products.
 </p>
 <jsp:include page="../widgets/screenshot-solo.jsp">
     <jsp:param name="path"        value="Operational-Success-Flow.png"/>
@@ -39,14 +41,14 @@
 
 <hr>
 
-<h2>Lessons in 60s video series</h2>
+<h2>Lessons&nbsp;in&nbsp;60s video&nbsp;series</h2>
 <p>
-    Brown bags can be a big time investment for a team. I've often spent 20 hours assembling a high quality
-    lunch-and-learn session&mdash;and the team will spend another 20 collective hours attending. I do love the
-    participation you get with a live meeting, but a lot of topics don't require pulling engineers away from doing their
-    actual work. In 2022, I started the <b>Lessons in 60s series</b> in which I'd share 60-second training videos with
-    my team, that they could consume whenever convenient. In total, I put about a dozen lessons together and encouraged
-    my team to share their knowledge in the same format, which brought in another dozen videos on diverse topics.
+    I've often spent 20 hours assembling a high quality lunch-and-learn session&mdash;and my team will spend another 20
+    collective hours attending. I love the participation you get with a live meeting, but a lot of topics shouldn't
+    require pulling engineers away from doing their actual work. In 2022, I started the <b>Lessons in 60s series</b>
+    through which I'd share 60-second training videos with my team, which they could consume at their convenience. I put
+    about a dozen lessons together and encouraged my team to share their knowledge in the same format, which brought in
+    another dozen videos on diverse topics.
 </p>
 <p>
     Here's an example from a set of videos I did on being an IntelliJ power user.
@@ -73,8 +75,8 @@
     development, within six months 6 of 14 hackathon projects had gone into production.
 </p>
 <p>
-    I cut this video of the presentations, along with some B-roll, to share our
-    engineers' hard work and enthusiasm with the whole company.
+    I cut this video of the presentations, along with some B-roll, to share our engineers' hard work and enthusiasm with
+    the whole company.
 </p>
 <jsp:include page="../widgets/video-player.jsp">
     <jsp:param name="wrapperId" value="hackathon-video"/>

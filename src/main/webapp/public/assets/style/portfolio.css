@@ -165,10 +165,6 @@ label {
 	width: 100%;
 }
 
-.disclaimer {
-    font-size: smaller;
-}
-
 .grid1and3.red-gradient-backface *:before {
     background-color: #c00;
     background-image: linear-gradient(to bottom right, #c00, #600);
@@ -266,6 +262,7 @@ label {
 }
 
 .sm-heading {
+    color: #fff;
     display: block;
     font-size: 18px;
     font-weight: normal;

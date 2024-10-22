@@ -32,15 +32,6 @@
     width: 85%;
 }
 
-#popup a {
-	color: #ddf;
-	transition: color 0.3s;
-}
-
-#popup a:hover {
-	color: #ffd;
-}
-
 #popup h1 {
 	margin-top: 0px;
 	text-align: center;
@@ -64,6 +55,12 @@
     line-height: 125%;
 	margin-top: 0px;
 	text-align: justify;
+}
+
+#popup .disclaimer {
+    font-size: smaller;
+    margin-top: 8px;
+    text-align: center;
 }
 
 #popup .github, #popup .github:hover {
@@ -120,6 +117,9 @@
     width: 99%;
 }
 
+
+/* Popup Controls */
+
 #popup #closeX {
     color: #fff;
     display: block;
@@ -142,6 +142,7 @@
 
 #popup #move-back:after {
     border-radius: 0 100% 100% 0 / 50%;
+    color: #fff;
     content: "\025C0";
     left: -25px;
 }
@@ -152,6 +153,7 @@
 
 #popup #move-forward:after {
     border-radius: 100% 0 0 100% / 50%;
+    color: #fff;
     content: "\025B6";
     margin-left: 2px;
 }
@@ -195,6 +197,50 @@
 
 #popup-container.open {
     display: block;
+}
+
+
+/* Link and header colors are pastel versions of the background color for each popup */
+.timeline-color-0 #popup a,
+.timeline-color-0 #popup h2,
+.timeline-color-0 #popup h3 {
+    color: rgb(255, 192, 255);
+}
+
+.timeline-color-1 #popup a,
+.timeline-color-1 #popup h2,
+.timeline-color-1 #popup h3 {
+    color: rgb(204, 204, 255);
+}
+
+.timeline-color-2 #popup a,
+.timeline-color-2 #popup h2,
+.timeline-color-2 #popup h3 {
+    color: rgb(185, 255, 255);
+}
+
+.timeline-color-3 #popup a,
+.timeline-color-3 #popup h2,
+.timeline-color-3 #popup h3 {
+    color: rgb(176, 255, 176);
+}
+
+.timeline-color-4 #popup a,
+.timeline-color-4 #popup h2,
+.timeline-color-4 #popup h3 {
+    color: rgb(255, 242, 175);
+}
+
+.timeline-color-5 #popup a,
+.timeline-color-5 #popup h2,
+.timeline-color-5 #popup h3 {
+    color: rgb(255, 200, 128);
+}
+
+.timeline-color-6 #popup a,
+.timeline-color-6 #popup h2,
+.timeline-color-6 #popup h3 {
+    color: rgb(255, 155, 155);
 }
 
 

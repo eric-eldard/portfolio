@@ -111,24 +111,15 @@
 
 <h2>Data Classifier & Obfuscator</h2>
 <p>
-    Brazen's data graph was complex enough that it was difficult to build plausible test data for non-production
-    environments. We often used production dumps, with all personally identifiable info obfuscated. The risk with this
-    approach was that the obfuscation rules lived in a Ruby script, separate from our code. Devs had to remember to
-    update that script to match their Java/MySQL changes, and DevOps had to be informed to deploy the latest Ruby script
-    during Java app deployments. If you forgot one of these steps, you could end up with PII in your database dumps,
-    bound for your test environments.
+    My <b>Harpocrates Annotation</b> and <b>Persistence</b> libraries allow developers to annotate sensitive data
+    fields, classifying the type of data they represent; these classifications are copied to your database columns
+    when your app starts up. At any time, pipe a classified database dump through the <b>Harpocrates Obfuscator</b>
+    app to create a sanitized test dataset, with smart replacements for all kinds of sensitive data, including names,
+    email addresses, phone numbers, and much more!
 </p>
 <p>
-    After my Brazen days, I wrote <b>Harpocrates</b>, a library and app combo that solve these problems. With the
-    <b>Harpocrates Annotation</b> and <b>Persistence</b> libraries, you can annotate your entity fields directly to
-    classify the type of sensitive data they represent, and these classifications will be copied to your database
-    columns when your app starts up. At any time, pipe a classified database dump through the <b>Harpocrates
-    Obfuscator</b> app to make smart replacements in your dump for all kinds of sensitive data, include names, email
-    address, phone numbers, and much more!
-</p>
-<p>
-    As an added bonus, your data classifications live with both your code <i>and</i> your data&mdash;useful if another
-    application reads your data!
+    As an added bonus, your data classifications live with both your code <i>and</i> your data&mdash;useful if other
+    applications have access to your data!
 </p>
 
 <jsp:include page="../widgets/see-it-on-gh.jsp">
