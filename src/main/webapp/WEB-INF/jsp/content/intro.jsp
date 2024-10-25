@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <div class="intro-text">
     <p>
         I was writing software long before it was my job. As a hobbyist and in my first career running movie theaters,

@@ -1,7 +1,6 @@
-<%@ taglib uri="jakarta.tags.core" prefix="c" %>
-
 <%-- A widget for displaying various project specs. All inputs are optional and hidden when not provided. --%>
-
+<%@ page session="false" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <table class="specs">
     <c:if test="${param.frontend ne null}">
     <tr>

@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <c:set var="baseFrameDir" value="${param.baseFrameDir eq null ? '/portfolio/assets/projects' : param.baseFrameDir}"/>
 <c:set var="baseImgDir" value="${param.baseImgDir eq null ? '/portfolio/assets/images/projects' : param.baseImgDir}"/>

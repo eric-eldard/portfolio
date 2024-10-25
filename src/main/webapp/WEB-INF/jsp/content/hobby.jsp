@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <style>
     #cycling-font-colors .iframe {
         height: 200px;

@@ -34,7 +34,8 @@
 }
 
 #popup h2,
-#popup h3 {
+#popup h3,
+#popup h4 {
 	margin-top: 36px;
 	text-align: center;
 }
@@ -271,7 +272,9 @@
         width: 80%;
     }
 
-    #popup h2, #popup h3 {
+    #popup h2,
+    #popup h3,
+    #popup h4 {
         text-align: left;
     }
 

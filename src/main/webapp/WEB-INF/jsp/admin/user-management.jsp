@@ -1,6 +1,6 @@
+<%@ page session="false" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>

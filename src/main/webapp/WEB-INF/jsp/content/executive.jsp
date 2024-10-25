@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <h1>Executive Work</h1>
 <p>
     As Brazen's Vice President of Engineering, I was responsible for the quality of the product which engineers turned
