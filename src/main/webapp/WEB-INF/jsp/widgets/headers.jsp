@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <%-- Master headers widget for all pages. Doesn't include no-viewport-zoom.jsp so that can be toggled page by page. --%>
         <meta charset="UTF-8">
         <meta name="author" content="Eric Eldard">

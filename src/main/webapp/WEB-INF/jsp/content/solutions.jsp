@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <style>
     #flowchart-doc .iframe {
         aspect-ratio: 128 / 69;

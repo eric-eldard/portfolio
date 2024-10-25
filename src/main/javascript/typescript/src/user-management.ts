@@ -108,7 +108,7 @@ export namespace UserManagement {
     }
 
     /**
-     * @param {successCallback} optional action to run on success; omit for default behavior (reload page)
+     * @param successCallback action to run on success; omit for default behavior (reload page)
      */
     function handleResponse(response: Response,
         successCallback: ((r: Response) => void) = (response => window.location.reload())): void {

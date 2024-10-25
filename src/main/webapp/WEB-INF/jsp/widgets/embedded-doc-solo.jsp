@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <c:set var="baseDocDir" value="${param.baseDocDir eq null ? '/portfolio/assets/documents' : param.baseDocDir}"/>
 <c:set var="fit" value="${param.fitOverride eq null ? 'FitH' : param.fitOverride}"/>

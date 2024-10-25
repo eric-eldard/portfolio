@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <h1>Portfolio App</h1>
 <p>
     This portfolio is an app I built myself. It showcases some of my tried-and-true technologies, like <b>AWS</b> and
@@ -7,8 +8,9 @@
         <jsp:param name="text" value="JavaScript swipe-detection library"/>
         <jsp:param name="href" value="https://github.com/eric-eldard/swipe-events.js"/>
     </jsp:include>,
-    pre-compiled JSPs and recursive asset preloading for faster load times, third-party video integration, JWT auth
-    tokens, and robust user management. I'm constantly adding and upgrading, and it's been a blast to work on!
+    pre-compiled JSPs and recursive asset preloading for faster load times, third-party video integration, stateless
+    auth through JSON Web Tokens, and robust user management. I'm constantly adding and upgrading, and it's been a blast
+    to work on!
 </p>
 
 <jsp:include page="../widgets/see-it-on-gh.jsp">
@@ -25,13 +27,13 @@
     <jsp:param name="deployment" value="Amazon EC2"/>
 </jsp:include>
 
-<h3>Cloud Architecture Diagram</h3>
+<h4>Cloud Architecture Diagram</h4>
 <jsp:include page="../widgets/screenshot-solo.jsp">
     <jsp:param name="path"        value="portfolio-hosting-infra.png"/>
     <jsp:param name="description" value="Portfolio Hosting Infrastructure diagram"/>
 </jsp:include>
 
-<h3>Mobile-Responsive Design</h3>
+<h4>Mobile-Responsive Design</h4>
 <jsp:include page="../widgets/video-player.jsp">
     <jsp:param name="wrapperId" value="responsive-design-video"/>
     <jsp:param name="classes"   value="aspect-1680x1080 square-border white-border"/>
@@ -40,7 +42,7 @@
     <jsp:param name="error"     value="${RESPONSIVE_DESIGN_VIDEO_ERROR}"/>
 </jsp:include>
 
-<h3>Admin-only User Management</h3>
+<h4>Admin-only User Management</h4>
 <jsp:include page="../widgets/screenshot-solo.jsp">
     <jsp:param name="path"        value="portfolio-user-management.png"/>
     <jsp:param name="description" value="Admin-only user management features"/>

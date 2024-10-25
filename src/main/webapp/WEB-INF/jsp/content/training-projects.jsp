@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <h1>Training Projects</h1>
 <h2>Nile Shopping App</h2>
 <p>

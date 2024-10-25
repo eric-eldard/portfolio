@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <div id="${param.id}-container">
     <input type="password" id="${param.id}" onkeydown="${param.onKeyDownAction}" autocomplete="current-password">
     <a href="javascript: Portfolio.togglePasswordVisibility('${param.id}-container')" accesskey="v" class="visibility-toggle">

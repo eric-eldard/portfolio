@@ -1,6 +1,6 @@
+<%@ page session="false" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
-
 <c:set var="user" value="${user}" scope="request"/>
 
 <!DOCTYPE html>

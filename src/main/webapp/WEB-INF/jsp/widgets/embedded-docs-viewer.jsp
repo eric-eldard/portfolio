@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <c:set var="basedir" value="/portfolio/assets/documents"/>
 <c:set var="viewerParams" value="navpanes=0&view=Fit"/>

@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <div class="footer">
     <a href="javascript: Portfolio.showResume()" title="View my resume" id="footer-resume" class="resume-link">
         <div class="icon-container">

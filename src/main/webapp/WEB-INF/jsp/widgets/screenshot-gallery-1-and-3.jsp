@@ -2,6 +2,7 @@
     A 4 screenshot gallery with 1 central image and 3 in the right gutter.
     Hovering on the gutter images causes them to be shown in the central slot.
 --%>
+<%@ page session="false" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <c:set var="basedir"   value="${param.basedir eq null ? '/portfolio/assets/images/screenshots' : param.basedir}"/>
 <c:set var="centerImg" value="${basedir}/${param.centerImage}"/>

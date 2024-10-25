@@ -1,3 +1,4 @@
+<%@ page session="false" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <c:set var="basedir" value="${param.basedir eq null ? '/portfolio/assets/images/screenshots' : param.basedir}"/>
 <c:set var="imgUrl" value="${basedir}/${param.path}"/>
