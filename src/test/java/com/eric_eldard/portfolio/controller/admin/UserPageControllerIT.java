@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import jakarta.annotation.Nullable;
 import java.net.URI;
 
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 
 import com.eric_eldard.portfolio.test.BaseMvcIntegrationTest;
@@ -18,19 +17,17 @@ public class UserPageControllerIT extends BaseMvcIntegrationTest
 {
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testAdminCanViewAllUsers()
     {
-        getPage(makeUsersUri())
+        get(makeUsersUri(), asAdmin())
             .andExpect(status().isOk());
     }
 
     @Test
     @SneakyThrows
-    @WithMockUser
     public void testViewerCannotViewAllUsers()
     {
-        getPage(makeUsersUri())
+        get(makeUsersUri(), asPortfolioViewer())
             .andExpect(status().isForbidden());
     }
 
@@ -38,7 +35,7 @@ public class UserPageControllerIT extends BaseMvcIntegrationTest
     @SneakyThrows
     public void testUnauthenticatedCannotViewAllUsers()
     {
-        getPage(makeUsersUri())
+        get(makeUsersUri(), asUnauthenticated())
             .andExpect(status().isFound())
             .andDo(this::assertRedirectToLogin);
     }
@@ -46,21 +43,19 @@ public class UserPageControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testAdminCanViewUser()
     {
         long userId = makeAndSaveNonAdminUser().getId();
-        getPage(makeUsersUri(userId))
+        get(makeUsersUri(userId), asAdmin())
             .andExpect(status().isOk());
     }
 
     @Test
     @SneakyThrows
-    @WithMockUser
     public void testViewerCannotViewUser()
     {
         long userId = makeAndSaveNonAdminUser().getId();
-        getPage(makeUsersUri(userId))
+        get(makeUsersUri(userId), asPortfolioViewer())
             .andExpect(status().isForbidden());
     }
 
@@ -69,7 +64,7 @@ public class UserPageControllerIT extends BaseMvcIntegrationTest
     public void testUnauthenticatedCannotViewUser()
     {
         long userId = makeAndSaveNonAdminUser().getId();
-        getPage(makeUsersUri(userId))
+        get(makeUsersUri(userId), asUnauthenticated())
             .andExpect(status().isFound())
             .andDo(this::assertRedirectToLogin);
     }
@@ -80,7 +75,6 @@ public class UserPageControllerIT extends BaseMvcIntegrationTest
         return makeUsersUri(null);
     }
 
-    @SneakyThrows
     private URI makeUsersUri(@Nullable Long userId)
     {
         return makeBaseUri()

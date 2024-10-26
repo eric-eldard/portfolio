@@ -7,27 +7,23 @@ import org.junit.jupiter.api.Test;
 
 import java.net.URI;
 
-import org.springframework.security.test.context.support.WithMockUser;
-
 import com.eric_eldard.portfolio.test.BaseMvcIntegrationTest;
 
 public class PortfolioControllerIT extends BaseMvcIntegrationTest
 {
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testAdminCanViewPortfolio()
     {
-        getPage(makePortoflioUri())
+        get(makePortoflioUri(), asAdmin())
             .andExpect(status().isOk());
     }
 
     @Test
     @SneakyThrows
-    @WithMockUser
     public void testViewerCanViewPortfolio()
     {
-        getPage(makePortoflioUri())
+        get(makePortoflioUri(), asPortfolioViewer())
             .andExpect(status().isOk());
     }
 
@@ -35,13 +31,12 @@ public class PortfolioControllerIT extends BaseMvcIntegrationTest
     @SneakyThrows
     public void testUnauthenticatedCannotViewPortfolio()
     {
-        getPage(makePortoflioUri())
+        get(makePortoflioUri(), asUnauthenticated())
             .andExpect(status().isFound())
             .andDo(this::assertRedirectToLogin);
     }
 
 
-    @SneakyThrows
     private URI makePortoflioUri()
     {
         return makeBaseUri()

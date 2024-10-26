@@ -21,22 +21,27 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AnonymousConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
+import org.springframework.security.web.session.DisableEncodeUrlFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.eric_eldard.portfolio.logging.filter.AddUserToMdcFilter;
 import com.eric_eldard.portfolio.model.AdditionalLocation;
 import com.eric_eldard.portfolio.properties.AdditionalLocations;
-import com.eric_eldard.portfolio.security.filter.JwtFilter;
+import com.eric_eldard.portfolio.security.csrf.PortfolioCsrfTokenRepository;
+import com.eric_eldard.portfolio.security.filter.DisableSessionFilter;
+import com.eric_eldard.portfolio.security.filter.JwsFilter;
 import com.eric_eldard.portfolio.service.auth.AuthenticationService;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import com.eric_eldard.portfolio.service.user.SecurityContextService;
-import com.eric_eldard.portfolio.util.Constants;
 
 /**
  * Master config for security, logging, and beans for which creation order prevents a circular dependency.
@@ -57,9 +62,12 @@ public class GlobalConfig
 
     private final PasswordEncoder passwordEncoder;
 
+    private final PortfolioCsrfTokenRepository csrfTokenRepo;
+
     private final PortfolioUserService portfolioUserService;
 
     private final SecurityContextService securityContextService;
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
@@ -80,8 +88,10 @@ public class GlobalConfig
         authorizeAdditionalLocationRequests(httpSecurity, additionalLocations.getLocations());
 
         httpSecurity
+            .anonymous(AnonymousConfigurer::disable)
             .authorizeHttpRequests(requests -> requests
                 // WARNING: order matters, since these paths are hierarchical; putting "/" 1st gives admin access to all
+                .requestMatchers("/actuator/**").hasRole("ADMIN")
                 .requestMatchers("/portfolio/users/**").hasRole("ADMIN")
                 .requestMatchers("/portfolio/**").authenticated()
                 .requestMatchers(
@@ -100,18 +110,25 @@ public class GlobalConfig
             .authenticationProvider(
                 makeAuthenticationProvider()
             )
-            .securityContext(security -> security
-                .requireExplicitSave(false) // makes sec context available for logging, even on unauthenticated pages
+            .securityContext(security ->
+                // Set security context to expire after the request (context not stored in a session)
+                security.securityContextRepository(new RequestAttributeSecurityContextRepository())
+            )
+            .sessionManagement(sessions ->
+                sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .csrf(csrf ->
-                csrf.ignoringRequestMatchers("/login", "/logout") // allow GET-style logout (w/o CSRF token)
+                csrf
+                    .csrfTokenRepository(csrfTokenRepo)
+                    .ignoringRequestMatchers("/login", "/logout") // allow GET-style logout (w/o CSRF token)
             )
             .logout(logout ->
                 logout
                     .permitAll()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) // reinstate GET /logout (removed by CSRF config)
-                    .deleteCookies(Constants.JWT_COOKIE_NAME, Constants.SESSION_COOKIE_NAME)
                     .logoutSuccessUrl("/")
+                    .addLogoutHandler((_, response, authentication) ->
+                        authenticationService.logUserOut(response, authentication))
             )
             .exceptionHandling(ex ->
                 ex.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
@@ -120,8 +137,12 @@ public class GlobalConfig
                 .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 .crossOriginResourcePolicy(crossOrigin -> crossOrigin.policy(SAME_SITE))
             )
-            .addFilterBefore(
-                new JwtFilter(authenticationService), UsernamePasswordAuthenticationFilter.class
+            .addFilterAfter(
+                // TODO SOMETHING is still creating sessions (not Spring Boot, not Tomcat, not JSPs ...)
+                new DisableSessionFilter(), DisableEncodeUrlFilter.class // makes DisableSessionFilter second in chain
+            )
+            .addFilterAfter(
+                new JwsFilter(authenticationService), SecurityContextHolderFilter.class
             )
             .addFilterAfter(
                 new AddUserToMdcFilter(securityContextService), SecurityContextHolderAwareRequestFilter.class

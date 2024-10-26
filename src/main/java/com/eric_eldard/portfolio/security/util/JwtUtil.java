@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,7 +28,7 @@ public class JwtUtil
     }
 
 
-    public String buildToken(String subject, Map<String, String> claims, Date issuedAt, Date expiration)
+    public String buildToken(String subject, Map<String, Object> claims, Date issuedAt, Date expiration)
     {
         return Jwts.builder()
             .claims(Jwts.claims()
@@ -43,13 +42,8 @@ public class JwtUtil
             .compact();
     }
 
-    public Jws<Claims> resolveClaims(String token)
+    public Jws<Claims> resolveClaims(String claims)
     {
-        return jwtParser.parseSignedClaims(token);
-    }
-
-    public boolean validate(Jws<Claims> signedToken) throws AuthenticationException
-    {
-        return signedToken.getPayload().getExpiration().after(new Date());
+        return jwtParser.parseSignedClaims(claims);
     }
 }

@@ -1,14 +1,10 @@
 package com.eric_eldard.portfolio.service.auth;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
 
@@ -18,17 +14,15 @@ public interface AuthenticationService
 
     String issueToken(PortfolioUser user);
 
-    String issueToken(PortfolioUser user, Date issuedAt, Date expiry);
+    void setAuthenticationForRequest(String token, HttpServletRequest request, HttpServletResponse response);
 
-    Jws<Claims> resolveClaims(String token);
+    void logUserOut(HttpServletResponse response, @Nullable Authentication authentication);
 
-    boolean valid(Jws<Claims> signedToken) throws AuthenticationException;
-
-    void setAuthentication(long userId, HttpServletRequest source);
-
-    void setAuthentication(PortfolioUser user, HttpServletRequest source);
-
-    void setAuthTokenCookie(String token, HttpServletResponse response);
-
-    void logUserOut(HttpServletResponse response);
+    /**
+     * When an account is changed in a way that will require a fresh lookup (disabled, permissions changed, etc.), we'll
+     * store the user's ID for the TTL of an auth token, to ensure any stale token presented prior to its expiry has its
+     * claims refreshed. (All tokens issued prior to a server restart also require a claims refresh, since this list of
+     * users is lost.)
+     */
+    void requireFreshClaimsForUser(long userId);
 }

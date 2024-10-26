@@ -10,7 +10,6 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.eric_eldard.portfolio.test.BaseMvcIntegrationTest;
@@ -20,11 +19,10 @@ public class StaticAssetsIT extends BaseMvcIntegrationTest
 {
     @Test
     @SneakyThrows
-    @WithMockUser
     public void testViewersCanAccessStaticAssets()
     {
         // Verify access
-        MvcResult imgResult = getPage(makeAssetsUri())
+        MvcResult imgResult = get(makeAssetsUri(), asPortfolioViewer())
             .andExpect(status().isOk())
             .andReturn();
 
@@ -40,7 +38,7 @@ public class StaticAssetsIT extends BaseMvcIntegrationTest
     @SneakyThrows
     public void testUnauthenticatedCannotAccessStaticAssets()
     {
-        getPage(makeAssetsUri())
+        get(makeAssetsUri(), asUnauthenticated())
             .andExpect(status().isFound())
             .andDo(this::assertRedirectToLogin);
     }

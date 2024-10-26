@@ -7,11 +7,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
+import jakarta.servlet.http.Cookie;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.eric_eldard.portfolio.test.BaseMvcIntegrationTest;
@@ -20,11 +20,12 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
 {
     @Test
     @SneakyThrows
-    @WithMockUser(authorities = "OLD_PORTFOLIO")
     public void testAuthorityGrantsAccessToAdditionalLocation()
     {
+        Cookie authTokenCookie = asOldPortfolioViewer();
+
         // Verify request redirect is issued
-        MvcResult redirectResult = getPage(makeOldPortoflioUri())
+        MvcResult redirectResult = get(makeOldPortoflioUri(), authTokenCookie)
             .andExpect(status().isFound())
             .andReturn();
 
@@ -33,7 +34,7 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
         assertNotNull(redirectLocation);
 
         // Verify access to redirect location
-        MvcResult pageResult = getPage(makeOldPortoflioUri(redirectLocation))
+        MvcResult pageResult = get(makeOldPortoflioUri(redirectLocation), authTokenCookie)
             .andExpect(status().isOk())
             .andReturn();
 
@@ -48,19 +49,17 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser
     public void testUserLackingAuthorityDeniedAccessToAdditionalLocation()
     {
-        getPage(makeOldPortoflioUri())
+        get(makeOldPortoflioUri(), asPortfolioViewer())
             .andExpect(status().isForbidden());
     }
 
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testAdminLackingAuthorityDeniedAccessToAdditionalLocation()
     {
-        getPage(makeOldPortoflioUri())
+        get(makeOldPortoflioUri(), asAdmin())
             .andExpect(status().isForbidden());
     }
 
@@ -68,7 +67,7 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
     @SneakyThrows
     public void testUnauthenticatedCannotAccessAdditionalLocations()
     {
-        getPage(makeOldPortoflioUri())
+        get(makeOldPortoflioUri(), asUnauthenticated())
             .andExpect(status().isFound())
             .andDo(this::assertRedirectToLogin);
     }

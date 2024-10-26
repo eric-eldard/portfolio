@@ -17,7 +17,6 @@ import java.util.Optional;
 
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -35,12 +34,11 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testAdminCanCreateUser()
     {
-        PortfolioUserDto newUserDto = makeNonAdminUser();
+        PortfolioUserDto newUserDto = makeNonAdminUserDto();
 
-        MvcResult result = post(makeUsersUri(), newUserDto)
+        MvcResult result = post(makeUsersUri(), newUserDto, asAdmin())
             .andExpect(status().isCreated())
             .andReturn();
 
@@ -57,20 +55,19 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser
     public void testAuthenticatedViewerCannotCreateUser()
     {
-        post(makeUsersUri(), makeNonAdminUser())
+        post(makeUsersUri(), makeNonAdminUserDto(), asPortfolioViewer())
             .andExpect(status().isForbidden());
 
-        assertTrue(userService().findAllFullyHydrated().isEmpty());
+        assertEquals(1, userService().findAllFullyHydrated().size()); // no user created after the posting user
     }
 
     @Test
     @SneakyThrows
     public void testUnauthenticatedCannotCreateUser()
     {
-        post(makeUsersUri(), makeNonAdminUser())
+        post(makeUsersUri(), makeNonAdminUserDto(), asUnauthenticated())
             .andExpect(status().isFound())
             .andDo(this::assertRedirectToLogin);
 
@@ -80,11 +77,10 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testAdminCanDeleteUser()
     {
         long userId = makeAndSaveNonAdminUser().getId();
-        delete(makeUsersUri(userId))
+        delete(makeUsersUri(userId), asAdmin())
             .andExpect(status().isOk());
 
         Optional<PortfolioUser> user = userService().findById(userId);
@@ -93,11 +89,10 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser
     public void testViewerCannotDeleteUser()
     {
         long userId = makeAndSaveNonAdminUser().getId();
-        delete(makeUsersUri(userId))
+        delete(makeUsersUri(userId), asPortfolioViewer())
             .andExpect(status().isForbidden());
 
         Optional<PortfolioUser> user = userService().findById(userId);
@@ -109,7 +104,7 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
     public void testUnauthenticatedCannotDeleteUser()
     {
         long userId = makeAndSaveNonAdminUser().getId();
-        delete(makeUsersUri(userId))
+        delete(makeUsersUri(userId), asUnauthenticated())
             .andExpect(status().isFound())
             .andDo(this::assertRedirectToLogin);
 
@@ -120,13 +115,13 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testAdminCanPromoteUser()
     {
         long userId = makeAndSaveNonAdminUser().getId();
         patch(
             makeUsersUri(userId, "admin"),
-            PortfolioUserDto.builder().admin(true).build()
+            PortfolioUserDto.builder().admin(true).build(),
+            asAdmin()
         ).andExpect(status().isOk());
 
         PortfolioUser user = userService().findById(userId).get();
@@ -135,13 +130,13 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser
     public void testViewerCannotPromoteUser()
     {
         long userId = makeAndSaveNonAdminUser().getId();
         patch(
             makeUsersUri(userId, "admin"),
-            PortfolioUserDto.builder().admin(true).build()
+            PortfolioUserDto.builder().admin(true).build(),
+            asPortfolioViewer()
         ).andExpect(status().isForbidden());
 
         PortfolioUser user = userService().findById(userId).get();
@@ -155,7 +150,8 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
         long userId = makeAndSaveNonAdminUser().getId();
         patch(
             makeUsersUri(userId, "admin"),
-            PortfolioUserDto.builder().admin(true).build()
+            PortfolioUserDto.builder().admin(true).build(),
+            asUnauthenticated()
         )
             .andExpect(status().isFound())
             .andDo(this::assertRedirectToLogin);
@@ -167,7 +163,6 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testAdminCanUpdateUserPassword()
     {
         PortfolioUser user = makeAndSaveNonAdminUser();
@@ -175,7 +170,8 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
         patch(
             makeUsersUri(userId, "password"),
-            PortfolioUserDto.builder().password("abcdefgh").build()
+            PortfolioUserDto.builder().password("abcdefgh").build(),
+            asAdmin()
         ).andExpect(status().isOk());
 
         Optional<PortfolioUser> updatedUser = userService().findById(userId);
@@ -184,7 +180,6 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testPasswordMustHave8Chars()
     {
         PortfolioUser user = makeAndSaveNonAdminUser();
@@ -192,13 +187,13 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
         patch(
             makeUsersUri(userId, "password"),
-            PortfolioUserDto.builder().password("abcdefg").build()
+            PortfolioUserDto.builder().password("abcdefg").build(),
+            asAdmin()
         ).andExpect(status().isBadRequest());
     }
 
     @Test
     @SneakyThrows
-    @WithMockUser
     public void testAuthenticatedViewerCannotUpdateUserPassword()
     {
         PortfolioUser user = makeAndSaveNonAdminUser();
@@ -206,7 +201,8 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
         patch(
             makeUsersUri(userId, "password"),
-            PortfolioUserDto.builder().password("abcdefgh").build()
+            PortfolioUserDto.builder().password("abcdefgh").build(),
+            asPortfolioViewer()
         ).andExpect(status().isForbidden());
 
         Optional<PortfolioUser> updatedUser = userService().findById(userId);
@@ -222,7 +218,8 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
         patch(
             makeUsersUri(userId, "password"),
-            PortfolioUserDto.builder().password("abcdefgh").build()
+            PortfolioUserDto.builder().password("abcdefgh").build(),
+            asUnauthenticated()
         )
             .andExpect(status().isFound())
             .andDo(this::assertRedirectToLogin);
@@ -234,27 +231,25 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testCsrfTokenRequired()
     {
         mockMvc().perform(MockMvcRequestBuilders.post(makeUsersUri())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonify(makeNonAdminUser()))
-            )
-            .andExpect(status().isForbidden());
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(jsonify(makeNonAdminUserDto()))
+            .cookie(asAdmin())
+        ).andExpect(status().isForbidden());
     }
 
     @Test
     @SneakyThrows
-    @WithMockUser(roles = "ADMIN")
     public void testValidCsrfTokenRequired()
     {
         mockMvc().perform(MockMvcRequestBuilders.post(makeUsersUri())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonify(makeNonAdminUser()))
-                .with(csrf().useInvalidToken().asHeader())
-            )
-            .andExpect(status().isForbidden());
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(jsonify(makeNonAdminUserDto()))
+            .cookie(asAdmin())
+            .with(csrf().useInvalidToken().asHeader())
+        ).andExpect(status().isForbidden());
     }
 
 
@@ -268,7 +263,6 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
         return makeUsersUri(userId, null);
     }
 
-    @SneakyThrows
     private URI makeUsersUri(@Nullable Long userId, @Nullable String operation)
     {
         StringBuilder fullPath = new StringBuilder("/portfolio/users");
