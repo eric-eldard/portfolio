@@ -16,5 +16,8 @@ public interface SecurityContextService
     @Nullable
     String getCurrentUsersNameNullable();
 
+    @Nullable
+    Long getCurrentUsersIdNullable();
+
     void setAuthentication(Authentication authentication);
 }

@@ -180,4 +180,20 @@ public class PortfolioUser implements UserDetails
             .sorted(Comparator.comparing(LoginAttempt::getTimestamp).reversed())
             .toList();
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        return obj instanceof PortfolioUser other && id != null && id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        if (id == null)
+        {
+            throw new UnsupportedOperationException("Can't call hashCode() on transient " + getClass().getSimpleName());
+        }
+        return Math.toIntExact(id);
+    }
 }

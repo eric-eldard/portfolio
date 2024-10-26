@@ -7,6 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.eric_eldard.portfolio.model.auth.JwsAuthToken;
+
 @Service
 public class SecurityContextServiceImpl implements SecurityContextService
 {
@@ -15,7 +17,11 @@ public class SecurityContextServiceImpl implements SecurityContextService
     public String getCurrentUsersNameNonNull()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth == null ? "anonymous" : auth.getName();
+        if (auth != null)
+        {
+            return ((JwsAuthToken) auth).username();
+        }
+        return "anonymous";
     }
 
     @Nullable
@@ -23,7 +29,23 @@ public class SecurityContextServiceImpl implements SecurityContextService
     public String getCurrentUsersNameNullable()
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth == null ? null : auth.getName();
+        if (auth != null)
+        {
+            return ((JwsAuthToken) auth).username();
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Long getCurrentUsersIdNullable()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null)
+        {
+            return ((JwsAuthToken) auth).userId();
+        }
+        return null;
     }
 
     @Override

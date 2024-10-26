@@ -7,10 +7,9 @@ import org.slf4j.LoggerFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import java.io.IOException;
 
+import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +30,7 @@ public class AuthenticationController
     public void login(@RequestBody @Valid Credentials credentials,
                       HttpServletRequest request,
                       HttpServletResponse response
-    ) throws IOException
+    )
     {
         try
         {
@@ -43,17 +42,19 @@ public class AuthenticationController
             LOGGER.info("[{}] successfully logged in.", authentication.getName());
 
             PortfolioUser user = (PortfolioUser) authentication.getPrincipal();
-            String authToken = authenticationService.issueToken(user);
+            String token = authenticationService.issueToken(user);
 
-            authenticationService.setAuthentication(user, request);
-            authenticationService.setAuthTokenCookie(authToken, response);
+            authenticationService.setAuthenticationForRequest(token, request, response);
 
             response.sendRedirect("/portfolio");
         }
-        catch (AuthenticationException ex)
+        catch (Exception ex)
         {
-            LOGGER.info("{} for user [{}]", ex.getMessage(), credentials.getUsername());
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            LOGGER.info("Authentication failed for reason: {}", ex.getMessage());
+            response.setStatus(ex instanceof AccountStatusException ?
+                HttpServletResponse.SC_FORBIDDEN :
+                HttpServletResponse.SC_UNAUTHORIZED
+            );
         }
     }
 }

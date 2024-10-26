@@ -23,6 +23,8 @@ import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
 import com.eric_eldard.portfolio.model.user.enumeration.LoginFailureReason;
 import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
+import com.eric_eldard.portfolio.security.annotation.ClearsCsrfToken;
+import com.eric_eldard.portfolio.security.annotation.RequiresClaimsRefresh;
 import com.eric_eldard.portfolio.util.Constants;
 
 @Service
@@ -64,13 +66,14 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     @Override
     public PortfolioUser create(@Nonnull PortfolioUserDto dto)
     {
-        if (StringUtils.isBlank(dto.getUsername()))
+        String username = dto.getUsername().trim();
+
+        if (StringUtils.isBlank(username))
         {
             throw new IllegalArgumentException("PortfolioUserDto with blank username somehow got through validation");
         }
         validatePassword(dto.getPassword());
 
-        String username = dto.getUsername().trim();
         if (portfolioUserRepo.existsByUsername(username))
         {
             throw new IllegalArgumentException($."A user with the username [\{username}] already exists");
@@ -92,6 +95,8 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     }
 
     @Override
+    @ClearsCsrfToken
+    @RequiresClaimsRefresh
     public void delete(long id)
     {
         PortfolioUser user = findById(id)
@@ -103,6 +108,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     }
 
     @Override
+    @RequiresClaimsRefresh
     public void unlock(long id)
     {
         PortfolioUser user = findById(id)
@@ -117,6 +123,8 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     }
 
     @Override
+    @ClearsCsrfToken
+    @RequiresClaimsRefresh
     public void setPassword(long id, String password)
     {
         validatePassword(password);
@@ -136,6 +144,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     }
 
     @Override
+    @RequiresClaimsRefresh
     public void setAuthorizedUntil(long id, Date date)
     {
         PortfolioUser user = findById(id)
@@ -153,6 +162,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     }
 
     @Override
+    @RequiresClaimsRefresh
     public void setInfiniteAuthorization(long id)
     {
         PortfolioUser user = findById(id)
@@ -169,6 +179,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     }
 
     @Override
+    @RequiresClaimsRefresh
     public void setEnabled(long id, boolean enabled)
     {
         PortfolioUser user = findById(id)
@@ -186,6 +197,8 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     }
 
     @Override
+    @ClearsCsrfToken
+    @RequiresClaimsRefresh
     public void setIsAdmin(long id, boolean isAdmin)
     {
         PortfolioUser user = findById(id)
@@ -203,9 +216,10 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     }
 
     @Override
+    @RequiresClaimsRefresh
     public void toggleAuth(long id, @Nonnull PortfolioAuthority authority)
     {
-        PortfolioUser user = findById(id)
+        PortfolioUser user = findWithAuthoritiesById(id)
             .orElseThrow(() -> new IllegalArgumentException(
                 $."Cannot grant/remove authority [\{authority}] for user with id [\{id}]; user not found"));
 
