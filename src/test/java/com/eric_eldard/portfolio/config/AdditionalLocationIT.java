@@ -25,7 +25,7 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
         Cookie authTokenCookie = asOldPortfolioViewer();
 
         // Verify request redirect is issued
-        MvcResult redirectResult = get(makeOldPortoflioUri(), authTokenCookie)
+        MvcResult redirectResult = get(makeOldPortfolioUri(), authTokenCookie)
             .andExpect(status().isFound())
             .andReturn();
 
@@ -34,7 +34,7 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
         assertNotNull(redirectLocation);
 
         // Verify access to redirect location
-        MvcResult pageResult = get(makeOldPortoflioUri(redirectLocation), authTokenCookie)
+        MvcResult pageResult = get(makeOldPortfolioUri(redirectLocation), authTokenCookie)
             .andExpect(status().isOk())
             .andReturn();
 
@@ -51,7 +51,7 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
     @SneakyThrows
     public void testUserLackingAuthorityDeniedAccessToAdditionalLocation()
     {
-        get(makeOldPortoflioUri(), asPortfolioViewer())
+        get(makeOldPortfolioUri(), asPortfolioViewer())
             .andExpect(status().isForbidden());
     }
 
@@ -59,7 +59,7 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
     @SneakyThrows
     public void testAdminLackingAuthorityDeniedAccessToAdditionalLocation()
     {
-        get(makeOldPortoflioUri(), asAdmin())
+        get(makeOldPortfolioUri(), asAdmin())
             .andExpect(status().isForbidden());
     }
 
@@ -67,18 +67,18 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
     @SneakyThrows
     public void testUnauthenticatedCannotAccessAdditionalLocations()
     {
-        get(makeOldPortoflioUri(), asUnauthenticated())
+        get(makeOldPortfolioUri(), asUnauthenticated())
             .andExpect(status().isFound())
             .andDo(this::assertRedirectToLogin);
     }
 
-    private URI makeOldPortoflioUri()
+    private URI makeOldPortfolioUri()
     {
-        return makeOldPortoflioUri("/portfolio/old/test");
+        return makeOldPortfolioUri("/portfolio/old/test");
     }
 
     @SneakyThrows
-    private URI makeOldPortoflioUri(String path)
+    private URI makeOldPortfolioUri(String path)
     {
         return makeBaseUri()
             .path(path)

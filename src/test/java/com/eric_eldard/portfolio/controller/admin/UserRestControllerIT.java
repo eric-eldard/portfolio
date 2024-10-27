@@ -42,7 +42,7 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
             .andExpect(status().isCreated())
             .andReturn();
 
-        long userId = Long.valueOf(result.getResponse().getContentAsString());
+        long userId = Long.parseLong(result.getResponse().getContentAsString());
         Optional<PortfolioUser> createdUser = userService().findById(userId);
 
         assertTrue(createdUser.isPresent());
