@@ -42,6 +42,17 @@
     <jsp:param name="error"     value="${RESPONSIVE_DESIGN_VIDEO_ERROR}"/>
 </jsp:include>
 
+<h4>Authentication & Authorization Flows</h4>
+<jsp:include page="../widgets/screenshot-solo.jsp">
+    <jsp:param name="path"        value="portfolio-login-flow.png"/>
+    <jsp:param name="description" value="Portfolio login flowchart"/>
+</jsp:include>
+<br>
+<jsp:include page="../widgets/screenshot-solo.jsp">
+    <jsp:param name="path"        value="portfolio-request-flow.png"/>
+    <jsp:param name="description" value="Portfolio request flowchart"/>
+</jsp:include>
+
 <h4>Admin-only User Management</h4>
 <jsp:include page="../widgets/screenshot-solo.jsp">
     <jsp:param name="path"        value="portfolio-user-management.png"/>
