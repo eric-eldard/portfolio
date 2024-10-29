@@ -238,6 +238,49 @@ public class JwsFilterTest
 
     @Test
     @SneakyThrows
+    public void testTokenWithFutureServerStartIsUnauthorized()
+    {
+        PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
+
+        Jws<Claims> claims = jwtUtil.resolveClaims(authService.issueToken(user));
+        Map<String, Object> claimsMap = new HashMap<>(claims.getPayload());
+        claimsMap.put(ClaimConstants.SERVER_START, TestUtils.tomorrow());
+
+        String claimsFromFutureServer = jwtUtil.buildToken(
+            claims.getPayload().getSubject(),
+            claimsMap,
+            claims.getPayload().getIssuedAt(),
+            claims.getPayload().getExpiration()
+        );
+
+        MockHttpServletResponse response = makeRequest(claimsFromFutureServer);
+
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatus());
+    }
+
+    @Test
+    @SneakyThrows
+    public void testTokenIssuedBeforeServerStartIsUnauthorized()
+    {
+        PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
+
+        Jws<Claims> claims = jwtUtil.resolveClaims(authService.issueToken(user));
+        Map<String, Object> claimsMap = new HashMap<>(claims.getPayload());
+
+        String claimsIssuedBeforeServerStart = jwtUtil.buildToken(
+            claims.getPayload().getSubject(),
+            claimsMap,
+            TestUtils.yesterday(),
+            claims.getPayload().getExpiration()
+        );
+
+        MockHttpServletResponse response = makeRequest(claimsIssuedBeforeServerStart);
+
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatus());
+    }
+
+    @Test
+    @SneakyThrows
     public void testTokenWithoutUsernameIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -266,9 +309,12 @@ public class JwsFilterTest
         authService.requireFreshClaimsForUser(user.getId());
 
         Jws<Claims> claims = jwtUtil.resolveClaims(authService.issueToken(user));
+        Map<String, Object> claimsMap = new HashMap<>(claims.getPayload());
+        claimsMap.put(ClaimConstants.SERVER_START, TestUtils.twoDaysAgo()); // must be before issuedAt
+
         String claimsFromYesterday = jwtUtil.buildToken(
             claims.getPayload().getSubject(),
-            claims.getPayload(),
+            claimsMap,
             TestUtils.yesterday(),
             claims.getPayload().getExpiration()
         );
@@ -292,7 +338,7 @@ public class JwsFilterTest
 
         Jws<Claims> jwsClaims = jwtUtil.resolveClaims(authService.issueToken(user));
         Map<String, Object> claimsFromYesterday = new HashMap<>(jwsClaims.getPayload());
-        claimsFromYesterday.put(ClaimConstants.SERVER_START, TestUtils.yesterday());
+        claimsFromYesterday.put(ClaimConstants.SERVER_START, TestUtils.twoDaysAgo()); // must be before issuedAt
 
         String authToken = jwtUtil.buildToken(
             jwsClaims.getPayload().getSubject(),
