@@ -15,7 +15,6 @@ import jakarta.inject.Inject;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +44,7 @@ import com.eric_eldard.portfolio.security.util.JwtUtil;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import com.eric_eldard.portfolio.service.web.CookieService;
 import com.eric_eldard.portfolio.util.ClaimConstants;
+import com.eric_eldard.portfolio.util.DateUtils;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService
@@ -151,13 +151,9 @@ public class AuthenticationServiceImpl implements AuthenticationService
         securityContextService.setAuthentication(tokenToPresent);
     }
 
-    /**
-     * Refresh required
-     * <ul>
-     *     <li>for any token issued prior to {@link #SERVER_START}</li>
-     *     <li>if presented token was issued prior user's addition to {@link #usersRequiringFreshClaims}</li>
-     * </ul>
-     */
+    /// Refresh required
+    /// - for any token issued prior to {@link #SERVER_START}
+    /// - if presented token was issued prior user's addition to {@link #usersRequiringFreshClaims}
     private boolean refreshRequired(JwsAuthToken incomingToken)
     {
         if (incomingToken.serverStart().before(SERVER_START))
@@ -188,7 +184,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
         Date now = new Date();
         LOGGER.info("Tokens issued to user [{}] prior to {} will require claims refreshing",
             user.isPresent() ? user.get().getUsername() : userId,
-            new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(now)
+            DateUtils.as_yyyyMMddhhmmss(now)
         );
         usersRequiringFreshClaims.put(userId, now);
     }
@@ -241,6 +237,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     {
         // If user ID is null, it will fail here when parsed (this also verifies the claims container isn't null)
         long userId = token.userId();
+        Date now = new Date();
 
         if (token.isExpired())
         {
@@ -250,13 +247,21 @@ public class AuthenticationServiceImpl implements AuthenticationService
         {
             throw new InvalidTokenException($."User [\{userId}] presented an auth token with no issued-at timestamp");
         }
-        if (token.issuedAt().after(new Date()))
+        if (token.issuedAt().after(now))
         {
-            throw new InvalidTokenException($."User [\{userId}] presented an auth token from the future (\{token.issuedAt()})");
+            throw new InvalidTokenException($."User [\{userId}] presented an auth token from the future (\{DateUtils.as_yyyyMMddhhmmss(token.issuedAt())})");
         }
         if (token.serverStart() == null)
         {
             throw new InvalidTokenException($."User [\{userId}] presented an auth token with no server start date");
+        }
+        if (token.serverStart().after(now))
+        {
+            throw new InvalidTokenException($."User [\{userId}] presented an auth token from a server that hasn't started yet (\{DateUtils.as_yyyyMMddhhmmss(token.serverStart())})");
+        }
+        if (token.issuedAt().before(token.serverStart()))
+        {
+            throw new InvalidTokenException($."User [\{userId}] presented an auth token issued before the issuing server started (\{DateUtils.as_yyyyMMddhhmmss(token.issuedAt())} < \{DateUtils.as_yyyyMMddhhmmss(token.serverStart())})");
         }
         if (token.username() == null)
         {

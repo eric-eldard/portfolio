@@ -18,6 +18,13 @@ public class TestUtils
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestUtils.class);
 
+    public static <T extends Throwable> T assertThrowsAndPrintMessage(Class<T> expectedType, Executable executable)
+    {
+        T throwable = assertThrows(expectedType, executable);
+        LOGGER.error("{} thrown with message: {}", expectedType.getSimpleName(), throwable.getMessage());
+        return throwable;
+    }
+
     public static PortfolioUserDto makePortfolioUserDto()
     {
         Date nextYear = new Date(System.currentTimeMillis() + Duration.ofDays(365).toMillis());
@@ -39,22 +46,23 @@ public class TestUtils
         return "x".repeat(Constants.MIN_PASSWORD_CHARS - 1);
     }
 
+    public static Date twoDaysAgo()
+    {
+        return dateAtSystemTz(LocalDateTime.now().minusDays(2));
+    }
+
     public static Date yesterday()
     {
-        LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
-        return Date.from(yesterday.atZone(ZoneId.systemDefault()).toInstant());
+        return dateAtSystemTz(LocalDateTime.now().minusDays(1));
     }
 
     public static Date tomorrow()
     {
-        LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
-        return Date.from(tomorrow.atZone(ZoneId.systemDefault()).toInstant());
+        return dateAtSystemTz(LocalDateTime.now().plusDays(1));
     }
 
-    public static <T extends Throwable> T assertThrowsAndPrintMessage(Class<T> expectedType, Executable executable)
+    private static Date dateAtSystemTz(LocalDateTime dateTime)
     {
-        T throwable = assertThrows(expectedType, executable);
-        LOGGER.error("{} thrown with message: {}", expectedType.getSimpleName(), throwable.getMessage());
-        return throwable;
+        return Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 }

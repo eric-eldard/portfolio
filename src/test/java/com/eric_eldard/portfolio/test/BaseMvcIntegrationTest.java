@@ -217,24 +217,16 @@ public class BaseMvcIntegrationTest
         return performHttpActionWithJwtAndCsrf(MockMvcRequestBuilders.delete(uri), authCookie);
     }
 
-    /**
-     * We must add real auth tokens to each request (vs annotating with {@link WithMockUser}); otherwise, the test
-     * invokes the {@link JwsFilter}, where we short-circuit and continue the filter chain when no token is present,
-     * expecting the call to fail authorization (when required) down the line. The test then puts its own
-     * {@link Authentication} into the security context (instead of our {@link JwsAuthToken}), and so authorization is
-     * not failed.
-     * <br><br>
-     * This introduces two problems:
-     * <ol>
-     *     <li>
-     *         This circumvents all of our authentication logic in {@link AuthenticationService}, which we want to test
-     *     </li>
-     *     <li>
-     *         We blow up in {@link SecurityContextService} when we retrieve the principal and can't cast it to
-     *         {@link JwsAuthToken}
-     *     </li>
-     * </ol>
-     */
+    /// We must add real auth tokens to each request (vs annotating with {@link WithMockUser}); otherwise, the test
+    /// invokes the {@link JwsFilter}, where we short-circuit and continue the filter chain when no token is present,
+    /// expecting the call to fail authorization (when required) down the line. The test then puts its own
+    /// {@link Authentication} into the security context (instead of our {@link JwsAuthToken}), and so authorization is
+    /// not failed.
+    ///
+    /// This introduces two problems:
+    /// 1. This circumvents all of our authentication logic in {@link AuthenticationService}, which we want to test
+    /// 2. We blow up in {@link SecurityContextService} when we retrieve the principal and can't cast it to
+    ///    {@link JwsAuthToken}
     @SneakyThrows
     private ResultActions performHttpActionWithJwtAndCsrf(MockHttpServletRequestBuilder request, Cookie authCookie)
     {
