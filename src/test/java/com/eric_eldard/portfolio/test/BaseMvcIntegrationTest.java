@@ -39,8 +39,8 @@ import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
 import com.eric_eldard.portfolio.security.filter.JwsFilter;
 import com.eric_eldard.portfolio.service.auth.AuthenticationService;
+import com.eric_eldard.portfolio.service.auth.SecurityContextService;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
-import com.eric_eldard.portfolio.service.user.SecurityContextService;
 import com.eric_eldard.portfolio.util.Constants;
 
 @SpringBootTest(
@@ -97,11 +97,7 @@ public class BaseMvcIntegrationTest
      */
     protected PortfolioUserDto makeNonAdminUserDto()
     {
-        return PortfolioUserDto.builder()
-            .username("portfolio-viewer")
-            .password("01234567")
-            .enabled(true)
-            .build();
+        return TestUtils.makePortfolioUserDto();
     }
 
     /**
@@ -150,7 +146,7 @@ public class BaseMvcIntegrationTest
     {
         Date nextYear = new Date(System.currentTimeMillis() + Duration.ofDays(365).toMillis());
         PortfolioUser user = userService.create(builder
-            .password("x".repeat(Constants.MIN_PASSWORD_CHARS))
+            .password(TestUtils.makePassword())
             .authorizedUntil(nextYear)
             .enabled(true)
             .build()

@@ -15,7 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.eric_eldard.portfolio.util.Constants;
+import com.eric_eldard.portfolio.util.ClaimConstants;
 
 /**
  * An {@link Authentication} which holds {@link Jws<Claims>} as the principal and provides convenience methods for
@@ -50,7 +50,7 @@ public class JwsAuthToken extends AbstractAuthenticationToken
 
     public String username()
     {
-        return jwsClaims.getPayload().get("username", String.class);
+        return jwsClaims.getPayload().get(ClaimConstants.USERNAME, String.class);
     }
 
     public Date issuedAt()
@@ -60,7 +60,7 @@ public class JwsAuthToken extends AbstractAuthenticationToken
 
     public Date serverStart()
     {
-        return jwsClaims.getPayload().get(Constants.SERVER_START_CLAIM, Date.class);
+        return jwsClaims.getPayload().get(ClaimConstants.SERVER_START, Date.class);
     }
 
     public boolean isExpired() throws AuthenticationException
@@ -78,24 +78,25 @@ public class JwsAuthToken extends AbstractAuthenticationToken
 
     public boolean accountLocked()
     {
-        return jwsClaims.getPayload().get("locked_on", Date.class) != null;
+        return jwsClaims.getPayload().get(ClaimConstants.LOCKED_ON, Date.class) != null;
     }
 
     public boolean accountDisabled()
     {
-        return !jwsClaims.getPayload().get("enabled", Boolean.class);
+        Boolean enabled = jwsClaims.getPayload().get(ClaimConstants.ENABLED, Boolean.class);
+        return enabled == null || !enabled;
     }
 
     public boolean accountExpired()
     {
-        Date authorizedUntil = jwsClaims.getPayload().get("authorized_until", Date.class);
+        Date authorizedUntil = jwsClaims.getPayload().get(ClaimConstants.AUTHORIZED_UNTIL, Date.class);
         return authorizedUntil != null && authorizedUntil.before(new Date());
     }
 
     private static Collection<GrantedAuthority> makeGrantAuthorities(Jws<Claims> jwsClaims)
     {
         return jwsClaims.getPayload().entrySet().stream()
-            .filter(entry -> entry.getKey().startsWith("GrantedAuthority-"))
+            .filter(entry -> entry.getKey().startsWith(ClaimConstants.GA_STUB))
             .map(Map.Entry::getValue)
             .map(Object::toString)
             .map(SimpleGrantedAuthority::new)

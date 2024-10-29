@@ -23,7 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
 
-import com.eric_eldard.portfolio.service.user.SecurityContextService;
+import com.eric_eldard.portfolio.service.auth.SecurityContextService;
 import com.eric_eldard.portfolio.util.Constants;
 import com.eric_eldard.portfolio.util.ReflectionUtils;
 

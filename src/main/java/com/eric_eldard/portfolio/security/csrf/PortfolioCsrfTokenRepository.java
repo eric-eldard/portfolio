@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.util.UUID;
 
-import com.eric_eldard.portfolio.service.user.SecurityContextService;
+import com.eric_eldard.portfolio.service.auth.SecurityContextService;
 import com.eric_eldard.portfolio.util.Constants;
 
 @Component

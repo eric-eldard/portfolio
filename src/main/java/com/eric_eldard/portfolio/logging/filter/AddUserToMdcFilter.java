@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import org.springframework.security.web.context.SecurityContextHolderFilter;
 
-import com.eric_eldard.portfolio.service.user.SecurityContextService;
+import com.eric_eldard.portfolio.service.auth.SecurityContextService;
 
 /**
  * Filter for adding the calling user's username to the MDC, exposing that info to the logging context. This filter

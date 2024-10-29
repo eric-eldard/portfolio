@@ -1,10 +1,9 @@
-package com.eric_eldard.portfolio.service.auth;
+package com.eric_eldard.portfolio.service.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -30,7 +29,7 @@ import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
 import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
 import com.eric_eldard.portfolio.security.csrf.PortfolioCsrfTokenRepository;
-import com.eric_eldard.portfolio.service.user.PortfolioUserService;
+import com.eric_eldard.portfolio.service.auth.AuthenticationService;
 import com.eric_eldard.portfolio.test.TestConfig;
 import com.eric_eldard.portfolio.test.TestUtils;
 
@@ -99,7 +98,7 @@ public class PortfolioUserServiceTest
     {
         PortfolioUserDto portfolioUserDto = TestUtils.makePortfolioUserDto();
         portfolioUserDto.setUsername("   ");
-        assertThrows(
+        TestUtils.assertThrowsAndPrintMessage(
             IllegalArgumentException.class,
             () -> userService.create(portfolioUserDto)
         );
@@ -110,7 +109,7 @@ public class PortfolioUserServiceTest
     public void testCreateFailsForExistingUsername()
     {
         userService.create(TestUtils.makePortfolioUserDto());
-        assertThrows(
+        TestUtils.assertThrowsAndPrintMessage(
             IllegalArgumentException.class,
             () -> userService.create(TestUtils.makePortfolioUserDto())
         );
@@ -122,7 +121,7 @@ public class PortfolioUserServiceTest
     {
         PortfolioUserDto portfolioUserDto = TestUtils.makePortfolioUserDto();
         portfolioUserDto.setPassword(null);
-        assertThrows(
+        TestUtils.assertThrowsAndPrintMessage(
             IllegalArgumentException.class,
             () -> userService.create(portfolioUserDto)
         );
@@ -134,7 +133,7 @@ public class PortfolioUserServiceTest
     {
         PortfolioUserDto portfolioUserDto = TestUtils.makePortfolioUserDto();
         portfolioUserDto.setPassword(TestUtils.makeShortPassword());
-        assertThrows(
+        TestUtils.assertThrowsAndPrintMessage(
             IllegalArgumentException.class,
             () -> userService.create(portfolioUserDto)
         );
@@ -203,7 +202,7 @@ public class PortfolioUserServiceTest
 
         Mockito.reset(userRepo);
 
-        assertThrows(
+        TestUtils.assertThrowsAndPrintMessage(
             IllegalArgumentException.class,
             () -> userService.setPassword(userId, TestUtils.makeShortPassword())
         );
