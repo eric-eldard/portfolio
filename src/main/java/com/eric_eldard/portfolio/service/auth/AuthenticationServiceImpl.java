@@ -15,6 +15,7 @@ import jakarta.inject.Inject;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -145,8 +146,11 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
         tokenToPresent.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-        // Make cookie with expiry matching expiry of auth token
-        setAuthTokenCookie(claimsToPresent, tokenToPresent.getSecondsUntilExpiration(), response);
+        if (!requestHasClaims(request, claimsToPresent))
+        {
+            // Make cookie with expiry matching expiry of auth token
+            setAuthTokenCookie(response, claimsToPresent, tokenToPresent.getSecondsUntilExpiration());
+        }
 
         securityContextService.setAuthentication(tokenToPresent);
     }
@@ -287,7 +291,19 @@ public class AuthenticationServiceImpl implements AuthenticationService
         }
     }
 
-    private void setAuthTokenCookie(String token, int maxAge, HttpServletResponse response)
+    /// Detects whether the caller already has their latest claims.
+    /// - For logins, we generally expect that they do not already have an auth token cookie, though we have to cover
+    /// the case that they presented an expired or invalid token by comparing it with the latest claims
+    /// - For all other calls, we expect that they do, unless they required fresh claims in this request
+    private boolean requestHasClaims(HttpServletRequest request, String requiredClaims)
+    {
+        return request.getCookies() != null && Arrays.stream(request.getCookies())
+            .filter(cookie -> cookie.getName().equals(JWT_COOKIE_NAME))
+            .map(Cookie::getValue)
+            .anyMatch(requiredClaims::equals);
+    }
+
+    private void setAuthTokenCookie(HttpServletResponse response, String token, int maxAge)
     {
         Cookie tokenCookie = cookieService.makePersistentCookie(JWT_COOKIE_NAME, token, maxAge);
         response.addCookie(tokenCookie);
