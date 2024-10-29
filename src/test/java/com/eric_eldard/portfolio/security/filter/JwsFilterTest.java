@@ -34,6 +34,7 @@ import com.eric_eldard.portfolio.service.auth.AuthenticationService;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 import com.eric_eldard.portfolio.test.TestConfig;
 import com.eric_eldard.portfolio.test.TestUtils;
+import com.eric_eldard.portfolio.util.ClaimConstants;
 import com.eric_eldard.portfolio.util.Constants;
 import com.eric_eldard.portfolio.util.ReflectionUtils;
 
@@ -136,6 +137,28 @@ public class JwsFilterTest
 
     @Test
     @SneakyThrows
+    public void testTokenWithoutUserIdIsUnauthorized()
+    {
+        PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
+
+        Jws<Claims> claims = jwtUtil.resolveClaims(authService.issueToken(user));
+        Map<String, Object> claimsMap = new HashMap<>(claims.getPayload());
+        claimsMap.remove(ClaimConstants.USER_ID);
+
+        String claimsMissingSubject = jwtUtil.buildToken(
+            null,
+            claimsMap,
+            claims.getPayload().getIssuedAt(),
+            claims.getPayload().getExpiration()
+        );
+
+        MockHttpServletResponse response = makeRequest(claimsMissingSubject);
+
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatus());
+    }
+
+    @Test
+    @SneakyThrows
     public void testExpiredTokenIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -149,6 +172,88 @@ public class JwsFilterTest
         );
 
         MockHttpServletResponse response = makeRequest(expiredClaims);
+
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatus());
+    }
+
+    @Test
+    @SneakyThrows
+    public void testTokenWithoutIssuedAtIsUnauthorized()
+    {
+        PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
+
+        Jws<Claims> claims = jwtUtil.resolveClaims(authService.issueToken(user));
+        String claimsMissingIssuedAt = jwtUtil.buildToken(
+            claims.getPayload().getSubject(),
+            claims.getPayload(),
+            null,
+            claims.getPayload().getExpiration()
+        );
+
+        MockHttpServletResponse response = makeRequest(claimsMissingIssuedAt);
+
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatus());
+    }
+
+    @Test
+    @SneakyThrows
+    public void testTokenFromFutureIsUnauthorized()
+    {
+        PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
+
+        Jws<Claims> claims = jwtUtil.resolveClaims(authService.issueToken(user));
+        String claimsFromTheFuture = jwtUtil.buildToken(
+            claims.getPayload().getSubject(),
+            claims.getPayload(),
+            TestUtils.tomorrow(),
+            claims.getPayload().getExpiration()
+        );
+
+        MockHttpServletResponse response = makeRequest(claimsFromTheFuture);
+
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatus());
+    }
+
+    @Test
+    @SneakyThrows
+    public void testTokenWithoutServerStartIsUnauthorized()
+    {
+        PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
+
+        Jws<Claims> claims = jwtUtil.resolveClaims(authService.issueToken(user));
+        Map<String, Object> claimsMap = new HashMap<>(claims.getPayload());
+        claimsMap.remove(ClaimConstants.SERVER_START);
+
+        String claimsMissingServerStart = jwtUtil.buildToken(
+            claims.getPayload().getSubject(),
+            claimsMap,
+            claims.getPayload().getIssuedAt(),
+            claims.getPayload().getExpiration()
+        );
+
+        MockHttpServletResponse response = makeRequest(claimsMissingServerStart);
+
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatus());
+    }
+
+    @Test
+    @SneakyThrows
+    public void testTokenWithoutUsernameIsUnauthorized()
+    {
+        PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
+
+        Jws<Claims> claims = jwtUtil.resolveClaims(authService.issueToken(user));
+        Map<String, Object> claimsMap = new HashMap<>(claims.getPayload());
+        claimsMap.remove(ClaimConstants.USERNAME);
+
+        String claimsMissingUsername = jwtUtil.buildToken(
+            claims.getPayload().getSubject(),
+            claimsMap,
+            claims.getPayload().getIssuedAt(),
+            claims.getPayload().getExpiration()
+        );
+
+        MockHttpServletResponse response = makeRequest(claimsMissingUsername);
 
         assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatus());
     }
@@ -187,7 +292,7 @@ public class JwsFilterTest
 
         Jws<Claims> jwsClaims = jwtUtil.resolveClaims(authService.issueToken(user));
         Map<String, Object> claimsFromYesterday = new HashMap<>(jwsClaims.getPayload());
-        claimsFromYesterday.put(Constants.SERVER_START_CLAIM, TestUtils.yesterday());
+        claimsFromYesterday.put(ClaimConstants.SERVER_START, TestUtils.yesterday());
 
         String authToken = jwtUtil.buildToken(
             jwsClaims.getPayload().getSubject(),
@@ -203,8 +308,8 @@ public class JwsFilterTest
         Claims originalClaims = jwtUtil.resolveClaims(authToken).getPayload();
         Claims newClaims = jwtUtil.resolveClaims(response.getCookie(Constants.JWT_COOKIE_NAME).getValue()).getPayload();
 
-        assertTrue(newClaims.get(Constants.SERVER_START_CLAIM, Date.class).after(
-            originalClaims.get(Constants.SERVER_START_CLAIM, Date.class)
+        assertTrue(newClaims.get(ClaimConstants.SERVER_START, Date.class).after(
+            originalClaims.get(ClaimConstants.SERVER_START, Date.class)
         ));
         assertEquals(originalClaims.getExpiration(), newClaims.getExpiration());
     }

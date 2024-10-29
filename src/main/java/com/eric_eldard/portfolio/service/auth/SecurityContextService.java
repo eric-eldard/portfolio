@@ -1,4 +1,4 @@
-package com.eric_eldard.portfolio.service.user;
+package com.eric_eldard.portfolio.service.auth;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

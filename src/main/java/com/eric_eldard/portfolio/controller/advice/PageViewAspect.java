@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Component;
 
-import com.eric_eldard.portfolio.service.user.SecurityContextService;
+import com.eric_eldard.portfolio.service.auth.SecurityContextService;
 
 @Aspect
 @Component

@@ -21,6 +21,9 @@ public class JwtUtil
     private final SecretKey jwtSecretKey;
 
 
+    /**
+     * @param jwtSecretKeyValue generate with {@code openssl rand -hex 32}
+     */
     public JwtUtil(@Value("${portfolio.security.jwt.signing-key}") String jwtSecretKeyValue)
     {
         jwtSecretKey = new SecretKeySpec(jwtSecretKeyValue.trim().getBytes(), "HmacSHA256");
@@ -28,6 +31,9 @@ public class JwtUtil
     }
 
 
+    /**
+     * @return a signed, url-encoded JWS token as a string (inspect at <a href="https://jwt.io">https://jwt.io</a>)
+     */
     public String buildToken(String subject, Map<String, Object> claims, Date issuedAt, Date expiration)
     {
         return Jwts.builder()
@@ -42,6 +48,9 @@ public class JwtUtil
             .compact();
     }
 
+    /**
+     * @return a Java-friendly claims object from a signed, url-encoded JWS token string
+     */
     public Jws<Claims> resolveClaims(String claims)
     {
         return jwtParser.parseSignedClaims(claims);

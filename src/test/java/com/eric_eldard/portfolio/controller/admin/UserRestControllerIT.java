@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
 import com.eric_eldard.portfolio.model.user.PortfolioUserDto;
 import com.eric_eldard.portfolio.test.BaseMvcIntegrationTest;
+import com.eric_eldard.portfolio.test.TestUtils;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserRestControllerIT extends BaseMvcIntegrationTest
@@ -170,7 +171,9 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
         patch(
             makeUsersUri(userId, "password"),
-            PortfolioUserDto.builder().password("abcdefgh").build(),
+            PortfolioUserDto.builder()
+                .password(TestUtils.makePassword())
+                .build(),
             asAdmin()
         ).andExpect(status().isOk());
 
@@ -180,14 +183,16 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
     @Test
     @SneakyThrows
-    public void testPasswordMustHave8Chars()
+    public void testPasswordMustHaveMinChars()
     {
         PortfolioUser user = makeAndSaveNonAdminUser();
         long userId = user.getId();
 
         patch(
             makeUsersUri(userId, "password"),
-            PortfolioUserDto.builder().password("abcdefg").build(),
+            PortfolioUserDto.builder()
+                .password(TestUtils.makeShortPassword())
+                .build(),
             asAdmin()
         ).andExpect(status().isBadRequest());
     }
@@ -201,7 +206,9 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
         patch(
             makeUsersUri(userId, "password"),
-            PortfolioUserDto.builder().password("abcdefgh").build(),
+            PortfolioUserDto.builder()
+                .password(TestUtils.makePassword())
+                .build(),
             asPortfolioViewer()
         ).andExpect(status().isForbidden());
 
@@ -218,7 +225,9 @@ public class UserRestControllerIT extends BaseMvcIntegrationTest
 
         patch(
             makeUsersUri(userId, "password"),
-            PortfolioUserDto.builder().password("abcdefgh").build(),
+            PortfolioUserDto.builder()
+                .password(TestUtils.makePassword())
+                .build(),
             asUnauthenticated()
         )
             .andExpect(status().isFound())

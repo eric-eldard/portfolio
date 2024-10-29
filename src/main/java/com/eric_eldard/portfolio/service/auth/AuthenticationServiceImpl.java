@@ -43,9 +43,8 @@ import com.eric_eldard.portfolio.security.exception.InvalidTokenException;
 import com.eric_eldard.portfolio.security.filter.JwsFilter;
 import com.eric_eldard.portfolio.security.util.JwtUtil;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
-import com.eric_eldard.portfolio.service.user.SecurityContextService;
 import com.eric_eldard.portfolio.service.web.CookieService;
-import com.eric_eldard.portfolio.util.Constants;
+import com.eric_eldard.portfolio.util.ClaimConstants;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService
@@ -126,22 +125,13 @@ public class AuthenticationServiceImpl implements AuthenticationService
         // We wrap the claims immediately to leverage convenience methods in the token class
         JwsAuthToken incomingToken = new JwsAuthToken(resolveClaims(incomingClaims));
 
-        if (incomingToken.isExpired())
-        {
-            throw new InvalidTokenException("User [" + incomingToken.username() + "] presented an expired auth token");
-        }
-
-        Date dateRefreshRequired = usersRequiringFreshClaims.getIfPresent(incomingToken.userId());
-
-        // - Refresh required for tokens issued prior to app restart
-        // - Refresh required if presented token was issued prior to last time a refresh was required for this user
-        boolean refreshRequired = incomingToken.serverStart().before(SERVER_START) ||
-            dateRefreshRequired != null && incomingToken.issuedAt().before(dateRefreshRequired);
+        validateToken(incomingToken);
 
         String claimsToPresent;
         JwsAuthToken tokenToPresent;
-        if (refreshRequired)
+        if (refreshRequired(incomingToken))
         {
+            LOGGER.info("Token presented by [{}] requires refreshing", incomingToken.username());
             claimsToPresent = refreshTokenClaims(incomingToken);
             tokenToPresent = new JwsAuthToken(resolveClaims(claimsToPresent));
         }
@@ -159,6 +149,25 @@ public class AuthenticationServiceImpl implements AuthenticationService
         setAuthTokenCookie(claimsToPresent, tokenToPresent.getSecondsUntilExpiration(), response);
 
         securityContextService.setAuthentication(tokenToPresent);
+    }
+
+    /**
+     * Refresh required
+     * <ul>
+     *     <li>for any token issued prior to {@link #SERVER_START}</li>
+     *     <li>if presented token was issued prior user's addition to {@link #usersRequiringFreshClaims}</li>
+     * </ul>
+     */
+    private boolean refreshRequired(JwsAuthToken incomingToken)
+    {
+        if (incomingToken.serverStart().before(SERVER_START))
+        {
+            return true;
+        }
+
+        Date dateRefreshRequired = usersRequiringFreshClaims.getIfPresent(incomingToken.userId());
+
+        return dateRefreshRequired != null && incomingToken.issuedAt().before(dateRefreshRequired);
     }
 
     @Override
@@ -188,17 +197,17 @@ public class AuthenticationServiceImpl implements AuthenticationService
     private String issueToken(PortfolioUser user, Date issuedAt, Date expiry)
     {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", user.getUsername());
-        claims.put("enabled", user.isEnabled());
-        claims.put("authorized_until", user.getAuthorizedUntil());
-        claims.put("locked_on", user.getLockedOn());
-        claims.put(Constants.SERVER_START_CLAIM, SERVER_START);
+        claims.put(ClaimConstants.USERNAME, user.getUsername());
+        claims.put(ClaimConstants.ENABLED, user.isEnabled());
+        claims.put(ClaimConstants.AUTHORIZED_UNTIL, user.getAuthorizedUntil());
+        claims.put(ClaimConstants.LOCKED_ON, user.getLockedOn());
+        claims.put(ClaimConstants.SERVER_START, SERVER_START);
         // "admin" is a granted authority, so no need to add it as a separate claim
 
         int index = 1;
         for (GrantedAuthority authority : user.getAuthorities())
         {
-            claims.put("GrantedAuthority-" + index++, authority.getAuthority());
+            claims.put(ClaimConstants.GA_STUB + index++, authority.getAuthority());
         }
 
         return jwtUtil.buildToken(String.valueOf(user.getId()), claims, issuedAt, expiry);
@@ -228,6 +237,33 @@ public class AuthenticationServiceImpl implements AuthenticationService
         return issueToken(user.get(), new Date(), originalTokenExpiration);
     }
 
+    private void validateToken(JwsAuthToken token)
+    {
+        // If user ID is null, it will fail here when parsed (this also verifies the claims container isn't null)
+        long userId = token.userId();
+
+        if (token.isExpired())
+        {
+            throw new InvalidTokenException($."User [\{userId}] presented an expired auth token");
+        }
+        if (token.issuedAt() == null)
+        {
+            throw new InvalidTokenException($."User [\{userId}] presented an auth token with no issued-at timestamp");
+        }
+        if (token.issuedAt().after(new Date()))
+        {
+            throw new InvalidTokenException($."User [\{userId}] presented an auth token from the future (\{token.issuedAt()})");
+        }
+        if (token.serverStart() == null)
+        {
+            throw new InvalidTokenException($."User [\{userId}] presented an auth token with no server start date");
+        }
+        if (token.username() == null)
+        {
+            throw new InvalidTokenException($."User [\{userId}] presented an auth token with no username");
+        }
+    }
+
     private void validateAccount(JwsAuthToken token)
     {
         String username = token.username();
@@ -236,11 +272,11 @@ public class AuthenticationServiceImpl implements AuthenticationService
         {
             throw new LockedException($."The account for user [\{username}] is locked for too many failed attempts.");
         }
-        else if (token.accountDisabled())
+        if (token.accountDisabled())
         {
             throw new DisabledException($."The account for user [\{username}] is permanently disabled.");
         }
-        else if (token.accountExpired())
+        if (token.accountExpired())
         {
             throw new AccountExpiredException($."The account for user [\{username}] has expired.");
         }

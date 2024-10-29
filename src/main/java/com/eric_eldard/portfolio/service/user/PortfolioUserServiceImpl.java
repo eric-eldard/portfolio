@@ -25,6 +25,7 @@ import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 import com.eric_eldard.portfolio.persistence.user.PortfolioUserRepository;
 import com.eric_eldard.portfolio.security.annotation.ClearsCsrfToken;
 import com.eric_eldard.portfolio.security.annotation.RequiresClaimsRefresh;
+import com.eric_eldard.portfolio.service.auth.SecurityContextService;
 import com.eric_eldard.portfolio.util.Constants;
 
 @Service
@@ -308,7 +309,8 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     {
         if (password == null || password.trim().length() < Constants.MIN_PASSWORD_CHARS)
         {
-            throw new IllegalArgumentException("Password must be at least 8 characters");
+            throw new IllegalArgumentException(
+                $."Password must be at least \{Constants.MIN_PASSWORD_CHARS} characters");
         }
     }
 

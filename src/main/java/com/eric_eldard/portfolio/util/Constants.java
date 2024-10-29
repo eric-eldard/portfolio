@@ -12,9 +12,7 @@ public final class Constants
 
     public static final String JWT_COOKIE_NAME = "authToken";
 
-    public static final int MIN_PASSWORD_CHARS = 8;
-
-    public static final String SERVER_START_CLAIM = "server_start";
+    public static final int MIN_PASSWORD_CHARS = 10;
 
     private Constants()
     {

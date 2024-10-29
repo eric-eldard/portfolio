@@ -40,8 +40,8 @@ import com.eric_eldard.portfolio.security.csrf.PortfolioCsrfTokenRepository;
 import com.eric_eldard.portfolio.security.filter.DisableSessionFilter;
 import com.eric_eldard.portfolio.security.filter.JwsFilter;
 import com.eric_eldard.portfolio.service.auth.AuthenticationService;
+import com.eric_eldard.portfolio.service.auth.SecurityContextService;
 import com.eric_eldard.portfolio.service.user.PortfolioUserService;
-import com.eric_eldard.portfolio.service.user.SecurityContextService;
 
 /**
  * Master config for security, logging, and beans for which creation order prevents a circular dependency.
