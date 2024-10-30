@@ -183,7 +183,6 @@ public class BaseMvcIntegrationTest
     /**
      * Perform an application/json POST to the URI, with a CSRF token, and return ResultActions for continued chaining.
      */
-    @SneakyThrows
     protected ResultActions post(URI uri, Object body, @Nullable Cookie authCookie)
     {
         return performHttpActionWithJwtAndCsrf(
@@ -197,7 +196,6 @@ public class BaseMvcIntegrationTest
     /**
      * Perform an application/json PATCH to the URI, with a CSRF token, and return ResultActions for continued chaining.
      */
-    @SneakyThrows
     protected ResultActions patch(URI uri, Object body, @Nullable Cookie authCookie)
     {
         return performHttpActionWithJwtAndCsrf(
@@ -211,7 +209,6 @@ public class BaseMvcIntegrationTest
     /**
      * Perform a DELETE op on the URI, with a CSRF token, and return ResultActions for continued chaining.
      */
-    @SneakyThrows
     protected ResultActions delete(URI uri, @Nullable Cookie authCookie)
     {
         return performHttpActionWithJwtAndCsrf(MockMvcRequestBuilders.delete(uri), authCookie);

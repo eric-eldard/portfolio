@@ -1,6 +1,7 @@
 package com.eric_eldard.portfolio.security.filter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.common.cache.Cache;
@@ -11,10 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.transaction.Transactional;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +71,6 @@ public class JwsFilterTest
 
 
     @Test
-    @SneakyThrows
     @Transactional
     public void testLockedAccountIsForbidden()
     {
@@ -86,7 +84,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testExpiredAccountIsForbidden()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -98,7 +95,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testDisabledAccountIsForbidden()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -110,7 +106,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testDeletedAccountIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -122,7 +117,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testDamagedAuthTokenIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -136,7 +130,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testTokenWithoutUserIdIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -158,7 +151,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testExpiredTokenIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -177,7 +169,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testTokenWithoutIssuedAtIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -196,7 +187,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testTokenFromFutureIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -215,7 +205,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testTokenWithoutServerStartIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -237,7 +226,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testTokenWithFutureServerStartIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -259,7 +247,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testTokenIssuedBeforeServerStartIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -280,7 +267,6 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
     public void testTokenWithoutUsernameIsUnauthorized()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
@@ -302,8 +288,18 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
-    public void tokenRefreshedWhenUserRequiresFreshClaims()
+    public void testTokenNotRefreshedWhenNotNecessary()
+    {
+        PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
+
+        MockHttpServletResponse response = makeRequest(authService.issueToken(user));
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertNull(response.getCookie(Constants.JWT_COOKIE_NAME));
+    }
+
+    @Test
+    public void testTokenRefreshedWhenUserRequiresFreshClaims()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
         authService.requireFreshClaimsForUser(user.getId());
@@ -331,8 +327,7 @@ public class JwsFilterTest
     }
 
     @Test
-    @SneakyThrows
-    public void tokenRefreshedAfterSystemRestart()
+    public void testTokenRefreshedAfterSystemRestart()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
 
@@ -361,7 +356,8 @@ public class JwsFilterTest
     }
 
 
-    private MockHttpServletResponse makeRequest(String authToken) throws IOException, ServletException
+    @SneakyThrows
+    private MockHttpServletResponse makeRequest(String authToken)
     {
         MockHttpServletRequest request = new MockHttpServletRequest("GET", "/some-asset");
         MockHttpServletResponse response = new MockHttpServletResponse();

@@ -43,7 +43,6 @@ public class StaticAssetsIT extends BaseMvcIntegrationTest
             .andDo(this::assertRedirectToLogin);
     }
 
-    @SneakyThrows
     private URI makeAssetsUri()
     {
         return makeBaseUri()
