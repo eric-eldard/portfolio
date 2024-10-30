@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.eric_eldard.portfolio.PortfolioApp;
@@ -66,7 +67,7 @@ public class JwsFilterTest
     {
         jwsFilter = new JwsFilter(authService);
         ((Cache<Long, Date>) ReflectionUtils.getField(authService, "usersRequiringFreshClaims")).invalidateAll();
-        userRepo.deleteAll();
+        userRepo.deleteAll(); /// Much faster than {@link DirtiesContext}
     }
 
 
@@ -103,6 +104,31 @@ public class JwsFilterTest
         MockHttpServletResponse response = makeRequest(authService.issueToken(user));
 
         assertEquals(HttpStatus.FORBIDDEN.value(), response.getStatus());
+    }
+
+    @Test
+    public void testForgedTokenIsUnauthorized()
+    {
+        PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
+        String randomSigningKey = "c33dda180f768f592440a1129226f246991a351b73be43a4533b7077ab1bedeb";
+        JwtUtil sketchyJwtUtil = new JwtUtil(randomSigningKey);
+
+        Map<String, Object> claimsMap = new HashMap<>();
+        claimsMap.put(ClaimConstants.USERNAME, user.getUsername());
+        claimsMap.put(ClaimConstants.ENABLED, Boolean.TRUE);
+        claimsMap.put(ClaimConstants.GA_STUB + "1", "ROLE_ADMIN");
+        claimsMap.put(ClaimConstants.SERVER_START, TestUtils.yesterday()); // attempting to get upgraded to a real token
+
+        String forgedClaims = sketchyJwtUtil.buildToken(
+            user.getId().toString(),
+            claimsMap,
+            new Date(),
+            TestUtils.tomorrow()
+        );
+
+        MockHttpServletResponse response = makeRequest(forgedClaims);
+
+        assertEquals(HttpStatus.UNAUTHORIZED.value(), response.getStatus());
     }
 
     @Test
@@ -299,27 +325,20 @@ public class JwsFilterTest
     }
 
     @Test
+    @SneakyThrows
     public void testTokenRefreshedWhenUserRequiresFreshClaims()
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
+        String claims = authService.issueToken(user);
+
+        Thread.sleep(1_000); // sleep required to ensure refresh-required timestamp is after claims issuedAt time
         authService.requireFreshClaimsForUser(user.getId());
 
-        Jws<Claims> claims = jwtUtil.resolveClaims(authService.issueToken(user));
-        Map<String, Object> claimsMap = new HashMap<>(claims.getPayload());
-        claimsMap.put(ClaimConstants.SERVER_START, TestUtils.twoDaysAgo()); // must be before issuedAt
-
-        String claimsFromYesterday = jwtUtil.buildToken(
-            claims.getPayload().getSubject(),
-            claimsMap,
-            TestUtils.yesterday(),
-            claims.getPayload().getExpiration()
-        );
-
-        MockHttpServletResponse response = makeRequest(claimsFromYesterday);
+        MockHttpServletResponse response = makeRequest(claims);
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
 
-        Claims originalClaims = jwtUtil.resolveClaims(claimsFromYesterday).getPayload();
+        Claims originalClaims = jwtUtil.resolveClaims(claims).getPayload();
         Claims newClaims = jwtUtil.resolveClaims(response.getCookie(Constants.JWT_COOKIE_NAME).getValue()).getPayload();
 
         assertTrue(newClaims.getIssuedAt().after(originalClaims.getIssuedAt()));
@@ -333,7 +352,7 @@ public class JwsFilterTest
 
         Jws<Claims> jwsClaims = jwtUtil.resolveClaims(authService.issueToken(user));
         Map<String, Object> claimsFromYesterday = new HashMap<>(jwsClaims.getPayload());
-        claimsFromYesterday.put(ClaimConstants.SERVER_START, TestUtils.twoDaysAgo()); // must be before issuedAt
+        claimsFromYesterday.put(ClaimConstants.SERVER_START, TestUtils.twoDaysAgo());
 
         String authToken = jwtUtil.buildToken(
             jwsClaims.getPayload().getSubject(),
