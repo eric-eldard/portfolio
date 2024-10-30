@@ -1,7 +1,6 @@
 package com.eric_eldard.portfolio.security.advice;
 
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,7 +22,6 @@ public class ClearCsrfTokenAspect
 {
     private final PortfolioCsrfTokenRepository csrfTokenRepo;
 
-    @SneakyThrows
     @AfterReturning("@annotation(com.eric_eldard.portfolio.security.annotation.ClearsCsrfToken)")
     public void after(JoinPoint joinPoint)
     {

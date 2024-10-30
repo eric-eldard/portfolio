@@ -1,7 +1,6 @@
 package com.eric_eldard.portfolio.security.advice;
 
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -24,7 +23,6 @@ public class TokenRefreshAspect
 {
     private final AuthenticationService authenticationService;
 
-    @SneakyThrows
     @AfterReturning("@annotation(com.eric_eldard.portfolio.security.annotation.RequiresClaimsRefresh)")
     public void after(JoinPoint joinPoint)
     {

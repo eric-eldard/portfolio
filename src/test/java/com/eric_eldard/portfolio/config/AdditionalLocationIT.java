@@ -77,7 +77,6 @@ public class AdditionalLocationIT extends BaseMvcIntegrationTest
         return makeOldPortfolioUri("/portfolio/old/test");
     }
 
-    @SneakyThrows
     private URI makeOldPortfolioUri(String path)
     {
         return makeBaseUri()
