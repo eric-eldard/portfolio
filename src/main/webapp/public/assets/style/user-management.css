@@ -15,7 +15,8 @@ fieldset {
     width: fit-content;
 }
 
-input[type="date"], input[type="text"] {
+input[type="date"],
+input[type="text"] {
     border: 0;
 }
 

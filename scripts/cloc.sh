@@ -1,4 +1,4 @@
-# Portfolio Count Lines Of Code
+# https://www.npmjs.com/package/cloc
 
 BOLD_WHITE="\e[1;97m"
 RESET="\e[0m"
