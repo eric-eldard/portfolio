@@ -27,6 +27,7 @@ import com.eric_eldard.portfolio.security.annotation.ClearsCsrfToken;
 import com.eric_eldard.portfolio.security.annotation.RequiresClaimsRefresh;
 import com.eric_eldard.portfolio.service.auth.SecurityContextService;
 import com.eric_eldard.portfolio.util.Constants;
+import com.eric_eldard.portfolio.util.PasswordUtils;
 
 @Service
 @AllArgsConstructor
@@ -73,7 +74,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
         {
             throw new IllegalArgumentException("PortfolioUserDto with blank username somehow got through validation");
         }
-        validatePassword(dto.getPassword());
+        PasswordUtils.validate(dto.getPassword());
 
         if (portfolioUserRepo.existsByUsername(username))
         {
@@ -128,7 +129,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     @RequiresClaimsRefresh
     public void setPassword(long id, String password)
     {
-        validatePassword(password);
+        PasswordUtils.validate(password);
 
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
@@ -303,15 +304,6 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
 
         user.getLoginAttempts().add(LoginAttempt.makeFailedAttempt(user, failureReason));
         portfolioUserRepo.save(user);
-    }
-
-    private void validatePassword(String password)
-    {
-        if (password == null || password.trim().length() < Constants.MIN_PASSWORD_CHARS)
-        {
-            throw new IllegalArgumentException(
-                $."Password must be at least \{Constants.MIN_PASSWORD_CHARS} characters");
-        }
     }
 
     private String getRequesterUsername()
