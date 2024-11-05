@@ -1,5 +1,5 @@
 <%@ page session="false" %>
-<%-- Master headers widget for all pages. Doesn't include no-viewport-zoom.jsp so that can be toggled page by page. --%>
+<%-- Master headers widget for all pages. Doesn't include csrf-token.jsp so that can be added only where needed. --%>
         <meta charset="UTF-8">
         <meta name="author" content="Eric Eldard">
         <meta name="description" content="Eric Eldard's Digital Portfolio">
