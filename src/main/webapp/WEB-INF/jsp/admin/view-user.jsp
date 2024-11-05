@@ -90,7 +90,7 @@
                     <td colspan="2">
                         <div class="button-cell">
                             <button onclick="UserManagement.setPassword(${user.id}, '${user.username}')">Set Password</button>
-                            <button onclick="UserManagement.deleteUser(${user.id}, '${user.username}', (response => window.location = '/portfolio/users'));">Delete</button>
+                            <button onclick="UserManagement.deleteUser(${user.id}, '${user.username}', (() => window.location = '/portfolio/users'));">Delete</button>
                         </div>
                     </td>
                 </tr>

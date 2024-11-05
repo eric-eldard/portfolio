@@ -32,6 +32,7 @@ import com.eric_eldard.portfolio.security.csrf.PortfolioCsrfTokenRepository;
 import com.eric_eldard.portfolio.service.auth.AuthenticationService;
 import com.eric_eldard.portfolio.test.TestConfig;
 import com.eric_eldard.portfolio.test.TestUtils;
+import com.eric_eldard.portfolio.util.Constants;
 
 @SpringBootTest(
     classes = {
@@ -160,7 +161,7 @@ public class PortfolioUserServiceTest
     {
         PortfolioUser user = userService.create(TestUtils.makePortfolioUserDto());
         user.setLockedOn(new Date());
-        user.setFailedPasswordAttempts(10);
+        user.setFailedPasswordAttempts(Constants.FAILED_LOGINS_BEFORE_ACCOUNT_LOCK);
         userRepo.save(user);
 
         Mockito.reset(userRepo);

@@ -1,5 +1,6 @@
 ROOT="/opt/portfolio"
 USER="portfolio-app"
+APP_NAME="Portfolio app"
 ARTIFACT="${ARTIFACT_FINAL_NAME}.war" # This can be set by maven during a build or provided as an env prop
 
 YELLOW="\e[0;93m"
@@ -9,7 +10,7 @@ BOLD_GREEN="\e[1;92m"
 BOLD_WHITE="\e[1;97m"
 RESET="\e[0m"
 
-printf "\n\n${BOLD_WHITE}Deploying Portfolio App${RESET}\n\n"
+printf "\n\n${BOLD_WHITE}Deploying ${APP_NAME}${RESET}\n\n"
 
 if [[ ! -d $ROOT ]]
 then
@@ -44,12 +45,12 @@ then
     sudo rm -rf /home/${USER}
   fi
   sudo useradd $USER
-  sudo sh -c "echo -e '\ncd /opt/portfolio' >> /home/${USER}/.bashrc"
+  sudo sh -c "echo -e '\ncd ${ROOT}' >> /home/${USER}/.bashrc"
   printf "\nRun ${YELLOW}aws configure${RESET} as ${MAGENTA}${USER}${RESET} to add this user's ${BOLD_WHITE}Secrets Manager${RESET} key\n\n"
 fi
 
 printf "Changing ownership of ${CYAN}${ROOT}${RESET} to user ${MAGENTA}${USER}${RESET}...\n"
 sudo chown -R $USER $ROOT
 
-printf "\n${BOLD_GREEN}Portfolio app successfully deployed.${RESET}\n"
+printf "\n${BOLD_GREEN}${APP_NAME} successfully deployed.${RESET}\n"
 printf "To run, execute ${YELLOW}run.sh${RESET} from ${CYAN}${ROOT}${RESET} as user ${MAGENTA}${USER}${RESET}\n\n\n"

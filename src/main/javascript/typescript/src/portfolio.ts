@@ -10,7 +10,7 @@ export namespace Portfolio {
     const SWIPE_SUBSCRIBE_FREQUENCY: number = 1000 / 120; // 120fps necessary for smooth (non-jittery) animation on iOS Safari
     const MAX_POPUP_ROTATION: number = 35;
     const HASH_PATH_KEY: string = "hashPath";
-    const POPUP_NAME_STYLE = "color: light-dark(blue, cyan)";
+    const POPUP_NAME_CONSOLE_STYLE = "color: light-dark(blue, cyan)";
 
     // Detects when videos have scrolled off screen in order to pause them
     let videoPlayerObserver: IntersectionObserver = createVideoPlayerObserver();
@@ -180,14 +180,14 @@ export namespace Portfolio {
         if (locationIsHashPath()) {                               // If page loads with a popup hash param, then...
             sessionStorage.setItem(HASH_PATH_KEY, hashPath());    // store the requested popup name
             console.debug(`Found path %c${sessionStorage.getItem(HASH_PATH_KEY)}%c in url; storing and reloading...`,
-                `${POPUP_NAME_STYLE}`, "color: unset");
+                `${POPUP_NAME_CONSOLE_STYLE}`, "color: unset");
             reloadWithoutHash();                                  // reload w/o popup name so we have a clean back state
         }
         else if (sessionStorage.getItem(HASH_PATH_KEY)) {         // If the page loads with a stored popup name, then...
             const storedPath: string = sessionStorage.getItem(HASH_PATH_KEY)!;  // retrieve the stored name
             sessionStorage.removeItem(HASH_PATH_KEY);             // remove stored name so it doesn't trigger later
             console.debug(`Found path %c${storedPath}%c in session storage; navigating to this content...`,
-                `${POPUP_NAME_STYLE}`, "color: unset");
+                `${POPUP_NAME_CONSOLE_STYLE}`, "color: unset");
             openPopup(storedPath.substring(1));                   // trim "#" and navigate to corresponding content
         }
     }
@@ -294,7 +294,8 @@ export namespace Portfolio {
             // Push an extra frame onto history, so the back button can be
             // used to close the popup without navigating away from the page
             history.pushState({ popupStatus : "open"}, "", hashPath);
-            console.debug(`Popup %c${hashPath}%c opened and added to history`, `${POPUP_NAME_STYLE}`, "color: unset");
+            console.debug(`Popup %c${hashPath}%c opened and added to history`,
+                `${POPUP_NAME_CONSOLE_STYLE}`, "color: unset");
 
             // Now that new content is loaded and set in the popup, recall it to the center of the screen
             getPopup().scrollTop = 0;
@@ -346,7 +347,7 @@ export namespace Portfolio {
         // been removed from the address and the popstate event doesn't contain info about the popped-state (it points
         // to the new history head)
         console.debug(`Popup %c${getDataName(getPopup())}%c removed from history`,
-            `${POPUP_NAME_STYLE}`, "color: unset");
+            `${POPUP_NAME_CONSOLE_STYLE}`, "color: unset");
 
         document.body.classList.remove("opaque-bg-color");
         main.classList.remove("blur");

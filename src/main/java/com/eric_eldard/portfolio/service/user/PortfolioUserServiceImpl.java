@@ -114,7 +114,7 @@ public class PortfolioUserServiceImpl implements PortfolioUserService
     {
         PortfolioUser user = findById(id)
             .orElseThrow(() ->
-                new IllegalArgumentException($."Cannot unlock user with id [\{id}]]; user not found"));
+                new IllegalArgumentException($."Cannot unlock user with id [\{id}]; user not found"));
 
         user.setLockedOn(null);
         user.setFailedPasswordAttempts(0);
