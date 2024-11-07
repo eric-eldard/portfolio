@@ -524,7 +524,7 @@ export namespace Portfolio {
     }
 
     function popupIsOpen(): boolean {
-        return getPopup().classList.contains("open");
+        return getPopup() && getPopup().classList.contains("open");
     }
     
     function setPopupIsOpen(isOpen: boolean): void {
