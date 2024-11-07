@@ -27,7 +27,7 @@ import com.eric_eldard.portfolio.test.BaseMvcIntegrationTest;
 import com.eric_eldard.portfolio.test.TestUtils;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class UserRestControllerIT extends BaseMvcIntegrationTest
+public class UsersRestControllerIT extends BaseMvcIntegrationTest
 {
     @Inject
     private PasswordEncoder passwordEncoder;
