@@ -263,7 +263,7 @@ export namespace Portfolio {
 
     // Show the content popup in a freshly opened or transitioned popup
     function showContentInPopup(path: string, content: string): void {
-        const main         : HTMLElement        = document.getElementById("main")!;
+        const main         : HTMLElement        = document.getElementsByTagName("main")[0]!;
         const container    : HTMLElement        = document.getElementById("popup-container")!;
         const popupContent : HTMLElement        = document.getElementById("popup-content")!;
         const timelineElem : HTMLElement | null = getTimelineElem(path);
@@ -330,7 +330,7 @@ export namespace Portfolio {
 
     // A partial close, for jumping from one popup card to another (mostly animated stuff)
     function transitionPopup(): void {
-        const main                  : HTMLElement = document.getElementById("main")!;
+        const main                  : HTMLElement = document.getElementsByTagName("main")[0]!;
         const container             : HTMLElement = document.getElementById("popup-container")!;
         const popupContent          : HTMLElement = document.getElementById("popup-content")!;
         const locationWasHashParam  : boolean     = locationIsHashPath();
@@ -491,7 +491,7 @@ export namespace Portfolio {
     }
 
     function getTimelinePaths(): string[] {
-        return Array.from(document.querySelectorAll("#main .content .timeline-events .timeline-event"))
+        return Array.from(document.querySelectorAll("main .content .timeline-events .timeline-event"))
             .map(elem => elem as HTMLElement)
             .map(htmlElem => htmlElem.dataset.timelinePath || '');
     }

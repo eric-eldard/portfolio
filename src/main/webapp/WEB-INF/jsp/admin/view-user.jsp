@@ -38,11 +38,11 @@
     <body>
         <div class="top-container">
             <h1>View User: <b>${user.username}</b></h1>
-            <div class="bread-crumbs">
+            <nav class="bread-crumbs">
                 <a href="/">Home</a>
                 <a href="/portfolio/">Portfolio</a>
                 <a href="/portfolio/users">Users</a>
-            </div>
+            </nav>
 
             <table class="vertical-table">
                 <tr>

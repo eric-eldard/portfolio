@@ -18,7 +18,7 @@
                 color: #ffd;
             }
 
-            #main {
+            main {
                 background-color: #000;
                 color: #fff;
                 font-family: Helvetica, sans-serif;
@@ -34,7 +34,7 @@
             }
 
             @media screen and (min-width: 600px) {
-                #main {
+                main {
                     margin-top: 0; /* in desktop view, it'll be centered on screen, so top margin no longer needed */
                     padding: 30px;
                 }
@@ -48,8 +48,7 @@
     </head>
 
     <body>
-
-        <div id="main">
+        <main>
             <div>
                 <div class="heading">HTTP ${status}</div>
                 <p>
@@ -64,6 +63,6 @@
                     <a href="/">Let's get you back to the portfolio</a>
                 </p>
             </div>
-        </div>
+        </main>
     </body>
 </html>

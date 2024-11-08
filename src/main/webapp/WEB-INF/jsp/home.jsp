@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" href="/public/assets/style/home.css">
     </head>
     <body>
-        <div id="main">
+        <main>
             <jsp:include page="content/title-subtitle.jsp"/>
 
             <div class="content">
@@ -34,6 +34,6 @@
                 </div>
             </div>
 
-        </div>
+        </main>
     </body>
 </html>
