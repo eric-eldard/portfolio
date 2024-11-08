@@ -1,6 +1,7 @@
 USER="portfolio-app"
 APP_NAME="Portfolio app"
 ARTIFACT="${ARTIFACT_FINAL_NAME}.war" # This can be set by maven during a build or provided as an env prop
+PORT=8080
 
 YELLOW="\e[0;93m"
 WHITE="\e[0;97m"
@@ -10,8 +11,8 @@ RESET="\e[0m"
 
 printf "\n\n${BOLD_WHITE}Starting ${APP_NAME}${RESET}\n\n"
 
-printf "Killing any process already running on ${WHITE}:8080${RESET}...\n"
-fuser -k 8080/tcp
+printf "Killing any process already running on ${WHITE}:${PORT}${RESET}...\n"
+fuser -k ${PORT}/tcp
 
 printf "Fetching ${WHITE}database credentials${RESET}...\n"
 json=`aws secretsmanager get-secret-value --secret-id portfolio-app-rds-access --query SecretString --output text`

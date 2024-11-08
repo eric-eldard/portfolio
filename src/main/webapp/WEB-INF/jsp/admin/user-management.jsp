@@ -70,10 +70,10 @@
     <body>
         <div class="top-container">
             <h1>Portfolio User Management</h1>
-            <div class="bread-crumbs center">
+            <nav class="bread-crumbs center">
                 <a href="/">Home</a>
                 <a href="/portfolio/">Portfolio</a>
-            </div>
+            </nav>
 
             <fieldset>
                 <legend>Create User</legend>

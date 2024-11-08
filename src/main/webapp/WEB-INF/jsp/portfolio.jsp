@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <div id="main">
+        <main>
             <jsp:include page="content/title-subtitle.jsp"/>
 
             <div class="content">
@@ -19,7 +19,7 @@
                 <jsp:include page="content/footer.jsp"/>
             </div>
 
-        </div>
+        </main>
 
         <div id="popup-container" onclick="Portfolio.closePopup()">
             <div id="popup" onclick="event.stopPropagation()">

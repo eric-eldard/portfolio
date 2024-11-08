@@ -31,7 +31,7 @@ label.for-clickable {
 
 
 /* Main content, before opening the popup */
-#main {
+main {
     box-sizing: border-box;
     left: 0;
 	padding: 10px;
@@ -42,7 +42,7 @@ label.for-clickable {
 	z-index: 1;
 }
 
-#main > * {
+main > * {
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
@@ -358,7 +358,7 @@ img.solo {
 }
 
 @media screen and (min-width: 800px) {
-    #main {
+    main {
         /* Provide a more vertically-centered experience, once we're sure the content won't go off the top of the page */
         top: 35%;
         transform: translateY(-35%);
@@ -376,7 +376,7 @@ img.solo {
 }
 
 @media screen and (min-width: 950px) {
-    #main > * {
+    main > * {
         box-sizing: unset; /* box-sizing needed on mobile view to include auto margins in 100% width */
         width: 900px;
     }
