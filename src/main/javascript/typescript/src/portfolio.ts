@@ -161,7 +161,7 @@ export namespace Portfolio {
     };
 
 
-    window.addEventListener("DOMContentLoaded", e => {
+    window.addEventListener("DOMContentLoaded", () => {
         browserDetect();
         bindPopupCloseToEsc();
     });
