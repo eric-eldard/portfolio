@@ -314,7 +314,7 @@
                                     <directory>scripts</directory>
                                     <includes>
                                         <include>assets-deploy.sh</include>
-                                        <include>deploy-portfolio.sh</include>
+                                        <include>deploy.sh</include>
                                         <include>run.sh</include>
                                     </includes>
                                 </resource>
@@ -340,7 +340,7 @@
                     <basedir>${project.build.directory}</basedir>
                     <includes>
                         <include>maintenance.html</include>
-                        <include>scripts/deploy-portfolio.sh</include>
+                        <include>scripts/deploy.sh</include>
                         <include>scripts/run.sh</include>
                         <include>classes/application.properties</include>
                     </includes>
