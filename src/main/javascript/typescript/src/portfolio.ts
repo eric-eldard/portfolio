@@ -1,6 +1,6 @@
 import { Video } from "./video";
-import type { SwipeEvent } from "./types/swipe-events";
-import type { SwipeEvents } from "./types/swipe-events";
+import type { SwipeEvent } from "swipe-events";
+import type { SwipeEvents } from "swipe-events";
 
 export namespace Portfolio {
 
@@ -12,7 +12,7 @@ export namespace Portfolio {
     const HASH_PATH_KEY: string = "hashPath";
     const POPUP_NAME_CONSOLE_STYLE = "color: light-dark(blue, cyan)";
 
-    // Detects when videos have scrolled off screen in order to pause them
+    // Detects when videos have scrolled offscreen in order to pause them
     let videoPlayerObserver: IntersectionObserver = createVideoPlayerObserver();
     document.addEventListener("videoPlayerAdded", trackVideoPlayer as EventListener);
 
@@ -77,7 +77,7 @@ export namespace Portfolio {
                     // avoid nerfing the distance factor.
                     const speedFactor: number = Math.max(Math.pow(e.detail.latestSpeedX, 4), 1);
 
-                    // We won't let the popup go too far off screen left or right, as distance traveled during the
+                    // We won't let the popup go too far offscreen left or right, as distance traveled during the
                     // return animation will directly affect the visual speed of that animation.
                     if (dir === "W") {
                         newLeft = Math.max(-distanceFactor * speedFactor, -2 * width);
@@ -114,7 +114,7 @@ export namespace Portfolio {
                     setUserIsSwiping(true);
 
                     // Your finger is at about the 60% demarcation horizontally on a mobile screen when the popup has
-                    // disappeared off screen, even at the slowest speeds. We'll interpret crossing this threshold as a
+                    // disappeared offscreen, even at the slowest speeds. We'll interpret crossing this threshold as a
                     // desire to navigate back/forward in the content.
                     const thresholdToJump: number = width * 0.6;
 
@@ -409,7 +409,7 @@ export namespace Portfolio {
             elem.classList.remove("focused");
         }
 
-        // Fling the current popup off screen
+        // Fling the current popup offscreen
         getPopup().style.left = window.screen.availWidth + "px";
         rotatePopup(MAX_POPUP_ROTATION);
 
@@ -429,7 +429,7 @@ export namespace Portfolio {
             elem.classList.remove("focused");
         }
 
-        // Fling the current popup off screen
+        // Fling the current popup offscreen
         getPopup().style.left = -window.screen.availWidth + "px";
         rotatePopup(-MAX_POPUP_ROTATION);
 

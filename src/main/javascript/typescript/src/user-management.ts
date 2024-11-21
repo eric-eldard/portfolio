@@ -1,4 +1,4 @@
-import { User } from "./types/user";
+import type { User } from "user";
 
 export namespace UserManagement {
     const USER_ADMIN_PATH: string = "/portfolio/users";
