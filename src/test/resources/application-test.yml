@@ -1,0 +1,26 @@
+# H2 InMem DB config
+jdbc:
+  driverClassName: org.h2.Driver
+  url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1;NON_KEYWORDS=KEY,VALUE
+hibernate:
+  dialect: org.hibernate.dialect.H2Dialect
+  hbm2ddl.auto: create
+spring:
+  h2.console.enabled: false
+
+# Contrary to @LocalServerPort's javadoc, local.server.port isn't read--and SpringBootTest.WebEnvironment.DEFINED_PORT
+# indicates server.port should be used...which seems to work great for both use cases.
+server.port: 8081
+
+portfolio:
+  app:
+    version: test
+  additional-locations:
+    locations:
+      - /portfolio/old/test | classpath:test/portfolio/locations | OLD_PORTFOLIO
+  additional-properties:
+    location:  classpath:application-test.properties
+  assets-path: classpath:test/portfolio/assets
+  security:
+    jwt:
+      signing-key: 30645116fcc7e0161d8604e47d971de77b4c71f25cb8dfff79cb43161349b335
