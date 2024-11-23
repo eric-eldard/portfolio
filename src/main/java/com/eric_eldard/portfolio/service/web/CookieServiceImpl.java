@@ -14,7 +14,7 @@ import com.eric_eldard.portfolio.config.GlobalConfig;
 public class CookieServiceImpl implements CookieService
 {
     /**
-     * Defaults to {@code true} in application.properties; supports override for non-SSL test envs
+     * Defaults to {@code true} in application.yml; supports override for non-SSL test envs
      */
     @Value("${portfolio.cookie.secure}")
     private final boolean secure;
