@@ -30,14 +30,12 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
-import org.springframework.security.web.session.DisableEncodeUrlFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.eric_eldard.portfolio.logging.filter.AddUserToMdcFilter;
 import com.eric_eldard.portfolio.model.AdditionalLocation;
 import com.eric_eldard.portfolio.properties.AdditionalLocations;
 import com.eric_eldard.portfolio.security.csrf.PortfolioCsrfTokenRepository;
-import com.eric_eldard.portfolio.security.filter.DisableSessionFilter;
 import com.eric_eldard.portfolio.security.filter.JwsFilter;
 import com.eric_eldard.portfolio.service.auth.AuthenticationService;
 import com.eric_eldard.portfolio.service.auth.SecurityContextService;
@@ -136,9 +134,6 @@ public class GlobalConfig
             .headers(headers -> headers
                 .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 .crossOriginResourcePolicy(crossOrigin -> crossOrigin.policy(SAME_SITE))
-            )
-            .addFilterAfter(
-                new DisableSessionFilter(), DisableEncodeUrlFilter.class // makes DisableSessionFilter second in chain
             )
             .addFilterAfter(
                 new JwsFilter(authenticationService), SecurityContextHolderFilter.class
