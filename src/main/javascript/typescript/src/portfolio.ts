@@ -293,7 +293,7 @@ export namespace Portfolio {
 
             // Push an extra frame onto history, so the back button can be
             // used to close the popup without navigating away from the page
-            history.pushState({ popupStatus : "open"}, "", hashPath);
+            history.pushState({ path : "open"}, "", hashPath);
             console.debug(`Popup %c${hashPath}%c opened and added to history`,
                 `${POPUP_NAME_CONSOLE_STYLE}`, "color: unset");
 

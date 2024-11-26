@@ -37,19 +37,8 @@
       align-self: center;
     }
 
-    #steganos-example a:after {
-        bottom: 8px;
+    .steganos-example a:after {
         content: "Open GitHub";
-    }
-
-    #steganos-example a img {
-        height: 183px;
-        object-fit: cover;
-        object-position: 0 1%;
-    }
-
-    .chrome-mobile-shim #steganos-usages {
-        left: -28px;
     }
 
     @media screen and (min-width: 800px) {
@@ -96,17 +85,17 @@
 </jsp:include>
 
 <jsp:include page="../widgets/project-specs.jsp">
-    <jsp:param name="language" value="Java 11"/>
+    <jsp:param name="language"   value="Java 11"/>
     <jsp:param name="versioning" value="GitHub"/>
-    <jsp:param name="build" value="Maven"/>
+    <jsp:param name="build"      value="Maven"/>
 </jsp:include>
-<div id="steganos-example" class="screenshot solo">
-    <a href="https://github.com/eric-eldard/steganos?tab=readme-ov-file#examples" target="_blank">
-        <img src="https://github.com/eric-eldard/steganos/raw/master/examples.png?raw=true"
-             alt="Link out to example output of Steganos on GitHub"
-        >
-    </a>
-</div>
+
+<jsp:include page="../widgets/screenshot-solo.jsp">
+    <jsp:param name="path"        value="steganos.png"/>
+    <jsp:param name="href"        value="https://github.com/eric-eldard/steganos?tab=readme-ov-file#examples"/>
+    <jsp:param name="description" value="Steganos output examples"/>
+    <jsp:param name="classes"     value="steganos-example"/>
+</jsp:include>
 
 <hr>
 
@@ -128,9 +117,9 @@
 </jsp:include>
 
 <jsp:include page="../widgets/project-specs.jsp">
-    <jsp:param name="language" value="Java 21, Spring 6"/>
+    <jsp:param name="language"   value="Java 21, Spring 6"/>
     <jsp:param name="versioning" value="GitHub"/>
-    <jsp:param name="build" value="Maven"/>
+    <jsp:param name="build"      value="Maven"/>
 </jsp:include>
 
 <div id="harpocrates-example" class="java-code"><span class="annotation unhighlight">@Entity</span>
@@ -173,9 +162,9 @@
     </jsp:include>
 </div>
 <jsp:include page="../widgets/embedded-iframe.jsp">
-    <jsp:param name="id" value="mtg"/>
+    <jsp:param name="id"          value="mtg"/>
     <jsp:param name="description" value="MTG Player Aid"/>
-    <jsp:param name="path" value="https://www.eric-eldard.com/mtg"/>
+    <jsp:param name="path"        value="https://www.eric-eldard.com/mtg"/>
 </jsp:include>
 
 <hr>
@@ -189,10 +178,10 @@
     <span id="back2back4">strings back-to-back!</span>
 </p>
 <jsp:include page="../widgets/embedded-iframe.jsp">
-    <jsp:param name="id" value="cycling-font-colors"/>
+    <jsp:param name="id"          value="cycling-font-colors"/>
     <jsp:param name="description" value="Cycling Font Colors"/>
-    <jsp:param name="path" value="Cycling_Font_Colors/index.html"/>
-    <jsp:param name="backupImg" value="Cycling_Font_Colors.png"/>
+    <jsp:param name="path"        value="Cycling_Font_Colors/index.html"/>
+    <jsp:param name="backupImg"   value="Cycling_Font_Colors.png"/>
 </jsp:include>
 
 <script>

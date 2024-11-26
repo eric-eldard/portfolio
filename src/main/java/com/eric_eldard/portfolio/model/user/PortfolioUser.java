@@ -15,6 +15,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,6 +33,7 @@ import com.eric_eldard.portfolio.model.user.enumeration.PortfolioAuthority;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor // for frameworks
 public class PortfolioUser implements UserDetails
 {
     @Id
@@ -67,10 +69,6 @@ public class PortfolioUser implements UserDetails
     @JoinTable(name = "grant_authority", joinColumns = @JoinColumn(name = "user_id"))
     private Set<PortfolioAuthority> portfolioAuthorities;
 
-    public PortfolioUser()
-    {
-        // framework ctor
-    }
 
     public PortfolioUser(String username, String password, Date authorizedUntil, boolean enabled, boolean admin)
     {
