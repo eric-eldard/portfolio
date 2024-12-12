@@ -18,7 +18,7 @@
 </jsp:include>
 
 <jsp:include page="../widgets/project-specs.jsp">
-    <jsp:param name="frontend" value="JSP 3 w/ JSTL, CSS3, TypeScript"/>
+    <jsp:param name="frontend" value="JSP 3, CSS3, TypeScript"/>
     <jsp:param name="backend" value="Java 21, Spring Boot 3, Spring Web, Spring Security"/>
     <jsp:param name="persistence" value="Spring Data JPA"/>
     <jsp:param name="storage" value="MySQL 8 in Amazon RDS"/>

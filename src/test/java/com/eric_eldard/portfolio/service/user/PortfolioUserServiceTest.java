@@ -18,10 +18,10 @@ import jakarta.transaction.Transactional;
 import java.util.Date;
 
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 
 import com.eric_eldard.portfolio.PortfolioApp;
 import com.eric_eldard.portfolio.model.user.PortfolioUser;
@@ -43,13 +43,13 @@ import com.eric_eldard.portfolio.util.Constants;
 @ActiveProfiles("test")
 public class PortfolioUserServiceTest
 {
-    @SpyBean
+    @MockitoSpyBean
     private AuthenticationService authenticationService;
 
-    @SpyBean
+    @MockitoSpyBean
     private PortfolioCsrfTokenRepository csrfTokenRepo;
 
-    @SpyBean
+    @MockitoSpyBean
     private PortfolioUserRepository userRepo;
 
     @Inject

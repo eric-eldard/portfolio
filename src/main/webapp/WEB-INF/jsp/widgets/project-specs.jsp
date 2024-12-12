@@ -20,6 +20,12 @@
             <td>${param.language}</td>
         </tr>
     </c:if>
+    <c:if test="${param.ai ne null}">
+        <tr>
+            <td>AI:</td>
+            <td>${param.ai}</td>
+        </tr>
+    </c:if>
     <c:if test="${param.persistence ne null}">
     <tr>
         <td>Persistence:</td>

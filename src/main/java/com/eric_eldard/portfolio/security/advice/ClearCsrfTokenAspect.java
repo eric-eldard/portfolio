@@ -25,12 +25,8 @@ public class ClearCsrfTokenAspect
     @AfterReturning("@annotation(com.eric_eldard.portfolio.security.annotation.ClearsCsrfToken)")
     public void after(JoinPoint joinPoint)
     {
-        ClearsCsrfToken annotationInstance =
-            ReflectionUtils.getAnnotationFromJoinPoint(joinPoint, ClearsCsrfToken.class);
-
-        long userId =
-            ReflectionUtils.getArgValueFromJoinPoint(joinPoint, annotationInstance.idParamName(), Long.class);
-
+        ClearsCsrfToken annotationInstance = ReflectionUtils.getAnnotation(joinPoint, ClearsCsrfToken.class);
+        long userId = ReflectionUtils.getArgValue(joinPoint, annotationInstance.idParamName(), Long.class);
         csrfTokenRepo.invalidateForUser(userId);
     }
 }

@@ -23,6 +23,7 @@ body.opaque-bg-color:after {
     transform: rotate(90deg);
     transition: transform 0.75s, margin 0.75s;
 	width: 85%;
+    will-change: transform;
 }
 
 .timeline .timeline-events {
