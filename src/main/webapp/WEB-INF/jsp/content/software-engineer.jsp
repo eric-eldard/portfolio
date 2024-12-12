@@ -31,12 +31,13 @@
 <jsp:include page="../widgets/project-specs.jsp">
     <jsp:param name="frontend" value="Freemarker, Google Web Toolkit, Google Material Design, jQuery"/>
     <jsp:param name="backend" value="Java 17, Spring 5, Spring Web, Spring Security, Akka, Jersey"/>
+    <jsp:param name="ai" value="gpt-3.5-turbo"/>
     <jsp:param name="persistence" value="Spring Data JPA"/>
+    <jsp:param name="storage" value="MySQL 8 in Amazon RDS, Amazon S3, Cassandra"/>
     <jsp:param name="caching" value="Hazelcast"/>
-    <jsp:param name="storage" value="MySQL 8 in Amazon RDS, Amazon S3, Cassandra (defunct)"/>
     <jsp:param name="versioning" value="Bitbucket (Git)"/>
     <jsp:param name="build" value="Maven, Jenkins"/>
-    <jsp:param name="deployment" value="Tomcat and Jetty on Amazon EC2"/>
+    <jsp:param name="deployment" value="Tomcat and Jetty on <span class='mobile-hidden'>Amazon </span>EC2"/>
 </jsp:include>
 
 <jsp:include page="../widgets/video-player.jsp">

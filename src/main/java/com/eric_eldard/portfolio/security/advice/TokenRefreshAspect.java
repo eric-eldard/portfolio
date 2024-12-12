@@ -26,12 +26,8 @@ public class TokenRefreshAspect
     @AfterReturning("@annotation(com.eric_eldard.portfolio.security.annotation.RequiresClaimsRefresh)")
     public void after(JoinPoint joinPoint)
     {
-        RequiresClaimsRefresh annotationInstance =
-            ReflectionUtils.getAnnotationFromJoinPoint(joinPoint, RequiresClaimsRefresh.class);
-
-        long userId =
-            ReflectionUtils.getArgValueFromJoinPoint(joinPoint, annotationInstance.idParamName(), Long.class);
-
+        RequiresClaimsRefresh annotationInstance = ReflectionUtils.getAnnotation(joinPoint, RequiresClaimsRefresh.class);
+        long userId = ReflectionUtils.getArgValue(joinPoint, annotationInstance.idParamName(), Long.class);
         authenticationService.requireFreshClaimsForUser(userId);
     }
 }
