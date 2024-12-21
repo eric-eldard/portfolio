@@ -16,6 +16,6 @@
 
         <link rel="stylesheet" type="text/css" href="/public/assets/style/portfolio.css">
 
-        <script src="/public/assets/scripts/generated/portfolio.bundle.js"></script>
-        <script src="/public/assets/scripts/generated/utils.js"></script>
+        <script src="/public/assets/scripts/generated/portfolio.bundle.min.js"></script>
+        <script src="/public/assets/scripts/generated/utils.min.js"></script>
         <script src="/public/assets/scripts/first-party/swipe-events.min.js"></script>
