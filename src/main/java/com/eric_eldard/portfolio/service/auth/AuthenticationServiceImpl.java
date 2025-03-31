@@ -7,8 +7,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import jakarta.annotation.Nullable;
 import jakarta.inject.Inject;
@@ -47,11 +46,10 @@ import com.eric_eldard.portfolio.service.web.CookieService;
 import com.eric_eldard.portfolio.util.ClaimConstants;
 import com.eric_eldard.portfolio.util.DateUtils;
 
+@Slf4j
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
-
     private static final Date SERVER_START = new Date();
 
     private final CookieService cookieService;
@@ -132,7 +130,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
         JwsAuthToken tokenToPresent;
         if (refreshRequired(incomingToken))
         {
-            LOGGER.info("Token presented by [{}] requires refreshing", incomingToken.username());
+            log.info("Token presented by [{}] requires refreshing", incomingToken.username());
             claimsToPresent = refreshTokenClaims(incomingToken);
             tokenToPresent = new JwsAuthToken(resolveClaims(claimsToPresent));
         }
@@ -186,7 +184,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
         Optional<PortfolioUser> user = userService.findById(userId);
         // Deleted users also go into the require-fresh-lookup cache, so it's possible we won't find them
         Date now = new Date();
-        LOGGER.info("Tokens issued to user [{}] prior to {} will require claims refreshing",
+        log.info("Tokens issued to user [{}] prior to {} will require claims refreshing",
             user.isPresent() ? user.get().getUsername() : userId,
             DateUtils.as_yyyyMMddhhmmss(now)
         );

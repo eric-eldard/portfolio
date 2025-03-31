@@ -1,7 +1,6 @@
 package com.eric_eldard.portfolio.controller.portfolio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import video.api.client.api.ApiException;
 
 import java.io.IOException;
@@ -22,12 +21,11 @@ import com.eric_eldard.portfolio.service.video.EmbeddableVideoService;
 import com.eric_eldard.portfolio.util.Constants;
 import com.eric_eldard.portfolio.util.StringUtils;
 
+@Slf4j
 @Controller
 @RequestMapping("/portfolio")
 public class PortfolioController
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PortfolioController.class);
-
     private final EmbeddableVideoService videoService;
 
     private final ResourceService resourceService;
@@ -104,7 +102,7 @@ public class PortfolioController
         }
         catch (ApiException ex)
         {
-            LOGGER.error("Unable to retrieve video [{}] for reason [{}]", video, ex.getMessage());
+            log.error("Unable to retrieve video [{}] for reason [{}]", video, ex.getMessage());
             model.addAttribute(video + "_VIDEO_ERROR", "An error prevented the retrieval of this video");
         }
     }
@@ -123,7 +121,7 @@ public class PortfolioController
         }
         catch (IOException ex)
         {
-            LOGGER.error("Unable to load {} resources from the classpath for reason: {}", type, ex.getMessage());
+            log.error("Unable to load {} resources from the classpath for reason: {}", type, ex.getMessage());
             return;
         }
 

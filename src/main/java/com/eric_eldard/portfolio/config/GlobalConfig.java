@@ -3,8 +3,7 @@ package com.eric_eldard.portfolio.config;
 import static org.springframework.security.web.header.writers.CrossOriginResourcePolicyHeaderWriter.CrossOriginResourcePolicy.SAME_SITE;
 
 import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import jakarta.servlet.DispatcherType;
 import java.util.Collection;
@@ -44,6 +43,7 @@ import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 /**
  * Master config for security, logging, and beans for which creation order prevents a circular dependency.
  */
+@Slf4j
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -52,8 +52,6 @@ import com.eric_eldard.portfolio.service.user.PortfolioUserService;
 @AllArgsConstructor
 public class GlobalConfig
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalConfig.class);
-
     private final AdditionalLocations additionalLocations;
 
     private final AuthenticationService authenticationService;
@@ -163,7 +161,7 @@ public class GlobalConfig
             }
             catch (Exception ex)
             {
-                LOGGER.error("Unable to load additional location [{}] for reason [{}]", webPath, ex.getMessage());
+                log.error("Unable to load additional location [{}] for reason [{}]", webPath, ex.getMessage());
             }
         });
     }
