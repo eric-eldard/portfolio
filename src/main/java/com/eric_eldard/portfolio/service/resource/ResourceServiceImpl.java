@@ -3,8 +3,7 @@ package com.eric_eldard.portfolio.service.resource;
 import static com.eric_eldard.portfolio.util.Constants.$;
 
 import lombok.SneakyThrows;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import jakarta.annotation.Nullable;
 import java.io.IOException;
@@ -18,11 +17,10 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public final class ResourceServiceImpl implements ResourceService
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceServiceImpl.class);
-
     @Override
     public List<Resource> getFileResources(String pathPattern) throws IOException
     {
@@ -75,7 +73,7 @@ public final class ResourceServiceImpl implements ResourceService
         }
         catch (IOException ex)
         {
-            LOGGER.error("Could not load resource [{}]: {}", resource.getFilename(), ex.getMessage());
+            log.error("Could not load resource [{}]: {}", resource.getFilename(), ex.getMessage());
         }
         return fileUri;
     }
