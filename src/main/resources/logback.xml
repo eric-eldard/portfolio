@@ -17,4 +17,19 @@
     <root level="INFO">
         <appender-ref ref="FILE"/>
     </root>
+
+    <springProfile name="dev,test">
+        <conversionRule conversionWord="hlCls" class="com.eric_eldard.portfolio.util.logging.PortfolioClassForegroundConverter"/>
+        <conversionRule conversionWord="hlMsg" class="com.eric_eldard.portfolio.util.logging.PortfolioMessageForegroundConverter"/>
+
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%white(%d{HH:mm:ss.SSS}) %boldWhite([%thread]) %replace(%boldCyan([user:%mdc{username}] )){'\[user:\] ', ''}%highlight(%-5level) %hlCls(%logger{35}) - %hlMsg(%msg%n)</pattern>
+            </encoder>
+        </appender>
+
+        <logger name="com.eric_eldard" level="INFO" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+    </springProfile>
 </configuration>
