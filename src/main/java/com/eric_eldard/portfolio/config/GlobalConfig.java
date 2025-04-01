@@ -116,7 +116,7 @@ public class GlobalConfig
             .csrf(csrf ->
                 csrf
                     .csrfTokenRepository(csrfTokenRepo)
-                    .ignoringRequestMatchers("/login", "/logout") // allow GET-style logout (w/o CSRF token)
+                    .ignoringRequestMatchers("/login")
             )
             .logout(logout ->
                 logout
