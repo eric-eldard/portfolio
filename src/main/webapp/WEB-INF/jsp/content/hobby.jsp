@@ -5,7 +5,8 @@
         width: 640px !important;
     }
 
-    #harpocrates-example {
+    #harpocrates-example,
+    .steganos-example {
         max-width: 850px;
     }
 
@@ -37,6 +38,11 @@
       align-self: center;
     }
 
+    .junie-voice-example {
+        max-width: 740px;
+    }
+
+    .junie-voice-example a:after,
     .steganos-example a:after {
         content: "Open GitHub";
     }
@@ -68,6 +74,41 @@
 </style>
 
 <h1>Coding for Fun</h1>
+
+<h2>Junie Voice</h2>
+<p>
+    As a Java dev, JetBrains' Junie (wrapping Claude 4) has become my coding agent of choice, since it works where I do.
+    But it seems voice integration isn't on its roadmap and I've found it really useful to bounce ideas off of ChatGPT
+    voice mode. However, ChatGPT doesn't have to my code base, and OpenAI's Codex doesn't have a voice mode.
+</p>
+<p>
+    <b>Junie Voice</b> is an IntelliJ plugin to bridge this gap, allowing voice chatting right inside the IDE. It adds
+    features I've always wanted from ChatGPT, like the ability for the agent to speak one thing, but print something
+    different. This eliminates the voice agent speaking code aloud, while still providing that code as text. More
+    broadly, Junie Voice allows for your choice of text, voice, or image input, then keeps the conversation going while
+    outputting relevant snippets. When you're ready to build, Junie Voice passes the spec you've created to Junie to
+    make the actual changes in your project.
+</p>
+<jsp:include page="../widgets/see-it-on-gh.jsp">
+    <jsp:param name="repo" value="junie-voice"/>
+</jsp:include>
+
+<jsp:include page="../widgets/project-specs.jsp">
+    <jsp:param name="ai"         value="gpt-4.1-mini (text), gpt-4o-mini-realtime-preview (voice)"/>
+    <jsp:param name="language"   value="Java 21, IntelliJ PSI SDK"/>
+    <jsp:param name="versioning" value="GitHub"/>
+    <jsp:param name="build"      value="Gradle"/>
+    <jsp:param name="deployment" value="IntelliJ plugin"/>
+</jsp:include>
+
+<jsp:include page="../widgets/screenshot-solo.jsp">
+    <jsp:param name="path"        value="junie-voice.png"/>
+    <jsp:param name="href"        value="https://github.com/eric-eldard/junie-voice?tab=readme-ov-file#junie-voice"/>
+    <jsp:param name="description" value="Junie Voice"/>
+    <jsp:param name="classes"     value="junie-voice-example"/>
+</jsp:include>
+
+<hr>
 
 <h2>Steganography</h2>
 <p>
