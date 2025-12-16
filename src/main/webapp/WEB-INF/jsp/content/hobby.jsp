@@ -195,7 +195,7 @@
 <div id="mtg-links">
     <jsp:include page="../widgets/link-out.jsp">
         <jsp:param name="text" value="Open in new tab"/>
-        <jsp:param name="href" value="https://www.eric-eldard.com/mtg/"/>
+        <jsp:param name="href" value="https://www.eric-eldard.com/mtg"/>
     </jsp:include>
     <jsp:include page="../widgets/link-out.jsp">
         <jsp:param name="text" value="Check out the JSDoc"/>

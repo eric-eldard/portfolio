@@ -13,10 +13,6 @@ body.opaque-bg-color:after {
     opacity: 1;
 }
 
-.chrome-mobile-shim .timeline .timeline-events {
-    bottom: -3px;
-}
-
 .timeline {
     margin-bottom: 10px;
     margin-top: 10px;
