@@ -1,6 +1,5 @@
 package com.eric_eldard.portfolio.service.auth;
 
-import static com.eric_eldard.portfolio.util.Constants.$;
 import static com.eric_eldard.portfolio.util.Constants.JWT_COOKIE_NAME;
 
 import com.google.common.cache.Cache;
@@ -243,31 +242,31 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
         if (token.isExpired())
         {
-            throw new InvalidTokenException($."User [\{userId}] presented an expired auth token");
+            throw new InvalidTokenException("User [" + userId + "] presented an expired auth token");
         }
         if (token.issuedAt() == null)
         {
-            throw new InvalidTokenException($."User [\{userId}] presented an auth token with no issued-at timestamp");
+            throw new InvalidTokenException("User [" + userId + "] presented an auth token with no issued-at timestamp");
         }
         if (token.issuedAt().after(now))
         {
-            throw new InvalidTokenException($."User [\{userId}] presented an auth token from the future (\{DateUtils.as_yyyyMMddhhmmss(token.issuedAt())})");
+            throw new InvalidTokenException("User [" + userId + "] presented an auth token from the future (" + DateUtils.as_yyyyMMddhhmmss(token.issuedAt()) + ")");
         }
         if (token.serverStart() == null)
         {
-            throw new InvalidTokenException($."User [\{userId}] presented an auth token with no server start date");
+            throw new InvalidTokenException("User [" + userId + "] presented an auth token with no server start date");
         }
         if (token.serverStart().after(now))
         {
-            throw new InvalidTokenException($."User [\{userId}] presented an auth token from a server that hasn't started yet (\{DateUtils.as_yyyyMMddhhmmss(token.serverStart())})");
+            throw new InvalidTokenException("User [" + userId + "] presented an auth token from a server that hasn't started yet (" + DateUtils.as_yyyyMMddhhmmss(token.serverStart()) + ")");
         }
         if (token.issuedAt().before(token.serverStart()))
         {
-            throw new InvalidTokenException($."User [\{userId}] presented an auth token issued before the issuing server started (\{DateUtils.as_yyyyMMddhhmmss(token.issuedAt())} < \{DateUtils.as_yyyyMMddhhmmss(token.serverStart())})");
+            throw new InvalidTokenException("User [" + userId + "] presented an auth token issued before the issuing server started (" + DateUtils.as_yyyyMMddhhmmss(token.issuedAt()) + " < " + DateUtils.as_yyyyMMddhhmmss(token.serverStart()) + ")");
         }
         if (token.username() == null)
         {
-            throw new InvalidTokenException($."User [\{userId}] presented an auth token with no username");
+            throw new InvalidTokenException("User [" + userId + "] presented an auth token with no username");
         }
     }
 
@@ -277,15 +276,15 @@ public class AuthenticationServiceImpl implements AuthenticationService
 
         if (token.accountLocked())
         {
-            throw new LockedException($."The account for user [\{username}] is locked for too many failed attempts.");
+            throw new LockedException("The account for user [" + username + "] is locked for too many failed attempts.");
         }
         if (token.accountDisabled())
         {
-            throw new DisabledException($."The account for user [\{username}] is permanently disabled.");
+            throw new DisabledException("The account for user [" + username + "] is permanently disabled.");
         }
         if (token.accountExpired())
         {
-            throw new AccountExpiredException($."The account for user [\{username}] has expired.");
+            throw new AccountExpiredException("The account for user [" + username + "] has expired.");
         }
     }
 

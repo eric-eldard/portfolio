@@ -1,7 +1,5 @@
 package com.eric_eldard.portfolio.service.video;
 
-import static com.eric_eldard.portfolio.util.Constants.$;
-
 import org.apache.commons.lang3.StringUtils;
 import video.api.client.ApiVideoClient;
 import video.api.client.api.ApiException;
@@ -39,7 +37,7 @@ public class ApiVideoService implements EmbeddableVideoService
         Video video = makeClient().videos().get(videoId);
         if (video == null || video.getAssets() == null || video.getAssets().getPlayer() == null)
         {
-            throw new ApiException($."null \{video == null ? "video" : "player"} retrieved for video \{videoId}");
+            throw new ApiException("null " + (video == null ? "video" : "player") +" retrieved for video " + videoId);
         }
         String uri = video.getAssets().getPlayer().toString();
         return uri.substring(uri.indexOf("token=") + "token=".length());

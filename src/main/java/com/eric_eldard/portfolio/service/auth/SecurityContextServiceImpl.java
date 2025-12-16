@@ -1,7 +1,5 @@
 package com.eric_eldard.portfolio.service.auth;
 
-import static com.eric_eldard.portfolio.util.Constants.$;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.Objects;
@@ -66,11 +64,11 @@ public class SecurityContextServiceImpl implements SecurityContextService
                 .getPayload()
                 .get(claim);
 
-            Objects.requireNonNull(claimValue, () -> $."Illegal null \{claim} in JwsAuthToken");
+            Objects.requireNonNull(claimValue, () -> "Illegal null " + claim + " in JwsAuthToken");
             return converter.apply(claimValue);
         }
 
         throw new IllegalStateException(
-            $."Found unsupported Authentication type \{auth.getClass().getSimpleName()} in the SecurityContext");
+            "Found unsupported Authentication type " + auth.getClass().getSimpleName() + " in the SecurityContext");
     }
 }

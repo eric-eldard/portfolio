@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -33,12 +32,6 @@ public class WebMvcConfig implements WebMvcConfigurer
 
     @Value("${portfolio.assets-path}")
     private final String assetsFilePath;
-
-    @Override
-    public void configurePathMatch(PathMatchConfigurer configurer)
-    {
-        configurer.setUseTrailingSlashMatch(true);
-    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry)

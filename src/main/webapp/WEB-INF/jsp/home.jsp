@@ -15,7 +15,7 @@
                 <jsp:include page="content/intro.jsp"/>
 
                 <div class="link-container">
-                    <a href="portfolio/" class="link-card have-password">
+                    <a href="portfolio" class="link-card have-password">
                         Already have a password?
                         <br>
                         <b>Sign in to see my work!</b>

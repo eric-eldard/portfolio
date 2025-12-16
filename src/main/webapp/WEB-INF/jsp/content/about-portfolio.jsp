@@ -2,8 +2,9 @@
 <h1>Portfolio App</h1>
 <p>
     This portfolio is an app I built myself. It showcases some of my tried-and-true technologies, like <b>AWS</b> and
-    <b>Spring Core/Data/Security</b>, as well as some new ones for me, like <b>Spring Boot</b> and <b>TypeScript</b>.
-    It features a mobile-responsive UI created from scratch, my own
+    <b>Spring Core/Data/Security</b>, as well as some new ones for me, like <b>TypeScript</b> and <b>Spring Boot</b>
+    (starting with version 2, then upgrading to 3, and later to 4). It features a mobile-responsive UI created from
+    scratch, my own
     <jsp:include page="../widgets/link-out.jsp">
         <jsp:param name="text" value="JavaScript swipe-detection library"/>
         <jsp:param name="href" value="https://github.com/eric-eldard/swipe-events.js"/>
@@ -19,7 +20,7 @@
 
 <jsp:include page="../widgets/project-specs.jsp">
     <jsp:param name="frontend" value="JSP 3, CSS3, TypeScript"/>
-    <jsp:param name="backend" value="Java 21, Spring Boot 3, Spring Web, Spring Security"/>
+    <jsp:param name="backend" value="Java 25, Spring Boot 4, Spring Web, Spring Security"/>
     <jsp:param name="persistence" value="Spring Data JPA"/>
     <jsp:param name="storage" value="MySQL 8 in Amazon RDS"/>
     <jsp:param name="versioning" value="GitHub"/>

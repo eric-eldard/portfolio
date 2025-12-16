@@ -9,10 +9,11 @@ import jakarta.servlet.DispatcherType;
 import java.util.Collection;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.servlet.server.CookieSameSiteSupplier;
+import org.springframework.boot.web.server.servlet.CookieSameSiteSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -28,8 +29,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextHolderFilter;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.eric_eldard.portfolio.logging.filter.AddUserToMdcFilter;
 import com.eric_eldard.portfolio.model.AdditionalLocation;
@@ -121,7 +122,7 @@ public class GlobalConfig
             .logout(logout ->
                 logout
                     .permitAll()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) // reinstate GET /logout (removed by CSRF config)
+                    .logoutRequestMatcher(PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/logout")) // reinstate GET /logout (removed by CSRF config)
                     .logoutSuccessUrl("/")
                     .addLogoutHandler((_, response, authentication) ->
                         authenticationService.logUserOut(response, authentication))
@@ -168,8 +169,8 @@ public class GlobalConfig
 
     private AuthenticationProvider makeAuthenticationProvider()
     {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(passwordEncoder);
-        provider.setUserDetailsService(portfolioUserService);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(portfolioUserService);
+        provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
 }

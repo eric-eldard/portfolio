@@ -2,8 +2,6 @@ package com.eric_eldard.portfolio.util;
 
 public final class Constants
 {
-    public static final StringTemplate.Processor<String, RuntimeException> $ = STR;
-
     public static final String ASSETS_PATH = "/portfolio/assets";
 
     public static final String CSRF_HEADER_NAME = "X-Csrf-Token";

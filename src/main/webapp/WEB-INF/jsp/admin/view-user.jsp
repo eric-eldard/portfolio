@@ -40,7 +40,7 @@
             <h1>View User: <b>${user.username}</b></h1>
             <nav class="bread-crumbs">
                 <a href="/">Home</a>
-                <a href="/portfolio/">Portfolio</a>
+                <a href="/portfolio">Portfolio</a>
                 <a href="/portfolio/users">Users</a>
             </nav>
 

@@ -1,6 +1,5 @@
 package com.eric_eldard.portfolio.security.csrf;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
